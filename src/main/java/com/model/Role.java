@@ -5,9 +5,8 @@
  */
 package com.model;
 
-
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,17 +44,17 @@ public class Role implements Serializable {
     @Column(name = "role_name")
     private String roleName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Set<User> userSet;
+    private List<User> userList;
 
     public Role() {
     }
 
-    public Role(String roleName) {
-        this.roleName = roleName;
-    }
-
     public Role(Integer id) {
         this.id = id;
+    }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
     }
 
     public Role(Integer id, String roleName) {
@@ -80,35 +79,37 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Role role = (Role) o;
-
-        if (!id.equals(role.id)) return false;
-        return roleName.equals(role.roleName);
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + roleName.hashCode();
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.Role[ id=" + id + " ]";
+        return "com.model.Role[ id=" + id + " ]";
     }
     
 }

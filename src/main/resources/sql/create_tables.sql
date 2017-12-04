@@ -1,4 +1,3 @@
-
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -19,7 +18,7 @@ USE `ciManagerDB` ;
 -- Table `ciManagerDB`.`Project`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Project` (
-  `id` BIGINT(8) NOT NULL,
+  `id` BIGINT(8) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `git_url` VARCHAR(100) NOT NULL,
   `git_login` VARCHAR(45) NULL,
@@ -33,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Project` (
 -- Table `ciManagerDB`.`Org`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Org` (
-  `id` BIGINT(8) NOT NULL,
+  `id` BIGINT(8) NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `isProduction` TINYINT(1) NULL,
@@ -64,14 +63,14 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Role` (
 -- Table `ciManagerDB`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User` (
-  `id` BIGINT(8) NOT NULL,
-  `name` VARCHAR(45) NULL,
+  `id` BIGINT(8) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `login` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NOT NULL,
   `registrated` TIMESTAMP NULL DEFAULT now(),
   `enabled` TINYINT(1) NULL,
   `email` VARCHAR(45) NULL,
-  `role_id` INT NOT NULL,
+  `role_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `user_role_fk_idx` (`role_id` ASC),
   CONSTRAINT `user_role_fk`

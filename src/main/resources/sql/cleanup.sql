@@ -1,6 +1,6 @@
-DELETE from user_has_branch;
-DELETE FROM "user"
-delete from role;
-DELETE from branch;
+DELETE from user_has_org;
+DELETE FROM user;
+
 DELETE FROM org;
+delete from role;
 DELETE from project;

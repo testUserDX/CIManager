@@ -2,7 +2,9 @@ package com.integration.dao;
 
 import com.DomainTestBase;
 import com.model.Role;
+import com.model.User;
 import com.service.daoService.RoleDao;
+import com.service.daoService.UserDao;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +21,10 @@ public class RoleDaoTest extends DomainTestBase{
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private UserDao userDao;
+
 
     @Test
     public void testAdd(){
@@ -62,10 +68,26 @@ public class RoleDaoTest extends DomainTestBase{
     }
 
     @Test
-    public void testDelete(){
+    public void testRemove(){
+        Role role = simpleRole();
+        roleDao.add(role);
+        Integer idRole = role.getId();
+        roleDao.remove(role);
+        assertNull(roleDao.find(idRole));
+    }
 
+    @Test
+    public void testRemoveRole(){
+        Role role = simpleRole();
+        roleDao.add(role);
+        User user = new User("test","login", "pass",role);
+        userDao.add(user);
+        assertFalse(roleDao.removeRole(role));
 
+        userDao.remove(user);
 
+        assertTrue(roleDao.removeRole(role));
+        assertNull(roleDao.find(role.getId()));
     }
 
     private Role simpleRole(){
@@ -73,6 +95,4 @@ public class RoleDaoTest extends DomainTestBase{
         role.setRoleName("Test");
         return role;
     }
-
-
 }

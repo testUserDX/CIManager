@@ -5,21 +5,12 @@
  */
 package com.model;
 
-
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +32,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -58,6 +50,8 @@ public class User implements Serializable {
     private Boolean enabled;
     @Column(name = "email")
     private String email;
+    @ManyToMany(mappedBy = "userList")
+    private List<Org> orgList;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Role roleId;
@@ -72,6 +66,13 @@ public class User implements Serializable {
     public User(Long id, String login) {
         this.id = id;
         this.login = login;
+    }
+
+    public User(String name, String login, String password, Role roleId) {
+        this.name = name;
+        this.roleId = roleId;
+        this.login = login;
+        this.password = password;
     }
 
     public Long getId() {
@@ -130,6 +131,15 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    @XmlTransient
+    public List<Org> getOrgList() {
+        return orgList;
+    }
+
+    public void setOrgList(List<Org> orgList) {
+        this.orgList = orgList;
+    }
+
     public Role getRoleId() {
         return roleId;
     }
@@ -160,7 +170,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.User[ id=" + id + " ]";
+        return "com.model.User[ id=" + id + " ]";
     }
     
 }

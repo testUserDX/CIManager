@@ -24,7 +24,7 @@ public abstract class DomainTestBase extends AbstractJUnit4SpringContextTests {
 
     @Before
     public void deleteAlldomainEntities() {
-      //  executeScript(jdbcTemplate, deleteScript);
+        executeScript(jdbcTemplate, deleteScript);
 //        try {
 //            ScriptUtils.executeSqlScript(jdbcTemplate.getDataSource().getConnection(), new FileSystemResource(deleteScript));
 //        } catch (SQLException ex) {

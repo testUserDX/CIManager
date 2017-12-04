@@ -5,18 +5,9 @@
  */
 package com.model;
 
-
 import java.io.Serializable;
-import java.util.Set;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -39,6 +30,7 @@ public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -55,7 +47,7 @@ public class Project implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
-    private Set<Org> orgSet;
+    private List<Org> orgList;
 
     public Project() {
     }
@@ -66,6 +58,11 @@ public class Project implements Serializable {
 
     public Project(Long id, String name, String gitUrl) {
         this.id = id;
+        this.name = name;
+        this.gitUrl = gitUrl;
+    }
+
+    public Project(String name, String gitUrl) {
         this.name = name;
         this.gitUrl = gitUrl;
     }
@@ -119,12 +116,12 @@ public class Project implements Serializable {
     }
 
     @XmlTransient
-    public Set<Org> getOrgSet() {
-        return orgSet;
+    public List<Org> getOrgList() {
+        return orgList;
     }
 
-    public void setOrgSet(Set<Org> orgSet) {
-        this.orgSet = orgSet;
+    public void setOrgList(List<Org> orgList) {
+        this.orgList = orgList;
     }
 
     @Override
@@ -149,7 +146,7 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.Project[ id=" + id + " ]";
+        return "com.model.Project[ id=" + id + " ]";
     }
     
 }

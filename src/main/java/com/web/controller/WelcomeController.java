@@ -15,4 +15,12 @@ public class WelcomeController {
     public ModelAndView showMenu() {
         return new ModelAndView("loginpage");
     }
+
+    @RequestMapping("/homepage")
+    public String showHomepage(){
+        return "homepage";
+    }
 }
+
+
+

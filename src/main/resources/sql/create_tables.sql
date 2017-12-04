@@ -1,123 +1,146 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema ciManagerDB
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema ciManagerDB
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `ciManagerDB` DEFAULT CHARACTER SET utf8 ;
+USE `ciManagerDB` ;
+
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`Project`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Project` (
+  `id` BIGINT(8) NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `git_url` VARCHAR(100) NOT NULL,
+  `git_login` VARCHAR(45) NULL,
+  `git_pasword` VARCHAR(45) NULL,
+  `description` VARCHAR(150) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `department`
---
-
-DROP TABLE IF EXISTS `department`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `department` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `employee`
---
-
-DROP TABLE IF EXISTS `employee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `dep_id` bigint(20) DEFAULT NULL,
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`Org`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Org` (
+  `id` BIGINT(8) NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `isProduction` TINYINT(1) NULL,
+  `project_id` BIGINT(8) NOT NULL,
+  `branch_name` VARCHAR(45) NOT NULL,
+  `branch_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_department` (`dep_id`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`dep_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  INDEX `project_FK_idx` (`project_id` ASC),
+  CONSTRAINT `Org_project_FK`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `ciManagerDB`.`Project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Table structure for table `manager`
---
 
-DROP TABLE IF EXISTS `manager`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `manager` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`Role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Role` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `role_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
---
--- Table structure for table `task`
---
 
-DROP TABLE IF EXISTS `task`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `task` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `completed` bit(1) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `manager_id` bigint(20) DEFAULT NULL,
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`User`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User` (
+  `id` BIGINT(8) NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NULL,
+  `registrated` TIMESTAMP NULL DEFAULT now(),
+  `enabled` TINYINT(1) NULL,
+  `email` VARCHAR(45) NULL,
+  `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK363585B7A879D6` (`manager_id`),
-  CONSTRAINT `FK363585B7A879D6` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  INDEX `user_role_fk_idx` (`role_id` ASC),
+  CONSTRAINT `user_role_fk`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `ciManagerDB`.`Role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Table structure for table `task_employee`
---
 
-DROP TABLE IF EXISTS `task_employee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `task_employee` (
-  `task_id` bigint(20) NOT NULL,
-  `employee_id` bigint(20) NOT NULL,
-  KEY `FK47A54828B1506F3E` (`employee_id`),
-  KEY `FK47A54828F22C2DDE` (`task_id`),
-  CONSTRAINT `FK47A54828B1506F3E` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
-  CONSTRAINT `FK47A54828F22C2DDE` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `timesheet`
---
-
-DROP TABLE IF EXISTS `timesheet`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `timesheet` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `hours` int(11) DEFAULT NULL,
-  `task_id` bigint(20) DEFAULT NULL,
-  `employee_id` bigint(20) DEFAULT NULL,
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`Branch`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Branch` (
+  `id` BIGINT(8) NOT NULL,
+  `type` SMALLINT(2) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK343C2B2B1506F3E` (`employee_id`),
-  KEY `FK343C2B2F22C2DDE` (`task_id`),
-  CONSTRAINT `FK343C2B2B1506F3E` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
-  CONSTRAINT `FK343C2B2F22C2DDE` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+  CONSTRAINT `fhrth`
+    FOREIGN KEY (`id`)
+    REFERENCES `ciManagerDB`.`Org` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-06-14 15:03:04
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`User_has_Branch`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User_has_Branch` (
+  `User_id` BIGINT(8) NOT NULL,
+  `Branch_id` BIGINT(8) NOT NULL,
+  PRIMARY KEY (`User_id`, `Branch_id`),
+  INDEX `fk_User_has_Branch_Branch1_idx` (`Branch_id` ASC),
+  INDEX `fk_User_has_Branch_User1_idx` (`User_id` ASC),
+  CONSTRAINT `fk_User_has_Branch_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `ciManagerDB`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_Branch_Branch1`
+    FOREIGN KEY (`Branch_id`)
+    REFERENCES `ciManagerDB`.`Branch` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ciManagerDB`.`User_has_Org`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User_has_Org` (
+  `User_id` BIGINT(8) NOT NULL,
+  `Org_id` BIGINT(8) NOT NULL,
+  PRIMARY KEY (`User_id`, `Org_id`),
+  INDEX `fk_User_has_Org_Org1_idx` (`Org_id` ASC),
+  INDEX `fk_User_has_Org_User1_idx` (`User_id` ASC),
+  CONSTRAINT `fk_User_has_Org_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `ciManagerDB`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_Org_Org1`
+    FOREIGN KEY (`Org_id`)
+    REFERENCES `ciManagerDB`.`Org` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

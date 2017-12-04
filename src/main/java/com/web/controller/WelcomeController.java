@@ -8,11 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 
 @Controller
-@RequestMapping({"/welcome","/" })
+@RequestMapping({"/loginpage","/" })
 public class WelcomeController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showMenu() {
-        return new ModelAndView("index", "today", new Date());
+        return new ModelAndView("loginpage");
     }
 }

@@ -1,3 +1,4 @@
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Project` (
   `git_pasword` VARCHAR(45) NULL,
   `description` VARCHAR(150) NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -42,11 +43,11 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Org` (
   PRIMARY KEY (`id`),
   INDEX `project_FK_idx` (`project_id` ASC),
   CONSTRAINT `Org_project_FK`
-    FOREIGN KEY (`project_id`)
-    REFERENCES `ciManagerDB`.`Project` (`id`)
+  FOREIGN KEY (`project_id`)
+  REFERENCES `ciManagerDB`.`Project` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -74,49 +75,11 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User` (
   PRIMARY KEY (`id`),
   INDEX `user_role_fk_idx` (`role_id` ASC),
   CONSTRAINT `user_role_fk`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `ciManagerDB`.`Role` (`id`)
+  FOREIGN KEY (`role_id`)
+  REFERENCES `ciManagerDB`.`Role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `ciManagerDB`.`Branch`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ciManagerDB`.`Branch` (
-  `id` BIGINT(8) NOT NULL,
-  `type` SMALLINT(2) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fhrth`
-    FOREIGN KEY (`id`)
-    REFERENCES `ciManagerDB`.`Org` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `ciManagerDB`.`User_has_Branch`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User_has_Branch` (
-  `User_id` BIGINT(8) NOT NULL,
-  `Branch_id` BIGINT(8) NOT NULL,
-  PRIMARY KEY (`User_id`, `Branch_id`),
-  INDEX `fk_User_has_Branch_Branch1_idx` (`Branch_id` ASC),
-  INDEX `fk_User_has_Branch_User1_idx` (`User_id` ASC),
-  CONSTRAINT `fk_User_has_Branch_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `ciManagerDB`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_User_has_Branch_Branch1`
-    FOREIGN KEY (`Branch_id`)
-    REFERENCES `ciManagerDB`.`Branch` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -129,16 +92,16 @@ CREATE TABLE IF NOT EXISTS `ciManagerDB`.`User_has_Org` (
   INDEX `fk_User_has_Org_Org1_idx` (`Org_id` ASC),
   INDEX `fk_User_has_Org_User1_idx` (`User_id` ASC),
   CONSTRAINT `fk_User_has_Org_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `ciManagerDB`.`User` (`id`)
+  FOREIGN KEY (`User_id`)
+  REFERENCES `ciManagerDB`.`User` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Org_Org1`
-    FOREIGN KEY (`Org_id`)
-    REFERENCES `ciManagerDB`.`Org` (`id`)
+  FOREIGN KEY (`Org_id`)
+  REFERENCES `ciManagerDB`.`Org` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

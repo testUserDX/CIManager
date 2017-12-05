@@ -115,11 +115,22 @@ public class UserDaoTest extends DomainTestBase {
         assertEquals(1, projectList.size());
     }
 
+    @Test
+    public void testVerifyUserByEmailAndPass(){
+        User user = simpleUser();
+        user.setEmail("test@test.com");
+        userDao.add(user);
+
+        assertTrue(userDao.verifyUserByEmailAndPassword("test@test.com","test-pass" ));
+        assertFalse(userDao.verifyUserByEmailAndPassword("fake@test.com","test-pass" ));
+        assertFalse(userDao.verifyUserByEmailAndPassword("test@test.com","fake-test-pass" ));
+
+    }
+
 
     private User simpleUser(){
         Role role = new Role("test-role");
         roleDao.add(role);
         return new User("test-name", "test-login", "test-pass", role);
-
     }
 }

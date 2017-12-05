@@ -27,10 +27,6 @@ public class DataGenerator {
     @Autowired
     OrgDao orgDao;
 
-    private final String deleteScript = "src/main/resources/sql/cleanup.sql";
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
 
     public void genareteDomain() {
         clearDatabase();

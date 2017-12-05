@@ -60,11 +60,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="project : ${userProjects}">
-                        <td th:text="${project.name}"></td>
-                        <td th:text="${project.description}"></td>
-                        <td th:text="${project.git_url}"></td>
-                    </tr>
+                    <th:block th:each="project : ${userProjects}">
+                        <tr>
+                            <td th:text="${project.name}"></td>
+                            <td th:text="${project.description}"></td>
+                            <td th:text="${project.gitUrl}"></td>
+                        </tr>
+                    </th:block>
                     </tbody>
                 </table>
             </div>

@@ -116,6 +116,34 @@ public class UserDaoTest extends DomainTestBase {
     }
 
     @Test
+    public void testUsersProjectListByEmail(){
+        User user = simpleUser();
+        user.setEmail("test@test.com");
+        userDao.add(user);
+
+        Project project  = new Project("test-1", "git-1");
+        projectDao.add(project);
+        Project project2  = new Project("test-2", "git-2");
+        projectDao.add(project2);
+
+        Org org = new Org("login1","password1", "branch1", "type1", project );
+        orgDao.add( org);
+        Org org2 = new Org("login2","password2", "branch2", "type2", project2 );
+        orgDao.add( org2);
+
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+        org2.setUserList(Arrays.asList(user));
+        orgDao.update(org2);
+
+        List<Project> projectList = userDao.usersProjectListByEmail("test@test.com");
+        assertEquals(2, projectList.size());
+    }
+
+
+
+
+    @Test
     public void testVerifyUserByEmailAndPass(){
         User user = simpleUser();
         user.setEmail("test@test.com");

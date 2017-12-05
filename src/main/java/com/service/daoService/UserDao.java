@@ -10,6 +10,10 @@ public interface UserDao extends GenericDao<User, Long> {
 
     public List<Project> usersProjectList(User user);
 
+    public List<Project> usersProjectListByEmail(String email);
+
     public boolean verifyUserByEmailAndPassword(String email, String passord);
+
+    public User getUserByEmil(String email);
 
 }

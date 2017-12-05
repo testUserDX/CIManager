@@ -23,15 +23,33 @@ public class UserDaoImpl extends HibernateDao<User, Long> implements UserDao {
         return projectList;
     }
 
+
+    @Override
+    public List<Project> usersProjectListByEmail(String email) {
+        String projectString = "select p from Project p where p.id in (" +
+                "select o.projectId from Org  o join o.userList u where u.id in (SELECT u.id from User where u.email =:email))";
+        Query projectQuery = currentSession().createQuery(projectString);
+        projectQuery.setParameter("email", email);
+        List<Project> projectList = projectQuery.list();
+        return projectList;
+    }
+
     @Override
     public boolean verifyUserByEmailAndPassword(String email, String passord) {
         Query query = currentSession().createQuery("select u from User u where  u.email=:email and u.password =:password ");
         query.setParameter("email", email);
         query.setParameter("password", passord);
         List userList = query.list();
-        if(userList.isEmpty()) {
+        if (userList.isEmpty()) {
             return false;
-        }
-        else return true;
+        } else return true;
+    }
+
+    @Override
+    public User getUserByEmil(String email) {
+        Query query = currentSession().createQuery("select u from User u where  u.email=:email");
+        query.setParameter("email", email);
+        List<User> userList = query.list();
+        return userList.get(0);
     }
 }

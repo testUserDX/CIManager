@@ -1,18 +1,29 @@
 package com.web.controller;
 
-import com.data.UserCredentials;
+import com.model.Project;
+import com.service.daoService.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class HomePageController {
+    @Autowired
+    private UserDao userDao;
+
 
     @RequestMapping("/homepage")
     public String showProjectList(Model model) {
-//        UserCredentials userCredentials = (UserCredentials) model.asMap().get("userCred");
+        String userEmail = (String)model.asMap().get("userEmail");
 
-        System.out.println("*****************" +  model.asMap().get("userCred"));
+        List<Project> projectList = userDao.usersProjectListByEmail(userEmail);
+
+        System.out.println("---------------------------- count of projects="+ projectList.size() );
+
+        model.addAttribute("userProjects", projectList);
         return "homepage";
     }
 

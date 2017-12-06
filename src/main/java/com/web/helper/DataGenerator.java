@@ -16,22 +16,16 @@ import java.util.List;
 
 @Service
 public class DataGenerator {
-
-
     @Autowired
     UserDao userDao;
-
     @Autowired
     ProjectDao projectDao;
-
     @Autowired
     OrgDao orgDao;
 
-
     public void genareteDomain() {
         clearDatabase();
-
-        User user = new User("Test name", "test login", "test-password", "test-email@test.com");
+        User user = new User("Test name", "test login", "111", "111@111.com");
         userDao.add(user);
 
         Project project = new Project("testProject-1", "git-1-url");
@@ -56,16 +50,13 @@ public class DataGenerator {
         for (User user : userList) {
             userDao.remove(user);
         }
-
         List<Org> orgs = orgDao.list();
         for (Org org : orgs) {
             orgDao.remove(org);
         }
-
         List<Project> projectList = projectDao.list();
         for (Project project : projectList) {
             projectDao.remove(project);
         }
     }
-
 }

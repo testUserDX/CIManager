@@ -31,9 +31,8 @@ public class WelcomeController {
 
     @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
     public ModelAndView showMenu() {
-        return new ModelAndView("loginpage", "credentials", new UserCredentials());
+        return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
     }
-
 
     @RequestMapping(value = "/loginpage", method = RequestMethod.POST)
     public String verifyUser(@ModelAttribute UserCredentials userCredentials, HttpServletRequest request) {
@@ -42,6 +41,14 @@ public class WelcomeController {
             return "redirect:/homepage";
         }
         return "redirect:/";
+    }
+
+    private UserCredentials createTestUserCreds(){
+        //TODO delete this method before production realise
+        UserCredentials  userCredentials = new UserCredentials();
+        userCredentials.setEmail("111@111.com");
+        userCredentials.setPassword("111");
+        return userCredentials;
     }
 
     @PostConstruct

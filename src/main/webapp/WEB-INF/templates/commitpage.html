@@ -113,7 +113,7 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" class="contact-form">
+    <form role="form" id="prompt-form" class="contact-form" th:action="@{/commitpage}" th:object="${cmessage}" method="post">
 
         <div id ="texthead">
             Enter message:
@@ -121,7 +121,7 @@
         <input  id="close" name="exit" type="image" src="../../images/close_red.png">
         <div>
             <div class="form-group">
-                <textarea class="form-control textarea" rows="1" name="text" id="Message" placeholder="Message"></textarea>
+                <textarea class="form-control textarea" rows="1" name="text" id="Message" placeholder="Message" th:field ="*{message}" required></textarea>
             </div>
         </div>
 
@@ -130,7 +130,9 @@
     </form>
 </div>
 
-<script>
+<script th:inline="javascript">
+
+    //========================COUNTER==========================================
     var ul = document.getElementById("myul");
     var liNodes = 0;
 
@@ -142,7 +144,7 @@
 
     document.getElementById("totalCount").innerHTML = "" + liNodes;
 
-
+//==============================POPUP===========================================
     function showCover() {
         var coverDiv = document.createElement('div');
         coverDiv.id = 'cover-div';
@@ -153,29 +155,17 @@
         document.body.removeChild(document.getElementById('cover-div'));
     }
 
-    function showPrompt(text, callback) {
+    function showPrompt() {
         showCover();
         var form = document.getElementById('prompt-form');
         var container = document.getElementById('prompt-form-container');
-//        document.getElementById('prompt-message').innerHTML = text;
-        form.elements.text.value = '';
 
-
-
-        function complete(value) {
+        function complete() {
             hideCover();
             container.style.display = 'none';
             document.onkeydown = null;
-            callback(value);
         }
 
-        form.onsubmit = function() {
-            var value = form.elements.text.value;
-            if (value == '') return false; // игнорировать пустой submit
-
-            complete(value);
-            return false;
-        };
 
         document.getElementById("close").onclick= function() {
             complete(null);
@@ -190,19 +180,19 @@
         var lastElem = form.elements[form.elements.length - 1];
         var firstElem = form.elements[0];
 
-//        lastElem.onkeydown = function(e) {
-//            if (e.keyCode == 9 && !e.shiftKey) {
-//                firstElem.focus();
-//                return false;
-//            }
-//        };
-//
-//        firstElem.onkeydown = function(e) {
-//            if (e.keyCode == 9 && e.shiftKey) {
-//                lastElem.focus();
-//                return false;
-//            }
-//        };
+        lastElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && !e.shiftKey) {
+                firstElem.focus();
+                return false;
+            }
+        };
+
+        firstElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && e.shiftKey) {
+                lastElem.focus();
+                return false;
+            }
+        };
 
 
         container.style.display = 'block';
@@ -210,9 +200,7 @@
     }
 
     document.getElementById('show-button').onclick = function() {
-        showPrompt('Enter commit message :', function(value) {
-
-        });
+        showPrompt();
     };
 </script>
 

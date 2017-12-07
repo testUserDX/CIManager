@@ -56,8 +56,8 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" method="post" action = "/loginpage.html" th:action="@{/loginpage.html}" th:object ="${credentials}">
                 <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus th:field ="*{email}">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required th:field ="*{password}">
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus th:field ="*{email}">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required th:field ="*{password}">
                 <div id="remember" class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me

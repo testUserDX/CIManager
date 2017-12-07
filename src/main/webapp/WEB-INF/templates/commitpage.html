@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
+    <link href="../../css/commitstyle.css" rel="stylesheet" th:href="@{/css/commitstyle.css}" >
+
+
+</head>
+<body>
+<div class = "container-fluid">
+    <nav class="navbar navbar-inverse bs-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
+
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a id = "homeid" href="#" >Homepage <span class="sr-only">(current)</span></a></li>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left form-horizontal" role="search">
+                    <div class="input-group">
+                        <input type="text" class="search-box" placeholder="Search">
+                        <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Account
+                            <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image" />
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Log out</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="panelwrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-list"></span> Total changes
+            </div>
+            <div class="panel-body" id="panelb">
+                <ul class="list-group" id="myul">
+                    <li class="list-group-item">
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <label for="checkbox">
+                                List group item heading
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox2" />
+                            <label for="checkbox2">
+                                List group item heading 1
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox3" />
+                            <label for="checkbox3">
+                                List group item heading 2
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox4" />
+                            <label for="checkbox4">
+                                List group item heading 3
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>
+                            Total changes <span class="label label-info" id="totalCount">25</span></h6>
+                    </div>
+
+                    <input type="button" value="Commit" id="show-button">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="prompt-form-container">
+    <form id="prompt-form">
+        <div id="prompt-message"></div>
+        <input name="text" type="text">
+        <input type="submit" value="Ok">
+        <input type="button" name="cancel" value="Cancel">
+    </form>
+</div>
+
+
+<script>
+    var ul = document.getElementById("myul");
+    var liNodes = 0;
+
+    for (var i =0; i < ul.childNodes.length; i++){
+        if(ul.childNodes[i].nodeName === 'LI'){
+            liNodes ++ ;
+        }
+    }
+
+    document.getElementById("totalCount").innerHTML = "" + liNodes;
+
+
+    function showCover() {
+        var coverDiv = document.createElement('div');
+        coverDiv.id = 'cover-div';
+        document.body.appendChild(coverDiv);
+    }
+
+    function hideCover() {
+        document.body.removeChild(document.getElementById('cover-div'));
+    }
+
+    function showPrompt(text, callback) {
+        showCover();
+        var form = document.getElementById('prompt-form');
+        var container = document.getElementById('prompt-form-container');
+        document.getElementById('prompt-message').innerHTML = text;
+        form.elements.text.value = '';
+
+        function complete(value) {
+            hideCover();
+            container.style.display = 'none';
+            document.onkeydown = null;
+            callback(value);
+        }
+
+        form.onsubmit = function() {
+            var value = form.elements.text.value;
+            if (value == '') return false; // игнорировать пустой submit
+
+            complete(value);
+            return false;
+        };
+
+        form.elements.cancel.onclick = function() {
+            complete(null);
+        };
+
+        document.onkeydown = function(e) {
+            if (e.keyCode == 27) { // escape
+                complete(null);
+            }
+        };
+
+        var lastElem = form.elements[form.elements.length - 1];
+        var firstElem = form.elements[0];
+
+        lastElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && !e.shiftKey) {
+                firstElem.focus();
+                return false;
+            }
+        };
+
+        firstElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && e.shiftKey) {
+                lastElem.focus();
+                return false;
+            }
+        };
+
+
+        container.style.display = 'block';
+        form.elements.text.focus();
+    }
+
+    document.getElementById('show-button').onclick = function() {
+        showPrompt('Enter commit message :', function(value) {
+
+        });
+    };
+
+</script>
+
+</body>
+</html>

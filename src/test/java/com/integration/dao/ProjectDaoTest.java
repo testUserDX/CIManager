@@ -47,6 +47,11 @@ public class ProjectDaoTest extends DomainTestBase {
         assertEquals("updated", projectDao.find(projectId).getName());
     }
 
+    private Project getSimpleProject(){
+        Project project = new Project("test","https://github.com/testUserDX/CIManager");
+        return project;
+    }
+
     @Test
     public void testFind(){
         Project project = getSimpleProject();
@@ -58,10 +63,11 @@ public class ProjectDaoTest extends DomainTestBase {
     @Test
     public void testList(){
         assertTrue(projectDao.list().isEmpty());
+        Project project1 = getSimpleProject();
         List<Project> projectList = Arrays.asList(getSimpleProject(),
                 new Project("test1","https://github.com/testUserDX/CIManager"),
-                new Project("test2","https://github.com/testUserDX/CIManager"),
-                new Project("test3","https://github.com/testUserDX/CIManager")
+        new Project("test2","https://github.com/testUserDX/CIManager"),
+        new Project("test3","https://github.com/testUserDX/CIManager")
         );
 
         for(Project project : projectList){
@@ -84,30 +90,11 @@ public class ProjectDaoTest extends DomainTestBase {
 
     @Test
     public void testProjectUsersList(){
-        User user = simpleUser();
-        userDao.add(user);
-
-        Project project  = new Project("name", "git-1");
-        projectDao.add(project);
-
-        Org org = new Org("login","password", "branch", "type", project );
-        orgDao.add( org);
-
-        org.setUserList(Arrays.asList(user));
-        orgDao.update(org);
-
-        List<User> testUserList = projectDao.usersProjectListByProjectName("name");
-        assertEquals(1, testUserList.size());
+        //TODO
     }
 
-    private Project getSimpleProject(){
-        Project project = new Project("test","https://github.com/testUserDX/CIManager");
-        return project;
-    }
-
-    private User simpleUser(){
-        Role role = new Role("test-role");
-        roleDao.add(role);
-        return new User("test-name", "test-login", "test-pass", role);
+    @Test
+    public void testProjectUserListByEmail(){
+        //TODO
     }
 }

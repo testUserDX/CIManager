@@ -1,6 +1,7 @@
 package com.vcsService;
 
 import com.config.WebAppConfig;
+import com.service.FilesTools;
 import com.service.gitServise.GitService;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -43,6 +44,9 @@ public class GitAuthTesting extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     private GitService gitJob;
+
+    @Autowired
+    private FilesTools filesTools;
 
     @Before
     public void init() {

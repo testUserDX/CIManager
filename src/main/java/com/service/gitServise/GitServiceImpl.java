@@ -1,8 +1,11 @@
 package com.service.gitServise;
 
+import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,8 +70,8 @@ public class GitServiceImpl implements GitService {
 //    }
 
     @Override
-    public void addFiles(String pattern) {
-        try (Git git = Git.open(new File(localRepositoryPath))) {
+    public void addFiles(String pattern,String path) {
+        try (Git git = Git.open(new File(path))) {
             git.add().addFilepattern(pattern).call();
         } catch (IOException | GitAPIException e) {
             System.err.println(e.getMessage());
@@ -93,10 +96,12 @@ public class GitServiceImpl implements GitService {
     }
 
     @Override
-    public boolean commitJob(String message) {
-        try(Git git = Git.open(new File(localRepositoryPath))) {
+    public boolean commitJob(String message,String path, String branch) {
+        try(Git git = Git.open(new File(path))) {
             Status status  = git.status().call();
             if (!status.getAdded().isEmpty() && !message.isEmpty()) {
+                CheckoutCommand checkout = git.checkout();
+                checkout.setName(branch).call();
                 git.commit().setMessage(message).call();
             }
         } catch (IOException | GitAPIException e) {
@@ -115,6 +120,26 @@ public class GitServiceImpl implements GitService {
         } catch (IOException| GitAPIException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public boolean pushToRemote(String path, String branch, CredentialsProvider credentials) {
+
+        try(Git git = Git.open(new File(path))) {
+            CheckoutCommand checkout = git.checkout();
+            checkout.setName(branch);
+            checkout.call();
+
+            PushCommand push = git.push();
+            push.setCredentialsProvider(credentials);
+            push.setRemote("origin");
+            push.call();
+        } catch (GitAPIException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 
 //    @Override

@@ -28,7 +28,9 @@ public class DataGenerator {
         User user = new User("Test name", "test login", "111", "111@111.com");
         userDao.add(user);
 
-        Project project = new Project("testProject-1", "git-1-url");
+        Project project = new Project("testProject-1", "https://github.com/andreytsykh/DxRepo");
+        project.setGitLogin("andreytsykh");
+        project.setGitPasword("blcksbbth1324");
         Project project2 = new Project("testProject-2", "git-2-url");
         projectDao.add(project);
         projectDao.add(project2);

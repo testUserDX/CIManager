@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface OrgDao extends GenericDao<Org, Long> {
     public List<Org> getOrgByUserAndProject(Long projectId, String email);
-    public List<Org> orgListByProjectName(String projectName);
-
+    public List<Org> getOrgListByProjectName(String projectName);
+    public List<Org> getOrgListOfUser(String username);
 }

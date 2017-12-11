@@ -47,10 +47,6 @@ public class ProjectDaoTest extends DomainTestBase {
         assertEquals("updated", projectDao.find(projectId).getName());
     }
 
-    private Project getSimpleProject(){
-        Project project = new Project("test","https://github.com/testUserDX/CIManager");
-        return project;
-    }
 
     @Test
     public void testFind(){
@@ -63,7 +59,6 @@ public class ProjectDaoTest extends DomainTestBase {
     @Test
     public void testList(){
         assertTrue(projectDao.list().isEmpty());
-        Project project1 = getSimpleProject();
         List<Project> projectList = Arrays.asList(getSimpleProject(),
                 new Project("test1","https://github.com/testUserDX/CIManager"),
         new Project("test2","https://github.com/testUserDX/CIManager"),
@@ -89,6 +84,48 @@ public class ProjectDaoTest extends DomainTestBase {
     }
 
     @Test
+    public void testUsersProjectList(){
+        User user = simpleUser();
+        userDao.add(user);
+
+        Project project  = new Project("test-1", "git-1");
+        projectDao.add(project);
+
+        Org org = new Org("login1","password1", "branch1", "type1", project );
+        orgDao.add( org);
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+
+        List<Project> projectList = projectDao.usersProjectList(user);
+        assertEquals(1, projectList.size());
+    }
+
+    @Test
+    public void testUsersProjectListByEmail(){
+        User user = simpleUser();
+        user.setEmail("test@test.com");
+        userDao.add(user);
+
+        Project project  = new Project("test-1", "git-1");
+        projectDao.add(project);
+        Project project2  = new Project("test-2", "git-2");
+        projectDao.add(project2);
+
+        Org org = new Org("login1","password1", "branch1", "type1", project );
+        orgDao.add( org);
+        Org org2 = new Org("login2","password2", "branch2", "type2", project2 );
+        orgDao.add( org2);
+
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+        org2.setUserList(Arrays.asList(user));
+        orgDao.update(org2);
+
+        List<Project> projectList = projectDao.usersProjectListByEmail("test@test.com");
+        assertEquals(2, projectList.size());
+    }
+
+    @Test
     public void testProjectUsersList(){
         //TODO
     }
@@ -96,5 +133,16 @@ public class ProjectDaoTest extends DomainTestBase {
     @Test
     public void testProjectUserListByEmail(){
         //TODO
+    }
+
+    private User simpleUser(){
+        Role role = new Role("test-role");
+        roleDao.add(role);
+        return new User("test-name", "test-login", "test-pass", role);
+    }
+
+    private Project getSimpleProject(){
+        Project project = new Project("test","https://github.com/testUserDX/CIManager");
+        return project;
     }
 }

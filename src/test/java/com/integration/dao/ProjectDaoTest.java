@@ -127,13 +127,22 @@ public class ProjectDaoTest extends DomainTestBase {
 
     @Test
     public void testProjectUsersList(){
-        //TODO
+        User user = simpleUser();
+        userDao.add(user);
+
+        Project project  = new Project("name", "git-1");
+        projectDao.add(project);
+
+        Org org = new Org("login","password", "branch", "type", project );
+        orgDao.add( org);
+
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+
+        List<User> testUserList = projectDao.usersProjectListByProjectName("name");
+        assertEquals(1, testUserList.size());
     }
 
-    @Test
-    public void testProjectUserListByEmail(){
-        //TODO
-    }
 
     private User simpleUser(){
         Role role = new Role("test-role");

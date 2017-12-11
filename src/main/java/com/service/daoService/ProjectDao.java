@@ -11,4 +11,6 @@ public interface ProjectDao extends GenericDao<Project, Long> {
     public List<Project> usersProjectList(User user);
 
     public List<Project> usersProjectListByEmail(String email);
+
+    public List<User> usersProjectListByProjectName(String projectName);
 }

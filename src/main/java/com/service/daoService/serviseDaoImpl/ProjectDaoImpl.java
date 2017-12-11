@@ -31,4 +31,12 @@ public class ProjectDaoImpl extends HibernateDao<Project, Long> implements Proje
         return projectList;
     }
 
+    @Override
+    public List<User> usersProjectListByProjectName(String projectName) {
+        Query query = currentSession().createQuery("select u from User u join u.orgList o where o.id in" +
+                " (select o from Org o where o.projectId in (select p from Project p where p.name =:projectName))");
+        query.setParameter("projectName", projectName);
+        List userList = query.list();
+        return userList;
+    }
 }

@@ -54,15 +54,5 @@ public class UserDaoImpl extends HibernateDao<User, Long> implements UserDao {
         return userList.get(0);
     }
 
-    @Override
-    public List<Org> getOrgByUserAndProject(Long projectId, String email) {
-        String projectString = "from Org o  join o.userList u where o.projectId=:projectId and u.id in (SELECT u.id from User where u.email =:email)";
 
-        Query projectQuery = currentSession().createQuery(projectString);
-        projectQuery.setParameter("email", email);
-        projectQuery.setParameter("projectId", new Project(projectId));
-
-        List<Org> orgsList = projectQuery.list();
-        return orgsList;
-    }
 }

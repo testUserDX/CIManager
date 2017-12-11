@@ -17,6 +17,5 @@ public interface UserDao extends GenericDao<User, Long> {
 
     public User getUserByEmil(String email);
 
-    public List<Org> getOrgByUserAndProject(Long projectId, String email);
 
 }

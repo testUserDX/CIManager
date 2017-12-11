@@ -24,7 +24,7 @@ public class DataGenerator {
     OrgDao orgDao;
 
     public void genareteDomain() {
-        //clearDatabase();
+        clearDatabase();
         User user = new User("Test name", "test login", "111", "111@111.com");
         userDao.add(user);
 

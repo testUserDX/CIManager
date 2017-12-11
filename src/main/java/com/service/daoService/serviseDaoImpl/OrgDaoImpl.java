@@ -23,4 +23,13 @@ public class OrgDaoImpl extends HibernateDao<Org, Long> implements OrgDao {
         List<Org> orgsList = projectQuery.list();
         return orgsList;
     }
+
+    @Override
+    public List<Org> orgListByProjectName(String projectName) {
+        String orgString = "select o from Org o where o.projectId in (select p from Project p where name =:projectName)";
+        Query orgQuery = currentSession().createQuery(orgString);
+        orgQuery.setParameter("projectName", projectName);
+        List<Org> orgList = orgQuery.list();
+        return orgList;
+    }
 }

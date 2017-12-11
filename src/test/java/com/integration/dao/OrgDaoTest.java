@@ -64,4 +64,32 @@ public class OrgDaoTest extends DomainTestBase {
 //        assertEquals(org, orgList.get(0));
     }
 
+    @Test
+    public void testGetOrgsByNameOfProject() {
+        Role role = new Role("test-role");
+        roleDao.add(role);
+
+        User user  = new User("test-name", "test-login", "test-pass", role);
+
+        user.setEmail("test@test.com");
+        userDao.add(user);
+
+        Project project = new Project("test", "git-1");
+        projectDao.add(project);
+        Project project2 = new Project("test", "git-2");
+        projectDao.add(project2);
+
+        Org org = new Org("login1", "password1", "branch1", "type1", project);
+        orgDao.add(org);
+        Org org2 = new Org("login2", "password2", "branch2", "type2", project2);
+        orgDao.add(org2);
+
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+        org2.setUserList(Arrays.asList(user));
+        orgDao.update(org2);
+
+        List<Org> testOrgs = orgDao.orgListByProjectName("test");
+        assertEquals(2, testOrgs.size());
+    }
 }

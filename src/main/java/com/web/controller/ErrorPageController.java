@@ -11,8 +11,12 @@ import java.util.List;
 @Controller
 public class ErrorPageController {
     @RequestMapping("/error")
-    public String showProjectList(Model model, HttpSession session) {
-        model.addAttribute("error", "Some error");
+    public String showProjectList(Model model, String message) {
+        if (message == null || message == "") {
+            model.addAttribute("error", "Unknown error");
+        } else {
+            model.addAttribute("error", message);
+        }
         return "errorpage";
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../css/commitstyle.css" rel="stylesheet" th:href="@{/css/commitstyle.css}">
+    <link href="../../css/popupstyle.css" rel="stylesheet" th:href="@{/css/popupstyle.css}">
+    <style type="text/css">
+        #centerLayer {
+            font-size: 150px;
+            position: absolute; /* Абсолютное позиционирование */
+            width: 40%; /* Ширина слоя в процентах */
+            height: 30%; /* Высота слоя в процентах */
+            left: 50%; /* Положение слоя от левого края */
+            top: 50%; /* Положение слоя от верхнего края */
+            margin-left: -20%; /* Отступ слева */
+            margin-top: -15%; /* Отступ сверху */
+            background: #ff4d00; /* Цвет фона */
+        }
+    </style>
+</head>
+<body>
+<div id="centerLayer">
+<th:block th:text="${error}" />
+</div>
+</body>
+</html>

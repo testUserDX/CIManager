@@ -39,3 +39,8 @@
 .list-group {
     margin-bottom: 0px;
 }
+.refresh-form{
+    display: inline-block;
+    position: relative;
+    left:80%;
+}

@@ -15,13 +15,6 @@
     <nav class="navbar navbar-inverse bs-dark">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
                 <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
             </div>
 
@@ -55,7 +48,11 @@
     <div class="panelwrapper">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span class="glyphicon glyphicon-list"></span> Total changes
+                <span class="glyphicon glyphicon-list refresh"></span>
+                <span class ="refresh">Total changes</span>
+                <form  class = "refresh-form" action="http://google.com">
+                    <input type="submit" value="Refresh"  class="main-btn"/>
+                </form>
             </div>
             <div class="panel-body" id="panelb">
                 <ul class="list-group" id="myul">
@@ -64,30 +61,6 @@
                             <input type="checkbox" id="checkbox" />
                             <label for="checkbox">
                                 List group item heading
-                            </label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox2" />
-                            <label for="checkbox2">
-                                List group item heading 1
-                            </label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox3" />
-                            <label for="checkbox3">
-                                List group item heading 2
-                            </label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox4" />
-                            <label for="checkbox4">
-                                List group item heading 3
                             </label>
                         </div>
                     </li>

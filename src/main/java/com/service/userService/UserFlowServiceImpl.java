@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.jws.Oneway;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -32,6 +34,11 @@ public class UserFlowServiceImpl implements UserFlowService {
     @Override
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

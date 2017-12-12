@@ -5,8 +5,12 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -99,7 +103,11 @@ public class GitServiceImpl implements GitService {
     public boolean commitJob(String message,String path, String branch) {
         try(Git git = Git.open(new File(path))) {
             Status status  = git.status().call();
-            if (!status.getAdded().isEmpty() && !message.isEmpty()) {
+            if (!status.getAdded().isEmpty() && !message.isEmpty()
+                    || !status.getChanged().isEmpty()
+                    || !status.getModified().isEmpty()
+                    ||  status.hasUncommittedChanges()
+                    || !status.getUntracked().isEmpty()) {
                 CheckoutCommand checkout = git.checkout();
                 checkout.setName(branch).call();
                 git.commit().setMessage(message).call();
@@ -140,6 +148,34 @@ public class GitServiceImpl implements GitService {
 
         return false;
 
+    }
+
+    public List<DiffEntry> getFilesInDiff(String path,String branch){
+
+        try(Git git = Git.open(new File(path))){
+            ObjectId head = git.getRepository().resolve("HEAD^{tree}");
+            ObjectId oldHead = git.getRepository().resolve("HEAD~1^{tree}");
+
+            try(ObjectReader reader = git.getRepository().newObjectReader()){
+                CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+                oldTreeIter.reset(reader,oldHead);
+                CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+                newTreeIter.reset(reader,head);
+
+                List<DiffEntry> diffEntries = git.diff()
+                                                .setNewTree(newTreeIter)
+                                                .setOldTree(oldTreeIter)
+                                                .call();
+                return diffEntries;
+
+            } catch (GitAPIException e) {
+                e.printStackTrace();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 //    @Override

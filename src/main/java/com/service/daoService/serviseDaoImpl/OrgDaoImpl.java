@@ -21,6 +21,7 @@ public class OrgDaoImpl extends HibernateDao<Org, Long> implements OrgDao {
         projectQuery.setParameter("email", email);
         projectQuery.setParameter("projectId", new Project(projectId));
 
+
         List<Org> orgsList = projectQuery.list();
         return orgsList;
     }

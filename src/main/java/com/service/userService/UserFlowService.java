@@ -13,4 +13,7 @@ public interface UserFlowService {
    public boolean commitAll(String message,String path, String branch,CredentialsProvider credentials) throws GitAPIException;
 
    public String getPath();
+
+   public void setPath(String path);
+
 }

@@ -50,20 +50,22 @@
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-list refresh"></span>
                 <span class ="refresh">Total changes</span>
-                <form  class = "refresh-form" action="http://google.com">
+                <form  class = "refresh-form" th:action="@{/commitpage/refresh}">
                     <input type="submit" value="Refresh"  class="main-btn"/>
                 </form>
             </div>
             <div class="panel-body" id="panelb">
                 <ul class="list-group" id="myul">
+                    <th:block th:each="change : ${changes}">
                     <li class="list-group-item">
                         <div class="checkbox">
                             <input type="checkbox" id="checkbox" />
-                            <label for="checkbox">
+                            <label for="checkbox" th:text="${change}">
                                 List group item heading
                             </label>
                         </div>
                     </li>
+                    </th:block>
                 </ul>
             </div>
             <div class="panel-footer">

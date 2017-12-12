@@ -1,9 +1,6 @@
 package com.service.gitServise;
 
-import org.eclipse.jgit.api.CheckoutCommand;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PushCommand;
-import org.eclipse.jgit.api.Status;
+import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -11,11 +8,11 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -107,7 +104,7 @@ public class GitServiceImpl implements GitService {
                     || !status.getChanged().isEmpty()
                     || !status.getModified().isEmpty()
                     ||  status.hasUncommittedChanges()
-                    || !status.getUntracked().isEmpty()) {
+                    || !status.getUncommittedChanges().isEmpty()){
                 CheckoutCommand checkout = git.checkout();
                 checkout.setName(branch).call();
                 git.commit().setMessage(message).call();
@@ -187,6 +184,21 @@ public class GitServiceImpl implements GitService {
 //    public Set<String> getStatus(Git git) {
 //        return null;
 //    }
+
+    public Set<String> getStatus(String path){
+
+        try(Git git = Git.open(new File(path))){
+            StatusCommand statusCommand = git.status();
+            Status status = statusCommand.call();
+
+            Set<String> changes = status.getUncommittedChanges();
+            return changes;
+
+        } catch (IOException | GitAPIException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 }

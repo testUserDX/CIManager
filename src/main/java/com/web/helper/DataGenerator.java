@@ -28,14 +28,14 @@ public class DataGenerator {
         User user = new User("Test name", "test login", "111", "111@111.com");
         userDao.add(user);
 
-        Project project = new Project("testProject-1", "https://github.com/andreytsykh/DxRepo");
-        project.setGitLogin("andreytsykh");
-        project.setGitPasword("blcksbbth1324");
+        Project project = new Project("testProject-1", "");
+        project.setGitLogin("");
+        project.setGitPasword("");
         Project project2 = new Project("testProject-2", "git-2-url");
         projectDao.add(project);
         projectDao.add(project2);
 
-        Org org = new Org("login1", "password1", "branch1", "type1", project);
+        Org org = new Org("login1", "password1", "master", "type1", project);
         Org org2 = new Org("login2", "password2", "branch2", "type1", project2);
         orgDao.add(org);
         orgDao.add(org2);

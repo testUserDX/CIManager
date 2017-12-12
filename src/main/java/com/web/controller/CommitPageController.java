@@ -5,6 +5,7 @@ import com.model.Org;
 import com.model.Project;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
+import com.service.gitServise.GitService;
 import com.service.userService.UserFlowService;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -31,11 +33,18 @@ public class CommitPageController {
     @Autowired
     UserFlowService userFlowService;
 
+    @Autowired
+    GitService gitService;
+
     private String path = "C:\\Users\\new\\Desktop\\Новая папка\\tmp";
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.GET)
     public String commit(@RequestParam(value = "projid",required = false) Long projid, Model model,  HttpSession session){
 
+        gitService.addFiles(".",path);
+        Set<String> changes = gitService.getStatus(path);
+
+        model.addAttribute("changes",changes);
         model.addAttribute("cmessage",new CommitMessage());
         session.setAttribute("projid",projid);
 
@@ -53,7 +62,7 @@ public class CommitPageController {
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.POST)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void getMessage(@ModelAttribute("cmessage") CommitMessage message, Model model, HttpSession session){
+    public String getMessage(@ModelAttribute("cmessage") CommitMessage message, Model model, HttpSession session){
 
         Long projid = (Long)session.getAttribute("projid");
 
@@ -62,12 +71,18 @@ public class CommitPageController {
         Project project = projectDao.find(projid);
         CredentialsProvider credentials = new UsernamePasswordCredentialsProvider(project.getGitLogin(),project.getGitPasword());
 
+
         try {
-            userFlowService.commitAll(message.getMessage(),path,"master",credentials);
+            userFlowService.commitAll(message.getMessage(),path,userOrg.get(0).getBranchName(),credentials);
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
-
-
+        return "redirect: /commitpage?projid="+session.getAttribute("projid");
     }
+
+//    @RequestMapping(value = "/commitpage/refresh")
+//    public String refresh(HttpSession session){
+//        gitService.addFiles(".",path);
+//        return "redirect: /commitpage?projid="+session.getAttribute("projid");
+//    }
 }

@@ -23,6 +23,8 @@ public interface GitService {
     public void createBrunch(String name);
 
     public boolean pushToRemote(String path, String branch, CredentialsProvider credentials);
+
+    public Set<String> getStatus(String path);
 //
 //    public boolean removeFileFromRepo(List<String> fileString);
 //

@@ -14,7 +14,7 @@ public class OrgDaoImpl extends HibernateDao<Org, Long> implements OrgDao {
 
     @Override
     public List<Org> getOrgByUserAndProject(Long projectId, String email) {
-        String projectString = "from Org o join o.userList u" +
+        String projectString = "select o from Org o join o.userList u" +
                 " where o.projectId=:projectId and u.id in (SELECT u.id from User where u.email =:email)";
 
         Query projectQuery = currentSession().createQuery(projectString);

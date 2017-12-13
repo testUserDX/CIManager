@@ -3,6 +3,7 @@ package com.web.controller;
 import com.data.CommitMessage;
 import com.model.Org;
 import com.model.Project;
+import com.service.FilesTools;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.gitServise.GitService;
@@ -36,28 +37,36 @@ public class CommitPageController {
     @Autowired
     GitService gitService;
 
-    private String path = "C:\\Users\\new\\Desktop\\Новая папка\\tmp";
+    @Autowired
+    FilesTools filesTools;
+
+    private String path = "C:\\Users\\new\\Desktop\\Новая папка";
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.GET)
-    public String commit(@RequestParam(value = "projid",required = false) Long projid, Model model,  HttpSession session){
+    public String commit(@RequestParam(value = "projid",required = true) Long projid, Model model,  HttpSession session){
 
-        gitService.addFiles(".",path);
-        Set<String> changes = gitService.getStatus(path);
+        String userEmail = (String)session.getAttribute("userEmail");
 
-        model.addAttribute("changes",changes);
-        model.addAttribute("cmessage",new CommitMessage());
-        session.setAttribute("projid",projid);
+        if(!(userEmail == null)){
 
-        Project project = projectDao.find(projid);
+            model.addAttribute("cmessage",new CommitMessage());
+            session.setAttribute("projid",projid);
 
+            Project project = projectDao.find(projid);
 
-        File gitSource = new File(path+"\\.git");
-        boolean isRepoExist;
-        isRepoExist = gitSource.exists();
-        if(!isRepoExist){
-            userFlowService.cloneRemoteRopository(project.getGitUrl(),"C:\\Users\\new\\Desktop\\Новая папка");
+            File gitSource = new File(path+"\\"+userEmail+projid+"\\.git");
+            boolean isRepoExist;
+            isRepoExist = gitSource.exists();
+            if(!isRepoExist){
+                userFlowService.cloneRemoteRopository(projid,userEmail,project.getGitUrl(),"C:\\Users\\new\\Desktop\\Новая папка");
+            }
+            Set<String> changes = gitService.getStatus(path+"\\"+userEmail+projid);
+
+            model.addAttribute("changes",changes);
+            return "commitpage";
+        }else{
+            return "redirect: /loginpage";
         }
-        return "commitpage";
     }
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.POST)
@@ -65,24 +74,28 @@ public class CommitPageController {
     public String getMessage(@ModelAttribute("cmessage") CommitMessage message, Model model, HttpSession session){
 
         Long projid = (Long)session.getAttribute("projid");
-
+        String userEmail = (String)session.getAttribute("userEmail");
         List<Org> userOrg =  orgDao.getOrgByUserAndProject(projid,(String)session.getAttribute("userEmail"));
 
         Project project = projectDao.find(projid);
         CredentialsProvider credentials = new UsernamePasswordCredentialsProvider(project.getGitLogin(),project.getGitPasword());
-
-
         try {
-            userFlowService.commitAll(message.getMessage(),path,userOrg.get(0).getBranchName(),credentials);
+            boolean result = userFlowService.commitAll(message.getMessage(),path+"\\"+userEmail+projid,userOrg.get(0).getBranchName(),credentials);
+            if(result){
+                filesTools.removeGitFolder(path+"\\"+userEmail+projid);
+            }
+
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
         return "redirect: /commitpage?projid="+session.getAttribute("projid");
     }
 
-//    @RequestMapping(value = "/commitpage/refresh")
-//    public String refresh(HttpSession session){
-//        gitService.addFiles(".",path);
-//        return "redirect: /commitpage?projid="+session.getAttribute("projid");
-//    }
+    @RequestMapping(value = "/commitpage/refresh")
+    public String refresh(HttpSession session){
+        Long projid = (Long)session.getAttribute("projid");
+        String userEmail = (String)session.getAttribute("userEmail");
+        gitService.addFiles(".",path+"\\"+userEmail+projid);
+        return "redirect: /commitpage?projid="+projid;
+    }
 }

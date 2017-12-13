@@ -61,15 +61,6 @@ public class GitServiceImpl implements GitService {
         }
     }
 
-//    private Git getLocalRepository() {
-//        try {
-//            git = Git.open(new File(localRepositoryPath));
-//        } catch (IOException e) {
-//            System.out.println("Repository does not exist");
-//        }
-//        return git;
-//    }
-
     @Override
     public void addFiles(String pattern,String path) {
         try (Git git = Git.open(new File(path))) {
@@ -100,11 +91,7 @@ public class GitServiceImpl implements GitService {
     public boolean commitJob(String message,String path, String branch) {
         try(Git git = Git.open(new File(path))) {
             Status status  = git.status().call();
-            if (!status.getAdded().isEmpty() && !message.isEmpty()
-                    || !status.getChanged().isEmpty()
-                    || !status.getModified().isEmpty()
-                    ||  status.hasUncommittedChanges()
-                    || !status.getUncommittedChanges().isEmpty()){
+            if (!status.getAdded().isEmpty() && status.hasUncommittedChanges() && !message.isEmpty()){
                 CheckoutCommand checkout = git.checkout();
                 checkout.setName(branch).call();
                 git.commit().setMessage(message).call();
@@ -146,6 +133,7 @@ public class GitServiceImpl implements GitService {
         return false;
 
     }
+
 
     public List<DiffEntry> getFilesInDiff(String path,String branch){
 

@@ -1,6 +1,7 @@
 package com.service.gitServise;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
 
 import java.util.List;
@@ -8,23 +9,28 @@ import java.util.Set;
 
 public interface GitService {
 
-    public Git createAndInitLocalRepository(String localRepositoryPath);
+    Git createAndInitLocalRepository(String localRepositoryPath);
 
-    public Git openRepository(String localRepositoryPath);
+    Git openRepository(String localRepositoryPath);
 
-    public Git cloneRepository(String url, String path);
+    Git cloneRepository(String url, String path);
 
-    public void addFiles(String pattern,String path);
+    void addFiles(String pattern, String path);
 
-    public boolean addFiles(List<String> filesList);
+    boolean addFiles(List<String> filesList);
 
-    public boolean commitJob(String message,String path, String branch);
+    boolean commitJob(String message, String path, String branch);
 
-    public void createBrunch(String name);
+    void createBrunch(String name);
 
-    public boolean pushToRemote(String path, String branch, CredentialsProvider credentials);
+    boolean pushToRemote(String path, String branch, CredentialsProvider credentials);
 
-    public Set<String> getStatus(String path);
+    Set<String> getStatus(String path);
+
+    List<DiffEntry> getFilesInDiff(String path, String branch);
+
+
+
 //
 //    public boolean removeFileFromRepo(List<String> fileString);
 //

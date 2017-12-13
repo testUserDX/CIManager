@@ -28,9 +28,9 @@ public class DataGenerator {
         User user = new User("Test name", "test login", "111", "111@111.com");
         userDao.add(user);
 
-        Project project = new Project("testProject-1", "");
-        project.setGitLogin("");
-        project.setGitPasword("");
+        Project project = new Project("testProject-1", "https://github.com/testandreytsykh/ciamanager.git");
+        project.setGitLogin("testandreytsykh");
+        project.setGitPasword("ciamanager1");
         Project project2 = new Project("testProject-2", "git-2-url");
         projectDao.add(project);
         projectDao.add(project2);

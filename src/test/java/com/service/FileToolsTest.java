@@ -32,7 +32,7 @@ public class FileToolsTest extends AbstractJUnit4SpringContextTests {
         File newDirectory = new File(path + "/" + folderName);
         assertTrue(newDirectory.exists());
 
-        filesTools.removeGitFolder(path, folderName);
+        filesTools.removeGitFolder(path);
         assertFalse(newDirectory.exists());
     }
 }

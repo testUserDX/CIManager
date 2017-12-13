@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 
 public interface UserFlowService {
 
-   public Git cloneRemoteRopository(String url, String path);
+   Git cloneRemoteRopository(Long projid, String userEmail, String url, String path);
 
-   public boolean commitAll(String message,String path, String branch,CredentialsProvider credentials) throws GitAPIException;
+   boolean commitAll(String message, String path, String branch, CredentialsProvider credentials) throws GitAPIException;
 
-   public String getPath();
 
-   public void setPath(String path);
 
 }

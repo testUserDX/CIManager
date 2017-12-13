@@ -29,23 +29,15 @@ public class UserFlowServiceImpl implements UserFlowService {
     @Autowired
     FilesTools filesTools;
 
-    private String path;
+
+
 
     @Override
-    public String getPath() {
-        return path;
-    }
+    public Git cloneRemoteRopository(Long projid ,String userEmail,String url, String path) {
 
-    @Override
-    public void setPath(String path) {
-        this.path = path;
-    }
+        String foldername = userEmail+projid;
+        String repoPath = filesTools.createFolder(path,foldername);
 
-    @Override
-    public Git cloneRemoteRopository(String url, String path) {
-
-        String repoPath = filesTools.createFolder(path,"tmp");
-        this.path =repoPath;
         Git git = gitService.cloneRepository(url,repoPath);
 
         try {

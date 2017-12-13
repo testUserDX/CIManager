@@ -138,6 +138,8 @@ public class GitServiceImpl implements GitService {
     public List<DiffEntry> getFilesInDiff(String path,String branch){
 
         try(Git git = Git.open(new File(path))){
+            CheckoutCommand checkout = git.checkout();
+            checkout.setName(branch).call();
             ObjectId head = git.getRepository().resolve("HEAD^{tree}");
             ObjectId oldHead = git.getRepository().resolve("HEAD~1^{tree}");
 
@@ -156,7 +158,7 @@ public class GitServiceImpl implements GitService {
             } catch (GitAPIException e) {
                 e.printStackTrace();
             }
-        }catch (IOException e) {
+        }catch (IOException | GitAPIException e) {
             e.printStackTrace();
         }
 

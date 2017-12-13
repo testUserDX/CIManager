@@ -9,6 +9,7 @@ import com.service.daoService.ProjectDao;
 import com.service.gitServise.GitService;
 import com.service.userService.UserFlowService;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,11 @@ public class CommitPageController {
         Long projid = (Long)session.getAttribute("projid");
         String userEmail = (String)session.getAttribute("userEmail");
         gitService.addFiles(".",path+"\\"+userEmail+projid);
+        List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
+        for (DiffEntry entry : result){
+            System.out.println(entry.toString());
+        }
+
         return "redirect: /commitpage?projid="+projid;
     }
 }

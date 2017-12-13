@@ -18,14 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "org")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Org.findAll", query = "SELECT o FROM Org o")
-    , @NamedQuery(name = "Org.findById", query = "SELECT o FROM Org o WHERE o.id = :id")
-    , @NamedQuery(name = "Org.findByLogin", query = "SELECT o FROM Org o WHERE o.login = :login")
-    , @NamedQuery(name = "Org.findByPassword", query = "SELECT o FROM Org o WHERE o.password = :password")
-    , @NamedQuery(name = "Org.findByIsProduction", query = "SELECT o FROM Org o WHERE o.isProduction = :isProduction")
-    , @NamedQuery(name = "Org.findByBranchName", query = "SELECT o FROM Org o WHERE o.branchName = :branchName")
-    , @NamedQuery(name = "Org.findByBranchType", query = "SELECT o FROM Org o WHERE o.branchType = :branchType")})
+
 public class Org implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +27,9 @@ public class Org implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Basic(optional = false)
+    @Column(name = "orgLink")
+    private String orgLink;
     @Basic(optional = false)
     @Column(name = "login")
     private String login;
@@ -45,9 +41,7 @@ public class Org implements Serializable {
     @Basic(optional = false)
     @Column(name = "branch_name")
     private String branchName;
-    @Basic(optional = false)
-    @Column(name = "branch_type")
-    private String branchType;
+
     @JoinTable(name = "user_has_org", joinColumns = {
         @JoinColumn(name = "Org_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "User_id", referencedColumnName = "id")})
@@ -64,20 +58,27 @@ public class Org implements Serializable {
         this.id = id;
     }
 
-    public Org(Long id, String login, String password, String branchName, String branchType) {
+    public Org(Long id, String login, String password, String branchName) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.branchName = branchName;
-        this.branchType = branchType;
     }
 
-    public Org(String login, String password, String branchName, String branchType, Project projectId) {
+    public Org(String login, String password, String branchName, String orgLink, Project projectId) {
         this.login = login;
         this.password = password;
         this.branchName = branchName;
-        this.branchType = branchType;
         this.projectId = projectId;
+        this.orgLink = orgLink;
+    }
+
+    public String getOrgLink() {
+        return orgLink;
+    }
+
+    public void setOrgLink(String orgLink) {
+        this.orgLink = orgLink;
     }
 
     public Long getId() {
@@ -120,14 +121,6 @@ public class Org implements Serializable {
         this.branchName = branchName;
     }
 
-    public String getBranchType() {
-        return branchType;
-    }
-
-    public void setBranchType(String branchType) {
-        this.branchType = branchType;
-    }
-
     @XmlTransient
     public List<User> getUserList() {
         return userList;
@@ -144,7 +137,6 @@ public class Org implements Serializable {
     public void setProjectId(Project projectId) {
         this.projectId = projectId;
     }
-
 
     @Override
     public String toString() {

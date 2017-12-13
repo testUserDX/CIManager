@@ -1,0 +1,127 @@
+<!--<div th:replace="fragments/header :: header"></div>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/homecss.css" rel="stylesheet" th:href="@{/css/homecss.css}">
+    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../css/projects.css" rel="stylesheet" th:href="@{/css/projects.css}">
+    <link href="../../css/projects.css" rel="stylesheet" th:href="@{/css/projects.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-inverse bs-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a id="homeid" href="#">Homepage <span class="sr-only">(current)</span></a></li>
+                </ul>
+                <form class="navbar-form navbar-left form-horizontal" role="search">
+                    <div class="input-group">
+                        <input type="text" class="search-box" placeholder="Search">
+                        <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            Account
+                            <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image"/>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Log out</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <form method="post" th:action="@{/projects}" th:object="${project}">
+            <div class="row">
+                <div class="col-6">
+                    <h3 style="margin-bottom: 25px; text-align: center;">Project information</h3>
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required
+                               th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Git-url</label>
+                        <input type="text" class="form-control" id="Git-url" name="Git-url" placeholder="Git-url"
+                               required
+                               th:field="*{gitUrl}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Git-login</label>
+                        <input type="text" class="form-control" id="Git-login" name="Git-login"
+                               placeholder="Git-login"
+                               required th:field="*{gitLogin}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Git-password</label>
+                        <input type="text" class="form-control" id="Git-password" name="Git-password"
+                               placeholder="Git-password" required th:field="*{gitPasword}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Project decription</label>
+                        <input type="text" class="form-control" id="Project-decription" name="Project-decription"
+                               placeholder="Project description" required th:field="*{description}">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h3 style="margin-bottom: 25px; text-align: center;">full sandbox information</h3>
+
+                    <div class="form-group">
+                        <label class="control-label">Org link</label>
+                        <input type="text" class="form-control" id="org-link" name="name" placeholder="full SB link"
+                               required
+                               th:field="*{orgList[0].orgLink}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Login</label>
+                        <input type="text" class="form-control" id="login" name="name" placeholder="Login" required
+                               th:field="*{orgList[0].login}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Git-url</label>
+                        <input type="text" class="form-control" id="Git-url" name="Git-url" placeholder="Org login"
+                               required
+                               th:field="*{orgList[0].password}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label">Git branch name</label>
+                        <input type="text" class="form-control" id="Git-branch-name" name="Git barancj name"
+                               placeholder="Git branch name"
+                               required th:field="*{orgList[0].branchName}">
+                    </div>
+
+                    <div class="funkyradio-info">
+                        <input type="checkbox" name="checkbox" id="checkbox6" checked th:field="*{orgList[0].isProduction}">
+                        <label>is production org</label>
+                    </div>
+
+
+                </div>
+            </div>
+            <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save project</button>
+        </form>
+    </div>
+
+
+    <div th:replace="fragments/footer :: header"></div>

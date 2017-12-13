@@ -35,8 +35,8 @@ public class DataGenerator {
         projectDao.add(project);
         projectDao.add(project2);
 
-        Org org = new Org("login1", "password1", "master", "type1", project);
-        Org org2 = new Org("login2", "password2", "branch2", "type1", project2);
+        Org org = new Org("login1", "password1", "master", "link",  project);
+        Org org2 = new Org("login2", "password2", "branch2", "link",project2);
         orgDao.add(org);
         orgDao.add(org2);
 

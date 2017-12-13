@@ -1,0 +1,50 @@
+
+<div th:fragment="header">
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/homecss.css" rel="stylesheet" th:href="@{/css/homecss.css}">
+        <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+        <link href="../../css/projects.css" rel="stylesheet" th:href="@{/css/projects.css}">
+
+        <script type="text/javascript" src="../../../js/project.js"></script>
+    </head>
+    <body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-inverse bs-dark">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a id="homeid" href="#">Homepage <span class="sr-only">(current)</span></a></li>
+                    </ul>
+                    <form class="navbar-form navbar-left form-horizontal" role="search">
+                        <div class="input-group">
+                            <input type="text" class="search-box" placeholder="Search">
+                            <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                Account
+                                <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image"/>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Log out</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>

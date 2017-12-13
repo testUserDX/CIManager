@@ -48,9 +48,9 @@ public class OrgDaoTest extends DomainTestBase {
         Project project2 = new Project("test-2", "git-2");
         projectDao.add(project2);
 
-        Org org = new Org("login1", "password1", "branch1", "type1", project);
+        Org org = new Org("login1", "password1", "branch1", "link", project);
         orgDao.add(org);
-        Org org2 = new Org("login2", "password2", "branch2", "type2", project2);
+        Org org2 = new Org("login2", "password2", "branch2", "link", project2);
         orgDao.add(org2);
 
         org.setUserList(Arrays.asList(user));
@@ -79,9 +79,9 @@ public class OrgDaoTest extends DomainTestBase {
         Project project2 = new Project("test", "git-2");
         projectDao.add(project2);
 
-        Org org = new Org("login1", "password1", "branch1", "type1", project);
+        Org org = new Org("login1", "password1", "branch1",  "link", project);
         orgDao.add(org);
-        Org org2 = new Org("login2", "password2", "branch2", "type2", project2);
+        Org org2 = new Org("login2", "password2", "branch2",  "link", project2);
         orgDao.add(org2);
 
         org.setUserList(Arrays.asList(user));
@@ -108,9 +108,9 @@ public class OrgDaoTest extends DomainTestBase {
         Project project2 = new Project("test", "git-2");
         projectDao.add(project2);
 
-        Org org = new Org("login1", "password1", "branch1", "type1", project);
+        Org org = new Org("login1", "password1", "branch1", "link", project);
         orgDao.add(org);
-        Org org2 = new Org("login2", "password2", "branch2", "type2", project2);
+        Org org2 = new Org("login2", "password2", "branch2",  "link",project2);
         orgDao.add(org2);
 
         org.setUserList(Arrays.asList(user));

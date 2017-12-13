@@ -27,6 +27,7 @@ public class WebAppConfig  extends WebMvcConfigurerAdapter implements Applicatio
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
         resourceHandlerRegistry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        resourceHandlerRegistry.addResourceHandler("/js/**").addResourceLocations("/js/");
         resourceHandlerRegistry.addResourceHandler("/images/**").addResourceLocations("/images/");
         resourceHandlerRegistry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 

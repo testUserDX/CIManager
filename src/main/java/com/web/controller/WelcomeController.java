@@ -29,11 +29,13 @@ public class WelcomeController {
     public String redirectToLogin(HttpSession session) {
         if(session.getAttribute("userEmail") == null){
             return "redirect:/loginpage";
-        }else if(session.getAttribute("role") == "admin"){
+        }else if(session.getAttribute("role") =="admin"){
             return "redirect:/adminprojectlist";
-        }else if(session.getAttribute("role") == "user"){
+        }else if(session.getAttribute("role") =="user"){
             return "redirect:/homepage";
         }
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
@@ -46,7 +48,6 @@ public class WelcomeController {
         if(userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())){
             request.getSession().setAttribute("userEmail", userCredentials.getEmail());
             request.getSession().setAttribute("role" ,userCredentials.getRole());
-            return "redirect:/";
         }
         return "redirect:/";
     }

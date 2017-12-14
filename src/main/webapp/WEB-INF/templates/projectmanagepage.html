@@ -48,15 +48,6 @@
     <div class="container-fluid">
         <img src="board.svg" id="projimg"/>
         <h1 id ="projname">CI Project</h1>
-        <form class ="picklist" th:action="">
-            <select name="projects" id="pick">
-                <th:block th:each="project:${projects}">
-                    <option th:value="${project}" th:text="${project.name}">< /option>
-                </th:block>
-
-            </select>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
 
         <div class="row">
             <div class="col-md-6">
@@ -70,7 +61,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-hover" id="task-table">
+                    <table class="table table-hover">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -106,7 +97,7 @@
 							</span>
                         </div>
                     </div>
-                    <table class="table table-hover" id="task-table">
+                    <table class="table table-hover">
                         <thead>
                         <tr>
                             <th>#</th>

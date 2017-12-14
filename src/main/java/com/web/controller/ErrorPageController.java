@@ -12,12 +12,12 @@ import java.util.List;
 public class ErrorPageController {
 
     @RequestMapping("/error")
-    public String showProjectList(Model model, String message) {
+    public String showError(Model model, String message) {
         if (message == null || message == "") {
             model.addAttribute("error", "Unknown error");
         } else {
             model.addAttribute("error", message);
         }
-        return "errorpage";
+        return "errors/errorpage";
     }
 }

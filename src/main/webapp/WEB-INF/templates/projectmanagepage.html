@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
+    <link href="../../css/projecteditstyle.css" rel="stylesheet" th:href="@{/css/projecteditstyle.css}" >
+
+</head>
+<body>
+<div class = "container-fluid">
+    <nav class="navbar navbar-inverse bs-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a id = "homeid" th:href="@{/homepage}" >Homepage <span class="sr-only">(current)</span></a></li>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left form-horizontal" role="search">
+                    <div class="input-group">
+                        <input type="text" class="search-box" placeholder="Search">
+                        <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Account
+                            <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image" />
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Log out</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <img src="board.svg" id="projimg"/>
+        <h1 id ="projname">CI Project</h1>
+        <form class ="picklist" th:action="">
+            <select name="projects" id="pick">
+                <th:block th:each="project:${projects}">
+                    <option th:value="${project}" th:text="${project.name}">< /option>
+                </th:block>
+
+            </select>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Orgs</h3>
+                        <div class="pull-right">
+							<span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
+								<i class="glyphicon glyphicon-filter"></i>
+							</span>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover" id="task-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Org link</th>
+                            <th>Branch</th>
+                            <th>User</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="project : ${userProjects}">
+                            <tr>
+
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.name}"></div></a></td>
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.description}"></div></a></td>
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div  th:text="${project.gitUrl}"></div></a></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <form class="">
+                    <button type="submit" class="btn">Create new org</button>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Users on project</h3>
+                        <div class="pull-right">
+							<span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
+								<i class="glyphicon glyphicon-filter"></i>
+							</span>
+                        </div>
+                    </div>
+                    <table class="table table-hover" id="task-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="project : ${userProjects}">
+                            <tr>
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.name}"></div></a></td>
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.description}"></div></a></td>
+                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div  th:text="${project.gitUrl}"></div></a></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <form class="adduser">
+                    <button type="submit" class="btn">Add user to project</button>
+                </form>
+                <form class="edituser">
+                    <button type="submit" class="btn">Edit users on project</button>
+                </form>
+            </div>
+        </div>
+        <div class="role">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

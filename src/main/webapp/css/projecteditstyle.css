@@ -1,0 +1,42 @@
+.row{
+    margin-top:40px;
+    padding: 0 10px;
+}
+.clickable{
+    cursor: pointer;
+}
+
+.panel-heading div {
+    margin-top: -18px;
+    font-size: 15px;
+}
+.panel-heading div span{
+    margin-left:5px;
+}
+.panel-body{
+    display: none;
+}
+.adduser , .edituser{
+    display: inline-block;
+}
+#projimg{
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+}
+#projname{
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.picklist{
+    margin-left: 20px;
+    display: inline-block;
+}
+
+#pick{
+    height: 35px;
+    width: 120px;
+    border-radius: 7px;
+    border-color: #00a491;
+}

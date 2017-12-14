@@ -1,6 +1,6 @@
 
 .panelwrapper{
-    height: 85vh;
+    height: 90vh;
 }
 
 .panel.panel-primary{
@@ -15,6 +15,11 @@
 #panelb{
     min-width: 100%;
 
+}
+.panel-footer{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
 
 .panel .glyphicon, .list-group-item .glyphicon {

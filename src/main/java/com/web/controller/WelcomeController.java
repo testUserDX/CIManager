@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class WelcomeController {
@@ -25,8 +26,14 @@ public class WelcomeController {
     private UserDao userDao;
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String redirectToLogin() {
-        return "redirect:/loginpage";
+    public String redirectToLogin(HttpSession session) {
+        if(session.getAttribute("userEmail") == null){
+            return "redirect:/loginpage";
+        }else if(session.getAttribute("role") == "admin"){
+            return "redirect:/adminprojectlist";
+        }else if(session.getAttribute("role") == "user"){
+            return "redirect:/homepage";
+        }
     }
 
     @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
@@ -38,7 +45,8 @@ public class WelcomeController {
     public String verifyUser(@ModelAttribute UserCredentials userCredentials, HttpServletRequest request) {
         if(userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())){
             request.getSession().setAttribute("userEmail", userCredentials.getEmail());
-            return "redirect:/homepage";
+            request.getSession().setAttribute("role" ,userCredentials.getRole());
+            return "redirect:/";
         }
         return "redirect:/";
     }
@@ -48,6 +56,7 @@ public class WelcomeController {
         UserCredentials  userCredentials = new UserCredentials();
         userCredentials.setEmail("111@111.com");
         userCredentials.setPassword("111");
+        userCredentials.setRole("admin");
         return userCredentials;
     }
 

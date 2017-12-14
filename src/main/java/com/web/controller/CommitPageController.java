@@ -89,8 +89,10 @@ public class CommitPageController {
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
-        return "redirect: /commitpage?projid="+session.getAttribute("projid");
+//        return "redirect: /commitpage?projid="+session.getAttribute("projid");
+        return "redirect: /homepage";
     }
+
 
     @RequestMapping(value = "/commitpage/refresh")
     public String refresh(HttpSession session){

@@ -31,12 +31,12 @@ public class CreateOrgController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String createAndAddOrgToProject(Model model) {
-        model.addAttribute("projects", projectDao.getAllProjects());
-        model.addAttribute("org", new Org());
-        return "asd";
-    }
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String createAndAddOrgToProject(Model model) {
+//        model.addAttribute("projects", projectDao.getAllProjects());
+//        model.addAttribute("org", new Org());
+//        return "asd";
+//    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String addNewProject(@ModelAttribute("project") Project project, @ModelAttribute("org") Org org, HttpSession session) {

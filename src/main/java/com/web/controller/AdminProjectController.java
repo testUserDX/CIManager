@@ -37,13 +37,15 @@ public class AdminProjectController {
 
         session.setAttribute("projid",projid);
 
-        Project project = projectDao.find(projid);
+        Project project = projectDao.findFullProject(projid);
         model.addAttribute("project",project);
 
 //        List<Org> orgs = project.getOrgList();
 //        model.addAttribute("projectOrgs",orgs);
 
         System.out.println(project.getOrgList().size() +"==============================================");
+        System.out.println(project.getOrgList().get(0).getUserList().size() +"==============================================");
+
 
         List<User> users = projectDao.usersProjectListByProjectName(project.getName());
         model.addAttribute("projectUsers",users);

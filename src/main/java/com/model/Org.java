@@ -6,6 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,11 +43,11 @@ public class Org implements Serializable {
     @Column(name = "branch_name")
     private String branchName;
 
+    @ManyToMany
     @JoinTable(name = "user_has_org", joinColumns = {
         @JoinColumn(name = "Org_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "User_id", referencedColumnName = "id")})
-    @ManyToMany
-    private List<User> userList;
+    private List<User> userList= new ArrayList<>();
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Project projectId;

@@ -1,6 +1,5 @@
 DELETE from user_has_org;
-DELETE FROM user;
-
-DELETE FROM org;
-delete from role;
-DELETE from project;
+DELETE FROM User;
+DELETE FROM Org;
+delete from Role;
+DELETE from Project;

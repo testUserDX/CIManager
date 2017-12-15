@@ -1,9 +1,11 @@
 package com.service.daoService.serviseDaoImpl;
 
+import com.model.Org;
 import com.model.Project;
 import com.model.User;
 import com.service.daoService.ProjectDao;
 import com.service.daoService.generalDaoService.HibernateDao;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -41,10 +43,22 @@ public class ProjectDaoImpl extends HibernateDao<Project, Long> implements Proje
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        String projectString = "select p from Project p";
-        Query projectQuery = currentSession().createQuery(projectString);
-        List<Project> projectList = projectQuery.list();
-        return projectList;
+    public Project findFullProject(Long key) {
+        Project project = find(key);
+            if (!project.getOrgList().isEmpty()) {
+                for(Org orgItem : project.getOrgList()){
+                    Hibernate.initialize(orgItem.getUserList());
+                }
+            }
+
+        return project;
     }
+
+//    @Override
+//    public List<Project> getAllProjects() {
+//        String projectString = "select p from Project p";
+//        Query projectQuery = currentSession().createQuery(projectString);
+//        List<Project> projectList = projectQuery.list();
+//        return projectList;
+//    }
 }

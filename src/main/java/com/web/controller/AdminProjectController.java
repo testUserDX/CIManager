@@ -10,6 +10,7 @@ import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class AdminProjectController {
 
 
     @RequestMapping(value = "/projectmanagepage" , method = RequestMethod.GET)
-    public String showData(@RequestParam("projid") Long projid, Model model, HttpSession session){
+    public String showData(@RequestParam(value = "projid" ,required = false) Long projid, Model model, HttpSession session){
 
         session.setAttribute("projid",projid);
 
@@ -46,7 +47,13 @@ public class AdminProjectController {
 
         List<User> users = projectDao.usersProjectListByProjectName(project.getName());
         model.addAttribute("projectUsers",users);
+        model.addAttribute("org",new Org());
 
         return "projectmanagepage";
+    }
+
+    @RequestMapping(value = "/projectmanagepage",method = RequestMethod.POST)
+    public void createOrg(@ModelAttribute("org") Org org){
+
     }
 }

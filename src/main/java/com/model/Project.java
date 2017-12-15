@@ -46,7 +46,7 @@ public class Project implements Serializable {
     private String gitPasword;
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId", fetch = FetchType.EAGER)
     private List<Org> orgList;
 
     public Project() {

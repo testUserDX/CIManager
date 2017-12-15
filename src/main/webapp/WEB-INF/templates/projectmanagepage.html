@@ -7,6 +7,8 @@
     <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
     <link href="../../css/projecteditstyle.css" rel="stylesheet" th:href="@{/css/projecteditstyle.css}" >
+    <link href="../../css/popupstyle.css" rel="stylesheet" th:href="@{/css/popupstyle.css}" >
+
 
 </head>
 <body>
@@ -73,16 +75,17 @@
                         <tbody>
                         <th:block th:each="org : ${project.orgList}">
                             <tr>
+                                <td> <div th:text="${org.id}"></div></td>
                                 <td> <div th:text="${org.orgLink}"></div></td>
                                 <td> <div th:text="${org.branchName}"></div></td>
-                                <td> <div th:text="${org.userList[0]}"></div></td>
+                                <!--<td> <div th:text="${org.userList[0]}"></div></td>-->
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
                 </div>
                 <form>
-                    <button type="submit" class="btn">Create new org</button>
+                    <button type="button" class="btn" id ="show-org-popup">Create new org</button>
                 </form>
             </div>
 
@@ -108,6 +111,7 @@
                         <tbody>
                         <th:block th:each="user : ${projectUsers}">
                             <tr>
+                                <td> <div th:text="${user.id}"></div></td>
                                 <td> <div th:text="${user.name}"></div></td>
                                 <td> <div th:text="${user.email}"></div></td>
                                 <td> <div th:text="${user.roleId}"></div></td>
@@ -126,5 +130,129 @@
         </div>
     </div>
 </div>
+
+<div id="prompt-form-container">
+    <form role="form" id="prompt-form" class="contact-form" th:action="@{/projectmanagepage}" th:object="${org}" method="post">
+        <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Your Name</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="cols-sm-2 control-label">Your Email</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="username" class="cols-sm-2 control-label">Username</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="cols-sm-2 control-label">Password</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+        </div>
+        <div class="login-register">
+            <a href="index.php">Login</a>
+        </div>
+
+    </form>
+</div>
+
+<script th:inline="javascript">
+
+    //==============================POPUP===========================================
+    function showCover() {
+        var coverDiv = document.createElement('div');
+        coverDiv.id = 'cover-div';
+        document.body.appendChild(coverDiv);
+    }
+
+    function hideCover() {
+        document.body.removeChild(document.getElementById('cover-div'));
+    }
+
+    function showPrompt() {
+        showCover();
+        var form = document.getElementById('prompt-form');
+        var container = document.getElementById('prompt-form-container');
+
+        function complete() {
+            hideCover();
+            container.style.display = 'none';
+            document.onkeydown = null;
+        }
+
+
+        document.getElementById("close").onclick= function() {
+            complete(null);
+        };
+
+        document.onkeydown = function(e) {
+            if (e.keyCode == 27) { // escape
+                complete(null);
+            }
+        };
+
+        var lastElem = form.elements[form.elements.length - 1];
+        var firstElem = form.elements[0];
+
+        lastElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && !e.shiftKey) {
+                firstElem.focus();
+                return false;
+            }
+        };
+
+        firstElem.onkeydown = function(e) {
+            if (e.keyCode == 9 && e.shiftKey) {
+                lastElem.focus();
+                return false;
+            }
+        };
+
+
+        container.style.display = 'block';
+        form.elements.text.focus();
+    }
+
+    document.getElementById('show-org-popup').onclick = function() {
+        showPrompt();
+    };
+</script>
 </body>
 </html>

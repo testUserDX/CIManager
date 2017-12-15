@@ -33,7 +33,7 @@ public class WelcomeController {
         } else {
             switch ((String) session.getAttribute("role")) {
                 case ROLE_ADMIN:
-                    return "redirect:/projects/adminListProject";
+                    return "redirect:/homepage";
                 case ROLE_USER:
                     return "redirect:/homepage";
                 default:

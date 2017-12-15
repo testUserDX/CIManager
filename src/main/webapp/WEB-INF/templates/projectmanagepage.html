@@ -46,8 +46,8 @@
     </nav>
 
     <div class="container-fluid">
-        <img src="board.svg" id="projimg"/>
-        <h1 id ="projname">CI Project</h1>
+        <img src="../../images/board.svg" id="projimg"/>
+        <h1 id ="projname" th:text="${project.name}"></h1>
 
         <div class="row">
             <div class="col-md-6">
@@ -71,18 +71,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="project : ${userProjects}">
+                        <th:block th:each="org : ${project.orgList}">
                             <tr>
-
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.name}"></div></a></td>
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.description}"></div></a></td>
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div  th:text="${project.gitUrl}"></div></a></td>
+                                <td> <div th:text="${org.orgLink}"></div></td>
+                                <td> <div th:text="${org.branchName}"></div></td>
+                                <td> <div th:text="${org.userList[0]}"></div></td>
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
                 </div>
-                <form class="">
+                <form>
                     <button type="submit" class="btn">Create new org</button>
                 </form>
             </div>
@@ -107,11 +106,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="project : ${userProjects}">
+                        <th:block th:each="user : ${projectUsers}">
                             <tr>
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.name}"></div></a></td>
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div th:text="${project.description}"></div></a></td>
-                                <td>   <a th:href="@{/commitpage(projid = ${project.id})}"><div  th:text="${project.gitUrl}"></div></a></td>
+                                <td> <div th:text="${user.name}"></div></td>
+                                <td> <div th:text="${user.email}"></div></td>
+                                <td> <div th:text="${user.roleId}"></div></td>
                             </tr>
                         </th:block>
                         </tbody>
@@ -124,9 +123,6 @@
                     <button type="submit" class="btn">Edit users on project</button>
                 </form>
             </div>
-        </div>
-        <div class="role">
-
         </div>
     </div>
 </div>

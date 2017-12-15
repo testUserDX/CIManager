@@ -47,7 +47,6 @@ public class CommitPageController {
     public String commit(@RequestParam(value = "projid",required = true) Long projid, Model model,  HttpSession session){
 
         String userEmail = (String)session.getAttribute("userEmail");
-
         if(!(userEmail == null)){
 
             model.addAttribute("cmessage",new CommitMessage());

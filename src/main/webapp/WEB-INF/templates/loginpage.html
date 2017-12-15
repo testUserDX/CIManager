@@ -57,6 +57,7 @@
             <form class="form-signin" method="post" action = "/loginpage.html" th:action="@{/loginpage.html}" th:object ="${credentials}">
                 <span id="reauth-email" class="reauth-email"></span>
                     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus th:field ="*{email}">
+                    <input type="text" id="inputEmail1" class="form-control" placeholder="Role" required autofocus th:field ="*{role}">
                     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required th:field ="*{password}">
                 <div id="remember" class="checkbox">
                     <label>

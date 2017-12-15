@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/links :: links"></head>
+
+<!--<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/homecss.css" rel="stylesheet" th:href="@{/css/homecss.css}">
+    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../css/projects.css" rel="stylesheet" th:href="@{/css/projects.css}">
+    <link href="../../css/projects.css" rel="stylesheet" th:href="@{/css/projects.css}">
+</head>-->
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+    <div class="container">
+        <form method="post" th:action="@{/projects}" th:object="${project}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div th:replace="fragments/inputForms :: projectForm"></div>
+                </div>
+                <div class="col-md-6">
+                    <div th:replace="fragments/inputForms :: sandboxForm"></div>
+                    <div class="funkyradio-info">
+                        <input type="checkbox" name="checkbox"  checked th:field="*{orgList[0].isProduction}">
+                        <label>is production org</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save project</button>
+        </form>
+    </div>
+
+</body>
+</html>

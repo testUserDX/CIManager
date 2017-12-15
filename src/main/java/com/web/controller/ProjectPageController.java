@@ -40,17 +40,23 @@ public class ProjectPageController {
         Org org = new Org();
         Project project = new Project();
         project.setOrgList(Arrays.asList(org));
-        return new ModelAndView("projects/newProjectPage", "project", project);
+        return new ModelAndView("projects/new", "project", project);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String addNewProject(@ModelAttribute("project") Project project, HttpSession session) {
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        if(userEmail.isEmpty() || userEmail==null){
+            return "redirect: /error";
+        }
+
         Org org = project.getOrgList().get(0);
         Project project1 = project;
         project1.setOrgList(null);
 
         projectDao.add(project1);
-        User user = userDao.getUserByEmil((String) session.getAttribute("userEmail"));
+        User user = userDao.getUserByEmil(userEmail);
         org.setUserList(Arrays.asList(user));
         org.setProjectId(project1);
          orgDao.add(org);

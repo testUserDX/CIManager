@@ -33,7 +33,6 @@
 
 <div  th:fragment="sandboxForm">
     <h3 style="margin-bottom: 25px; text-align: center;">Sandbox information</h3>
-
     <div class="form-group">
         <label class="control-label">Org link</label>
         <input type="text" class="form-control" name="name" placeholder="full SB link"
@@ -47,18 +46,14 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label">Git-url</label>
-        <input type="text" class="form-control" name="Git-url" placeholder="Org login"
-               required
-               th:field="*{orgList[0].password}">
+        <label class="control-label">Password</label>
+        <input type="text" class="form-control" name="Password" placeholder="Password"
+               required th:field="*{orgList[0].password}">
     </div>
 
-
-    <div class="form-group">
-        <label class="control-label">Git branch name</label>
-        <input type="text" class="form-control"  name="Git barancj name"
-               placeholder="Git branch name"
-               required th:field="*{orgList[0].branchName}">
-    </div>
-
+    <!--<div class="form-group">-->
+        <!--<label class="control-label">Git branch name</label>-->
+        <!--<input type="text" class="form-control"  name="Git baranch name"-->
+               <!--placeholder="Git branch name" required th:field="*{orgList[0].branchName}">-->
+    <!--</div>-->
 </div>

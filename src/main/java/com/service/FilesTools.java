@@ -24,7 +24,6 @@ public class FilesTools {
         }
     }
 
-
     public void removeGitFolder(String path) {
         try {
             FileUtils.forceDelete(new File(path));

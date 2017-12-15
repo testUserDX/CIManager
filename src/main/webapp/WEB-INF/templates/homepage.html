@@ -51,55 +51,37 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Git</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-
-                <a href="projects?new">Create new project</a>
+                <div th:switch="${session.role}" class="col-md-3">
+                    <a th:case="'admin'" href="projects?new" class="btn btn-primary btn-lg btn-block btn-huge"
+                       style="width: 160px; font-size: medium">Create new project</a>
+                </div>
 
                 <th:block th:each="project : ${userProjects}">
                     <tr>
-
-                        <td><a th:href="@{/commitpage(projid = ${project.id})}">
+                        <td>
                             <div th:text="${project.name}"></div>
-                        </a></td>
-                        <td><a th:href="@{/commitpage(projid = ${project.id})}">
-                            <div th:text="${project.description}"></div>
-                        </a></td>
-                        <td><a th:href="@{/commitpage(projid = ${project.id})}">
-                            <div th:text="${project.gitUrl}"></div>
-                        </a></td>
-
-                        <div th:switch="${session.role}">
-
-                            <td th:case="'admin'">
-                                <a th:href="@{/projectmanagepage(projid = ${project.id})}">
-                                    Edit project
-                                </a>
-                            </td>
-                            <td th:case="'user'">
-                                <a th:href="@{/commitpage(projid = ${project.id})}">
-                                    view project
-                                </a>
-                            </td>
-
-                        </div>
-
-                        <td>
-                        <td>
-                            <a th:case="'admin'"> Edit project</a>
-                            <a th:case="'user'"> user</a>
                         </td>
-
-
+                        <td>
+                            <div th:text="${project.description}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${project.gitUrl}"></div>
+                        </td>
+                        <td th:switch="${session.role}">
+                            <a th:case="'admin'" th:href="@{/projectmanagepage(projid = ${project.id})}">Edit
+                                project </a>
+                            <a th:case="'user'" th:href="@{/commitpage(projid = ${project.id})}">View project</a>
+                        </td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

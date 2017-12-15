@@ -19,6 +19,7 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("projects")
 public class ProjectPageController {
+    public static final String MASTER_BRANCH ="master";
 
     @Autowired
     private ProjectDao projectDao;
@@ -59,6 +60,8 @@ public class ProjectPageController {
         User user = userDao.getUserByEmil(userEmail);
         org.setUserList(Arrays.asList(user));
         org.setProjectId(project1);
+        org.setBranchName(MASTER_BRANCH);
+        org.setIsProduction(true);
          orgDao.add(org);
         return "redirect:/projects?list";
     }

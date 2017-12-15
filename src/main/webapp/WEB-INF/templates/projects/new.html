@@ -15,23 +15,19 @@
 
 <div th:replace="fragments/header :: header"></div>
 
-    <div class="container">
-        <form method="post" th:action="@{/projects}" th:object="${project}">
-            <div class="row">
-                <div class="col-md-6">
-                    <div th:replace="fragments/inputForms :: projectForm"></div>
-                </div>
-                <div class="col-md-6">
-                    <div th:replace="fragments/inputForms :: sandboxForm"></div>
-                    <div class="funkyradio-info">
-                        <input type="checkbox" name="checkbox"  checked th:field="*{orgList[0].isProduction}">
-                        <label>is production org</label>
-                    </div>
-                </div>
+<div class="container">
+    <form method="post" th:action="@{/projects}" th:object="${project}">
+        <div class="row">
+            <div class="col-md-6">
+                <div th:replace="fragments/inputForms :: projectForm"></div>
             </div>
-            <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save project</button>
-        </form>
-    </div>
+            <div class="col-md-6">
+                <div th:replace="fragments/inputForms :: sandboxForm"></div>
+            </div>
+        </div>
+        <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save project</button>
+    </form>
+</div>
 
 </body>
 </html>

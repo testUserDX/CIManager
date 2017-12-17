@@ -46,4 +46,12 @@ public class CreateOrgController {
         orgDao.add(org);
         return "redirect:/projects?list";
     }
+
+    @RequestMapping(params = "edit", method = RequestMethod.GET)
+    public String editOrg(@ModelAttribute("org") Org org, HttpSession session) {
+        User user = userDao.getUserByEmil((String) session.getAttribute("userEmail"));
+        org.setUserList(Arrays.asList(user));
+        orgDao.add(org);
+        return "";
+    }
 }

@@ -22,4 +22,10 @@ public class HomePageController {
         model.addAttribute("userProjects", projectList);
         return "homepage";
     }
+
+    @RequestMapping("/logout")
+    public String logout(Model model, HttpSession session) {
+        session.invalidate();
+        return "loginpage";
+    }
 }

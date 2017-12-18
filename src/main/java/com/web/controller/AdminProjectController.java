@@ -55,7 +55,13 @@ public class AdminProjectController {
     }
 
     @RequestMapping(value = "/projectmanagepage",method = RequestMethod.POST)
-    public void createOrg(@ModelAttribute("org") Org org){
+    public String createOrg(@ModelAttribute("org") Org org, HttpSession session){
+
+
+        org.setProjectId(projectDao.findFullProject((Long)session.getAttribute("projid")));
+        orgDao.add(org);
+        return "redirect: /projectmanagepage?projid="+session.getAttribute("projid");
+
 
     }
 }

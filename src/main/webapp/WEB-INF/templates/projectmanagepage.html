@@ -7,7 +7,7 @@
     <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
     <link href="../../css/projecteditstyle.css" rel="stylesheet" th:href="@{/css/projecteditstyle.css}" >
-    <link href="../../css/popupstyle.css" rel="stylesheet" th:href="@{/css/popupstyle.css}" >
+    <link href="../../css/createorgstyle.css" rel="stylesheet" th:href="@{/css/createorgstyle.css}" >
 
 
 </head>
@@ -132,68 +132,35 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" class="contact-form" th:action="@{/projectmanagepage}" th:object="${org}" method="post">
+    <form role="form" id="prompt-form" class="contact-form">
+        <input  id="close" name="exit" type="image" src="../../images/close_red.png">
+        <h3 id = "texthead">Create new org</h3>
         <div class="form-group">
-            <label for="name" class="cols-sm-2 control-label">Your Name</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
-                </div>
-            </div>
+            <label class="control-label">Org link</label>
+            <input type="text" class="form-control" name="name" placeholder="Salesforce org link"
+                  >
         </div>
-
         <div class="form-group">
-            <label for="email" class="cols-sm-2 control-label">Your Email</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
-                </div>
-            </div>
+            <label class="control-label">Login</label>
+            <input type="text" class="form-control"  name="name" placeholder="Login" required
+                   >
         </div>
 
         <div class="form-group">
-            <label for="username" class="cols-sm-2 control-label">Username</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
-                </div>
-            </div>
+            <label class="control-label">Password</label>
+            <input type="text" class="form-control" name="Password" placeholder="Password"
+                   required >
         </div>
-
         <div class="form-group">
-            <label for="password" class="cols-sm-2 control-label">Password</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
-                </div>
-            </div>
+            <label class="control-label">Branch name</label>
+            <input type="text" class="form-control" name="BranchName" placeholder="Branch name"
+                   required>
         </div>
-
-        <div class="form-group">
-            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group ">
-            <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
-        </div>
-        <div class="login-register">
-            <a href="index.php">Login</a>
-        </div>
-
+        <button type="submit" class="btn main-btn pull-right">Save</button>
     </form>
 </div>
 
-<script th:inline="javascript">
+<script>
 
     //==============================POPUP===========================================
     function showCover() {

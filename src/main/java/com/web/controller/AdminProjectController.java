@@ -40,8 +40,8 @@ public class AdminProjectController {
         Project project = projectDao.findFullProject(projid);
         model.addAttribute("project",project);
 
-//        List<Org> orgs = project.getOrgList();
-//        model.addAttribute("projectOrgs",orgs);
+        List<Org> orgs = project.getOrgList();
+        model.addAttribute("projectOrgs",orgs);
 
         System.out.println(project.getOrgList().size() +"==============================================");
         System.out.println(project.getOrgList().get(0).getUserList().size() +"==============================================");

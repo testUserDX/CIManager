@@ -53,7 +53,7 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "userList")
     private List<Org> orgList;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Role roleId;
 
     public User() {

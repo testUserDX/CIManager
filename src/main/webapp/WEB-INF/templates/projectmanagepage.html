@@ -78,7 +78,13 @@
                                 <td> <div th:text="${org.id}"></div></td>
                                 <td> <div th:text="${org.orgLink}"></div></td>
                                 <td> <div th:text="${org.branchName}"></div></td>
-                                <!--<td> <div th:text="${org.userList[0]}"></div></td>-->
+                                <td>
+                                    <th:block th:each="user : ${org.userList}">
+                                        <p th:text="${user.name} "></p>
+
+                                    </th:block>
+                                </td>
+
                             </tr>
                         </th:block>
                         </tbody>
@@ -114,7 +120,7 @@
                                 <td> <div th:text="${user.id}"></div></td>
                                 <td> <div th:text="${user.name}"></div></td>
                                 <td> <div th:text="${user.email}"></div></td>
-                                <td> <div th:text="${user.roleId}"></div></td>
+                                <td> <div th:text="${user.roleId.roleName}"></div></td>
                             </tr>
                         </th:block>
                         </tbody>

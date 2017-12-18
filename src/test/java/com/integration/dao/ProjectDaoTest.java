@@ -143,6 +143,23 @@ public class ProjectDaoTest extends DomainTestBase {
         assertEquals(1, testUserList.size());
     }
 
+    @Test
+    public void testFullFindProject(){
+        User user = simpleUser();
+        userDao.add(user);
+
+        Project project  = new Project("test-1", "git-1");
+        projectDao.add(project);
+
+        Org org = new Org("login1","password1", "branch1",  "link", project );
+        orgDao.add( org);
+        org.setUserList(Arrays.asList(user));
+        orgDao.update(org);
+
+
+        Project project1 = projectDao.findFullProject(project.getId());
+        assertEquals(1, project1.getOrgList().get(0).getUserList().size());
+    }
 
     private User simpleUser(){
         Role role = new Role("test-role");

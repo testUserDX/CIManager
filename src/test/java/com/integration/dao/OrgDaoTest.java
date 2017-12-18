@@ -61,7 +61,7 @@ public class OrgDaoTest extends DomainTestBase {
         List<Org> orgList = orgDao.getOrgByUserAndProject(project.getId(), "test@test.com");
         assertEquals(1, orgList.size());
         //TODO uncomment this method
-//        assertEquals(org, orgList.get(0));
+        assertEquals(org, orgList.get(0));
     }
 
     @Test

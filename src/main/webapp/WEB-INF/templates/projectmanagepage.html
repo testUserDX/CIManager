@@ -81,9 +81,17 @@
                                 <td>
                                     <th:block th:each="user : ${org.userList}">
                                         <p th:text="${user.name} "></p>
-
                                     </th:block>
                                 </td>
+                                <td>
+                                    <a  id="editOrg" th:href="@{/projectmanagepage(orgid = ${org.id})}">Edit
+                                        Org </a>
+                                </td>
+                                <td>
+                                    <a  id="deleteOrg" th:href="@{'/projectmanagepage/'+${org.id}}">Delete
+                                        Org </a>
+                                </td>
+
                             </tr>
                         </th:block>
                         </tbody>
@@ -142,20 +150,20 @@
         <h3 id = "texthead">Create new org</h3>
         <div class="form-group">
             <label class="control-label">Org link</label>
-            <input type="text" class="form-control" name="name" placeholder="Salesforce org link" th:field ="*{orgLink}">
+            <input type="text" class="form-control" name="name" placeholder="Salesforce org link" th:text="*{orgLink}" th:field ="*{orgLink}">
         </div>
         <div class="form-group">
             <label class="control-label">Login</label>
-            <input type="text" class="form-control"  name="name" placeholder="Login" required th:field ="*{login}">
+            <input type="text" class="form-control"  name="name" placeholder="Login" required th:text="*{login}" th:field ="*{login}">
         </div>
 
         <div class="form-group">
             <label class="control-label">Password</label>
-            <input type="text" class="form-control" name="Password" placeholder="Password" required th:field ="*{password}">
+            <input type="text" class="form-control" name="Password" placeholder="Password" required th:text="*{password}" th:field ="*{password}">
         </div>
         <div class="form-group">
             <label class="control-label">Branch name</label>
-            <input type="text" class="form-control" name="BranchName" placeholder="Branch name" required th:field ="*{branchName}">
+            <input type="text" class="form-control" name="BranchName" placeholder="Branch name" required th:text="*{branchName}" th:field ="*{branchName}">
         </div>
         <button type="submit" class="btn main-btn pull-right">Save</button>
     </form>
@@ -221,6 +229,7 @@
     document.getElementById('show-org-popup').onclick = function() {
         showPrompt();
     };
+
 </script>
 </body>
 </html>

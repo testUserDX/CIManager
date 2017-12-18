@@ -137,29 +137,25 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" class="contact-form">
+    <form role="form" id="prompt-form" class="contact-form" th:action="@{/projectmanagepage}" th:object="${org}" method="post">
         <input  id="close" name="exit" type="image" src="../../images/close_red.png">
         <h3 id = "texthead">Create new org</h3>
         <div class="form-group">
             <label class="control-label">Org link</label>
-            <input type="text" class="form-control" name="name" placeholder="Salesforce org link"
-                  >
+            <input type="text" class="form-control" name="name" placeholder="Salesforce org link" th:field ="*{orgLink}">
         </div>
         <div class="form-group">
             <label class="control-label">Login</label>
-            <input type="text" class="form-control"  name="name" placeholder="Login" required
-                   >
+            <input type="text" class="form-control"  name="name" placeholder="Login" required th:field ="*{login}">
         </div>
 
         <div class="form-group">
             <label class="control-label">Password</label>
-            <input type="text" class="form-control" name="Password" placeholder="Password"
-                   required >
+            <input type="text" class="form-control" name="Password" placeholder="Password" required th:field ="*{password}">
         </div>
         <div class="form-group">
             <label class="control-label">Branch name</label>
-            <input type="text" class="form-control" name="BranchName" placeholder="Branch name"
-                   required>
+            <input type="text" class="form-control" name="BranchName" placeholder="Branch name" required th:field ="*{branchName}">
         </div>
         <button type="submit" class="btn main-btn pull-right">Save</button>
     </form>

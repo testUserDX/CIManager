@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -58,7 +59,9 @@ public class AdminProjectController {
     public String createOrg(@ModelAttribute("org") Org org, HttpSession session){
 
 
-        org.setProjectId(projectDao.findFullProject((Long)session.getAttribute("projid")));
+
+        org.setProjectId(projectDao.find((Long)session.getAttribute("projid")));
+        org.setUserList(Arrays.asList(userDao.getUserByEmil((String)session.getAttribute("userEmail"))));
         orgDao.add(org);
         return "redirect: /projectmanagepage?projid="+session.getAttribute("projid");
 

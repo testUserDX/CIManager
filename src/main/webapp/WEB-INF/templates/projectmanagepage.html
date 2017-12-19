@@ -84,8 +84,7 @@
                                     </th:block>
                                 </td>
                                 <td>
-                                    <a  id="editOrg" th:href="@{/projectmanagepage(orgid = ${org.id})}">Edit
-                                        Org </a>
+                                    <a  id="editOrg" th:href="@{'/orgs/'+${org.id}}">Edit org </a>
                                 </td>
                                 <td>
                                     <a  id="deleteOrg" th:href="@{'/projectmanagepage/'+${org.id}}">Delete

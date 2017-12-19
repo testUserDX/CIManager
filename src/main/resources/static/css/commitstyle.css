@@ -1,0 +1,51 @@
+
+.panelwrapper{
+    height: 90vh;
+}
+
+.panel.panel-primary{
+    position: relative;
+    height: 100%;
+}
+.panel-body {
+    overflow-y: scroll;
+    position: relative;
+    height: 80%;
+}
+#panelb{
+    min-width: 100%;
+
+}
+.panel-footer{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.panel .glyphicon, .list-group-item .glyphicon {
+    margin-right: 5px;
+}
+
+.panel-body .radio, .checkbox {
+    display: inline-block;
+    margin: 0px;
+}
+
+.panel-body input[type=checkbox]:checked + label {
+    text-decoration: none;
+    color: rgb(128, 144, 160);
+}
+
+.list-group-item:hover, a.list-group-item:focus {
+    text-decoration: none;
+    background-color: rgb(245, 245, 245);
+}
+
+.list-group {
+    margin-bottom: 0px;
+}
+.refresh-form{
+    display: inline-block;
+    position: relative;
+    left:80%;
+}

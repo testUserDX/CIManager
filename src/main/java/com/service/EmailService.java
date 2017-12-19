@@ -1,4 +1,4 @@
-package com.web.controller;
+package com.service;
 
 import java.util.Properties;
 
@@ -10,7 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class UtilityController {
+public class EmailService {
 
     public Boolean sendEmail(String email) {
         Properties props = new Properties();

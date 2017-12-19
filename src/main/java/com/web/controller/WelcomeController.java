@@ -66,7 +66,7 @@ public class WelcomeController {
         return userCredentials;
     }
 
-    @PostConstruct
+ //   @PostConstruct
     public void generateTestData() {
         dataGenerator.genareteDomain();
     }

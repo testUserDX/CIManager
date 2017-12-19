@@ -3,6 +3,7 @@ package com.service.daoService.serviseDaoImpl;
 import com.model.Project;
 import com.service.daoService.generalDaoService.HibernateDao;
 import com.model.Org;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import com.service.daoService.OrgDao;
@@ -43,5 +44,13 @@ public class OrgDaoImpl extends HibernateDao<Org, Long> implements OrgDao {
         orgQuery.setParameter("username", username);
         List<Org> orgList = orgQuery.list();
         return orgList;
+    }
+
+    @Override
+    public Org getFullOrg(Long key) {
+        Org org = find(key);
+        Hibernate.initialize(org.getUserList());
+
+        return org;
     }
 }

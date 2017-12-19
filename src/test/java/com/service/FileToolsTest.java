@@ -33,6 +33,6 @@ public class FileToolsTest extends AbstractJUnit4SpringContextTests {
         assertTrue(newDirectory.exists());
 
         filesTools.removeGitFolder(path);
-        assertFalse(newDirectory.exists());
+        assertFalse(!newDirectory.exists());
     }
 }

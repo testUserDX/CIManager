@@ -3,6 +3,7 @@
     height: 90vh;
 }
 
+
 .panel.panel-primary{
     position: relative;
     height: 100%;
@@ -11,6 +12,11 @@
     overflow-y: scroll;
     position: relative;
     height: 80%;
+}
+.panel-primary > .panel-heading {
+    color: #333;
+    background-color: #5fc6bc;
+    border-color:#5fc6bc;
 }
 #panelb{
     min-width: 100%;

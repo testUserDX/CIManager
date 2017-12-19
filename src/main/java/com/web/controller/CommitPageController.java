@@ -13,7 +13,10 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +46,8 @@ public class CommitPageController {
 
     private String path = "C:\\Users\\new\\Desktop\\Новая папка";
 
-    @RequestMapping(value = "/commitpage", method = RequestMethod.GET)
-    public String commit(@RequestParam(value = "projid",required = true) Long projid, Model model,  HttpSession session){
+    @RequestMapping(value = "/commitpage",params ="projid")
+    public String commit(@RequestParam(value = "projid") Long projid, Model model,  HttpSession session){
 
         String userEmail = (String)session.getAttribute("userEmail");
         if(!(userEmail == null)){
@@ -60,9 +63,7 @@ public class CommitPageController {
             if(!isRepoExist){
                 userFlowService.cloneRemoteRopository(projid,userEmail,project.getGitUrl(),"C:\\Users\\new\\Desktop\\Новая папка");
             }
-            Set<String> changes = gitService.getStatus(path+"\\"+userEmail+projid);
 
-            model.addAttribute("changes",changes);
             return "commitpage";
         }else{
             return "redirect: /loginpage";
@@ -70,7 +71,6 @@ public class CommitPageController {
     }
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String getMessage(@ModelAttribute("cmessage") CommitMessage message, Model model, HttpSession session){
 
         Long projid = (Long)session.getAttribute("projid");
@@ -84,25 +84,49 @@ public class CommitPageController {
             if(result){
                 filesTools.removeGitFolder(path+"\\"+userEmail+projid);
             }
-
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
-//        return "redirect: /commitpage?projid="+session.getAttribute("projid");
         return "redirect: /homepage";
     }
 
 
-    @RequestMapping(value = "/commitpage/refresh")
-    public String refresh(HttpSession session){
-        Long projid = (Long)session.getAttribute("projid");
-        String userEmail = (String)session.getAttribute("userEmail");
-        gitService.addFiles(".",path+"\\"+userEmail+projid);
-        List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
-        for (DiffEntry entry : result){
-            System.out.println(entry.toString());
-        }
+    @RequestMapping(value = "/commitpage",params = "action")
+    @ResponseBody
+    public ResponseEntity<?> refresh(@RequestParam("action") int action, HttpSession session, Model model){
+        if(action == 1){
+            Long projid = (Long)session.getAttribute("projid");
+            String userEmail = (String)session.getAttribute("userEmail");
 
-        return "redirect: /commitpage?projid="+projid;
+            gitService.addFiles(".",path+"\\"+userEmail+projid);
+//            List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
+//            for (DiffEntry entry : result){
+//                System.out.println(entry.toString());
+//            }
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Set<String> changes = gitService.getStatus(path+"\\"+userEmail+projid);
+            StringBuilder responseText = new StringBuilder();
+            for(String change:changes){
+                responseText.append("<li class=\"list-group-item\">\n" +
+                        "                        <div class=\"checkbox\">\n" +
+                        "                            <input type=\"checkbox\" id=\"checkbox\" />\n" +
+                        "                            <label for=\"checkbox\">\n" +
+                        change + "\n" +
+                        "                            </label>\n" +
+                        "                        </div>\n" +
+                        "                    </li>");
+            }
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.setContentType(MediaType.TEXT_HTML);
+
+            return new ResponseEntity<>(responseText.toString(),HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+
+//        return "redirect: /commitpage?projid="+projid;
     }
 }

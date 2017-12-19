@@ -8,6 +8,9 @@
     <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
     <link href="../../css/commitstyle.css" rel="stylesheet" th:href="@{/css/commitstyle.css}" >
     <link href="../../css/popupstyle.css" rel="stylesheet" th:href="@{/css/popupstyle.css}" >
+    <link href="../../css/spinnercss.css" rel="stylesheet" th:href="@{/css/spinnercss.css}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -50,22 +53,13 @@
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-list refresh"></span>
                 <span class ="refresh">Total changes</span>
-                <form  class = "refresh-form" th:action="@{/commitpage/refresh}">
-                    <input type="submit" value="Refresh"  class="main-btn"/>
+                <form  class = "refresh-form" >
+                    <input type="button" value="Prepare metadata to commit"  class="main-btn" id="spinner-btn"/>
                 </form>
             </div>
             <div class="panel-body" id="panelb">
                 <ul class="list-group" id="myul">
-                    <th:block th:each="change : ${changes}">
-                    <li class="list-group-item">
-                        <div class="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <label for="checkbox" th:text="${change}">
-                                List group item heading
-                            </label>
-                        </div>
-                    </li>
-                    </th:block>
+
                 </ul>
             </div>
             <div class="panel-footer">
@@ -102,6 +96,10 @@
     </form>
 </div>
 
+<div id = "spinner-container">
+    <div class="loader"></div>
+</div>
+
 <script th:inline="javascript">
 
     //========================COUNTER==========================================
@@ -116,7 +114,20 @@
 
     document.getElementById("totalCount").innerHTML = "" + liNodes;
 
-//==============================POPUP===========================================
+    //========================================SPINNER============================
+    function showSpinner() {
+        showCover();
+        var container = document.getElementById('spinner-container');
+        container.style.display = 'block';
+
+    }
+    function removeSpinner() {
+        hideCover();
+        var container = document.getElementById('spinner-container');
+        container.style.display ='none';
+    }
+
+    //==============================POPUP===========================================
     function showCover() {
         var coverDiv = document.createElement('div');
         coverDiv.id = 'cover-div';
@@ -171,9 +182,31 @@
         form.elements.text.focus();
     }
 
+
     document.getElementById('show-button').onclick = function() {
         showPrompt();
     };
+
+    var response ='';
+     jQuery(document).ready(function () {
+         jQuery('#spinner-btn').click(function () {
+             jQuery.ajax({
+                 type: "GET",
+                 url: "/commitpage?action=1",
+                 beforeSend: function () {
+                     showSpinner();
+                 },
+                 success: function (data,status) {
+                     removeSpinner();
+                     jQuery("#myul").html(data);
+
+                 }
+             });
+         });
+     });
+
+
+
 </script>
 
 </body>

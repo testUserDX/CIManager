@@ -1,56 +1,57 @@
-
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
-.contact-form {
-    margin-top: 15px;
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+.feedback-input {
+    color: white;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 5px;
+    line-height: 22px;
+    background-color: transparent;
+    border: 2px solid #CC6666;
+    transition: all 0.3s;
+    padding: 13px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
 }
 
-.contact-form .textarea {
-    min-height: 100px;
-    resize: none;
+.feedback-input:focus {
+    border: 2px solid #CC4949;
 }
 
-.form-control {
-    box-shadow: none;
-    border-color: #eee;
-    height: 20px;
+textarea {
+    height: 150px;
+    line-height: 150%;
+    resize: vertical;
 }
 
-.form-control:focus {
-    box-shadow: none;
-    border-color: #00b09c;
+.popup-btn {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    width: 48%;
+    background: #CC6666;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all 0.3s;
+    margin-top: -4px;
+    font-weight: 700;
 }
 
-.form-control-feedback {
-    line-height: 50px;
+.popup-btn:hover {
+    background: #CC4949;
 }
-
-.main-btn {
-    background: #00b09c;
-    border-color: #00b09c;
-    color: #fff;
-}
-
-.main-btn:hover {
-    background: #00a491;
-    color: #fff;
-}
-
-.form-control-feedback {
-    line-height: 50px;
-    top: 0px;
-}
-
-
 
 #prompt-form {
     display: inline-block;
+    max-width: 420px;
+    margin: 50px auto;
     padding: 5px 5px 5px 7px;
-    width: 400px;
-    height: 200px;
-    border: 1px solid rgba(0, 176, 156,1);
-    border-radius: 5px;
-    background-color: rgb(144, 184, 219);
-    /*background: white url(git.png) no-repeat left 5px;*/
+    position: relative;
     vertical-align: middle;
 }
 
@@ -80,30 +81,30 @@
     z-index: 9000;
     width: 100%;
     height: 100%;
-    background-color: gray;
-    opacity: 0.3;
+    background: rgb(30,30,40);
+    opacity: 0.9;
 }
 
-#prompt-form input[name="text"] {
-    display: block;
-    margin: 5px;
-    width: 100%;
-}
-#texthead{
+/*#prompt-form input[name="text"] {*/
+/*display: block;*/
+/*margin: 5px;*/
+/*width: 100%;*/
+/*}*/
 
+#texthead {
     font-family: Montserrat;
     color: #ffffff;
     font-weight: bold;
 
     /*margin-right: 70%;*/
     /*margin-left: auto;*/
-    display: inline-block;
-    float: left;
+
 }
-#close{
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    margin: 5px;
-    float: right;
-}
+
+/*#close {*/
+/*display: inline-block;*/
+/*height: 20px;*/
+/*width: 20px;*/
+/*margin: 5px;*/
+/*float: right;*/
+/*}*/

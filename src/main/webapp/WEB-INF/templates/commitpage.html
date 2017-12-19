@@ -79,23 +79,13 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" class="contact-form" th:action="@{/commitpage}" th:object="${cmessage}" method="post">
-
-        <div id ="texthead">
-            Enter message:
-        </div>
-        <input  id="close" name="exit" type="image" src="../../images/close_red.png">
-        <div>
-            <div class="form-group">
-                <textarea class="form-control textarea" rows="1" name="text" id="Message" placeholder="Message" th:field ="*{message}" required></textarea>
-            </div>
-        </div>
-
-        <button type="submit" class="btn main-btn pull-right">Commit changes</button>
-
+    <form role="form" id="prompt-form" class="contact-form" th:action="@{/commitpage}" th:object="${cmessage}">
+        <h1 id="texthead">Enter commit message:</h1>
+        <textarea name="text" class="feedback-input" placeholder="Comment" th:field ="*{message}" required></textarea>
+        <input class="popup-btn" type="submit" value="COMMIT"/>
+        <input class="popup-btn" id="cancel-button" type="reset" value="CANCEL"/>
     </form>
 </div>
-
 <div id = "spinner-container">
     <div class="loader"></div>
 </div>
@@ -148,34 +138,6 @@
             container.style.display = 'none';
             document.onkeydown = null;
         }
-
-
-        document.getElementById("close").onclick= function() {
-            complete(null);
-        };
-
-        document.onkeydown = function(e) {
-            if (e.keyCode == 27) { // escape
-                complete(null);
-            }
-        };
-
-        var lastElem = form.elements[form.elements.length - 1];
-        var firstElem = form.elements[0];
-
-        lastElem.onkeydown = function(e) {
-            if (e.keyCode == 9 && !e.shiftKey) {
-                firstElem.focus();
-                return false;
-            }
-        };
-
-        firstElem.onkeydown = function(e) {
-            if (e.keyCode == 9 && e.shiftKey) {
-                lastElem.focus();
-                return false;
-            }
-        };
 
 
         container.style.display = 'block';

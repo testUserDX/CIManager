@@ -1,0 +1,111 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+.feedback-input {
+    color: white;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 5px;
+    line-height: 22px;
+    background-color: transparent;
+    border: 2px solid #CC6666;
+    transition: all 0.3s;
+    padding: 13px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+.feedback-input:focus {
+    border: 2px solid #0080c0;
+}
+
+textarea {
+    height: 150px;
+    line-height: 150%;
+    resize: vertical;
+}
+
+.popup-btn {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    width: 48%;
+    background: #0080c0;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all 0.3s;
+    margin-top: -4px;
+    font-weight: 700;
+}
+
+.popup-btn:hover {
+    background: #0080c0;
+}
+
+#prompt-form {
+    display: inline-block;
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 5px 5px 5px 7px;
+    position: relative;
+    vertical-align: middle;
+}
+
+#prompt-form-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+}
+
+#prompt-form-container:before {
+    display: inline-block;
+    height: 100%;
+    content: '';
+    vertical-align: middle;
+}
+
+#cover-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    width: 100%;
+    height: 100%;
+    background: rgb(30,30,40);
+    opacity: 0.9;
+}
+
+/*#prompt-form input[name="text"] {*/
+/*display: block;*/
+/*margin: 5px;*/
+/*width: 100%;*/
+/*}*/
+
+#texthead {
+    font-family: Montserrat;
+    color: #ffffff;
+    font-weight: bold;
+
+    /*margin-right: 70%;*/
+    /*margin-left: auto;*/
+    /*display: inline-block;*/
+    /*float: left;*/
+}
+
+/*#close {*/
+/*display: inline-block;*/
+/*height: 20px;*/
+/*width: 20px;*/
+/*margin: 5px;*/
+/*float: right;*/
+/*}*/

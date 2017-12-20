@@ -67,6 +67,20 @@ public class Project implements Serializable {
         this.gitUrl = gitUrl;
     }
 
+    public Project(String name, String gitUrl, String description) {
+        this.name = name;
+        this.gitUrl = gitUrl;
+        this.description = description;
+    }
+
+    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String description) {
+        this.name = name;
+        this.gitUrl = gitUrl;
+        this.gitLogin = gitLogin;
+        this.gitPasword = gitPasword;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

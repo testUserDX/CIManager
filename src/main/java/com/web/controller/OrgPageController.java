@@ -56,17 +56,19 @@ public class OrgPageController {
 
     }
 
-//    @RequestMapping(value = "/{id}/employees/add{employeeId}", method = RequestMethod.POST)
-//    public String addEmployee(@PathVariable("id") long taskId, @PathVariable("employeeId") long employeeId) {
-//
+    @RequestMapping(value = "/{id}/orgs/add{userId}", method = RequestMethod.POST)
+    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") long userId) {
+
+        Org org = orgDao.find(orgId);
+
 //        Employee employee = employeeDao.find(employeeId);
 //        Task task = taskDao.find(taskId);
 //
 //        task.addEmployee(employee);
 //        taskDao.update(task);
-//
-//        return "redirect:/tasks/" + taskId;
-//    }
+
+        return "redirect:/orgs/" + userId;
+    }
 
 
 

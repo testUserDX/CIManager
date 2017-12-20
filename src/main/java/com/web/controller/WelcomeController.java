@@ -50,7 +50,7 @@ public class WelcomeController {
     @RequestMapping(value = "/loginpage", method = RequestMethod.POST)
     public String verifyUser(@ModelAttribute UserCredentials userCredentials, HttpSession session) {
         if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
-            session.setAttribute("userEmail", userCredentials.getEmail());
+            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
             session.setAttribute("role", userCredentials.getRole());
         }
         return "redirect:/";
@@ -59,7 +59,7 @@ public class WelcomeController {
     private UserCredentials createTestUserCreds() {
         //TODO delete this method before production realise
         UserCredentials userCredentials = new UserCredentials();
-        userCredentials.setEmail("111@111.com");
+        userCredentials.setEmail("111@ctdev.com");
         userCredentials.setRole("admin");
         userCredentials.setPassword("111");
 
@@ -68,6 +68,7 @@ public class WelcomeController {
 
     @PostConstruct
     public void generateTestData() {
+        //TODO remove method in production release
         dataGenerator.genareteDomain();
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 @Controller
 public class AdminProjectController {
 
+    public static final String TITLE_PROJECT_MANAGER = "Project Manager";
 
     @Autowired
     ProjectDao projectDao;
@@ -52,7 +53,7 @@ public class AdminProjectController {
             List<User> users = projectDao.usersProjectListByProjectName(project.getName());
             model.addAttribute("projectUsers",users);
             model.addAttribute("org",new Org());
-
+        model.addAttribute("title", TITLE_PROJECT_MANAGER);
         return "projectmanagepage";
     }
 

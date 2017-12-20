@@ -6,6 +6,7 @@ import com.service.daoService.UserDao;
 import com.web.helper.DataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ public class WelcomeController {
     private static final String ROLE_ADMIN = "admin";
     private static final String ROLE_USER = "user";
     private static final String ATR_EMAIL = "userEmail";
+    public static final String TITLE_LOGIN = "Login";
 
     @Autowired
     private DataGenerator dataGenerator;
@@ -43,7 +45,8 @@ public class WelcomeController {
     }
 
     @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
-    public ModelAndView showMenu() {
+    public ModelAndView showMenu(Model model) {
+        model.addAttribute("title", TITLE_LOGIN);
         return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
     }
 

@@ -23,6 +23,8 @@ import java.util.Set;
 @RequestMapping("/orgs")
 public class OrgPageController {
 
+    public static final String TITLE_ORG_PAGE = "Orgs";
+
     @Autowired
     private ProjectDao projectDao;
 
@@ -45,6 +47,7 @@ public class OrgPageController {
             }
         }
         model.addAttribute("unassigned", unassignedUsers);
+        model.addAttribute("title", TITLE_ORG_PAGE);
         return "orgs/view";
     }
 

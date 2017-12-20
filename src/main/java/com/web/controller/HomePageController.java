@@ -12,6 +12,9 @@ import java.util.List;
 
 @Controller
 public class HomePageController {
+
+    public static final String TITLE_HOME = "Home";
+
     @Autowired
     private ProjectDao projectDao;
 
@@ -20,6 +23,7 @@ public class HomePageController {
         String userEmail = (String) session.getAttribute("userEmail");
         List<Project> projectList = projectDao.usersProjectListByEmail(userEmail);
         model.addAttribute("userProjects", projectList);
+        model.addAttribute("title", TITLE_HOME);
         return "homepage";
     }
 

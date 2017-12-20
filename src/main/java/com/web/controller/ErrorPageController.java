@@ -11,6 +11,8 @@ import java.util.List;
 @Controller
 public class ErrorPageController {
 
+    public static final String TITLE_ERROR = "Error";
+
     @RequestMapping("/error")
     public String showError(Model model, String message) {
         if (message == null || message == "") {
@@ -18,6 +20,7 @@ public class ErrorPageController {
         } else {
             model.addAttribute("error", message);
         }
+        model.addAttribute("title", TITLE_ERROR);
         return "errors/errorpage";
     }
 }

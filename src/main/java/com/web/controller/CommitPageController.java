@@ -26,6 +26,8 @@ import java.util.Set;
 @Controller
 public class CommitPageController {
 
+    public static final String TITLE_COMMIT_PAGE = "Commit";
+
     @Autowired
     OrgDao orgDao;
 
@@ -60,7 +62,7 @@ public class CommitPageController {
             if(!isRepoExist){
                 userFlowService.cloneRemoteRopository(projid,userEmail,project.getGitUrl(),"C:\\Users\\new\\Desktop\\Новая папка");
             }
-
+            model.addAttribute("title", TITLE_COMMIT_PAGE);
             return "commitpage";
         }else{
             return "redirect: /loginpage";

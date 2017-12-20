@@ -8,6 +8,7 @@ import com.service.daoService.ProjectDao;
 import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 @RequestMapping("projects")
 public class ProjectPageController {
     public static final String MASTER_BRANCH ="master";
+    public static final String TITLE_NEW_PROJECT = "New Project";
 
     @Autowired
     private ProjectDao projectDao;
@@ -37,10 +39,11 @@ public class ProjectPageController {
     }
 
     @RequestMapping(params = "new", method = RequestMethod.GET)
-    public ModelAndView createNewProject() {
+    public ModelAndView createNewProject(Model model) {
         Org org = new Org();
         Project project = new Project();
         project.setOrgList(Arrays.asList(org));
+        model.addAttribute("title", TITLE_NEW_PROJECT);
         return new ModelAndView("projects/new", "project", project);
     }
 

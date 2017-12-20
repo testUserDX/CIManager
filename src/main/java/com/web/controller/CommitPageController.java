@@ -13,10 +13,7 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,23 +68,37 @@ public class CommitPageController {
     }
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.POST)
-    public String getMessage(@ModelAttribute("cmessage") CommitMessage message, Model model, HttpSession session){
+    @ResponseBody
+    public ResponseEntity<?> getMessage(/*@ModelAttribute("cmessage") CommitMessage message, */Model model, HttpSession session, RequestEntity<String>requestEntity){
 
         Long projid = (Long)session.getAttribute("projid");
         String userEmail = (String)session.getAttribute("userEmail");
         List<Org> userOrg =  orgDao.getOrgByUserAndProject(projid,(String)session.getAttribute("userEmail"));
 
+
         Project project = projectDao.find(projid);
         CredentialsProvider credentials = new UsernamePasswordCredentialsProvider(project.getGitLogin(),project.getGitPasword());
+        boolean result =false;
         try {
-            boolean result = userFlowService.commitAll(message.getMessage(),path+"\\"+userEmail+projid,userOrg.get(0).getBranchName(),credentials);
+            result = userFlowService.commitAll(requestEntity.getBody(),path+"\\"+userEmail+projid,userOrg.get(0).getBranchName(),credentials);
             if(result){
                 filesTools.removeGitFolder(path+"\\"+userEmail+projid);
             }
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
-        return "redirect: /homepage";
+        ResponseEntity<?> responseEntity;
+        if(result){
+            responseEntity = new ResponseEntity<>("true",HttpStatus.OK);
+        }else {
+            responseEntity = new ResponseEntity<>("false",HttpStatus.OK);
+        }
+
+        System.out.println(requestEntity.getBody());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.TEXT_PLAIN);
+
+        return responseEntity;
     }
 
 
@@ -122,6 +133,8 @@ public class CommitPageController {
             }
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.setContentType(MediaType.TEXT_HTML);
+
+
 
             return new ResponseEntity<>(responseText.toString(),HttpStatus.OK);
         }

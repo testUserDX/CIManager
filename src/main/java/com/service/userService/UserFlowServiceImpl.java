@@ -51,13 +51,15 @@ public class UserFlowServiceImpl implements UserFlowService {
 
     @Override
     public boolean commitAll(String message, String path, String branch, CredentialsProvider credentials) throws GitAPIException {
+        boolean commitResult;
+        boolean pushResult;
         gitService.addFiles(".",path);
-        gitService.commitJob(message,path,branch);
-        boolean failPush = gitService.pushToRemote(path,branch,credentials);
-        if(!failPush){
-            return true;
+        commitResult = gitService.commitJob(message,path,branch);
+        if(commitResult){
+            pushResult = gitService.pushToRemote(path,branch,credentials);
+            return pushResult;
         }else{
-            return false;
+            return commitResult;
         }
     }
 

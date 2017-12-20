@@ -95,12 +95,16 @@ public class GitServiceImpl implements GitService {
                 CheckoutCommand checkout = git.checkout();
                 checkout.setName(branch).call();
                 git.commit().setMessage(message).call();
+                return true;
+            }else {
+                return false;
             }
         } catch (IOException | GitAPIException e) {
             System.err.println(e.getMessage());
             //TODO: Log4j
+            return false;
         }
-        return false;
+
     }
 
 
@@ -126,11 +130,13 @@ public class GitServiceImpl implements GitService {
             push.setCredentialsProvider(credentials);
             push.setRemote("origin");
             push.call();
+            return true;
         } catch (GitAPIException | IOException e) {
             e.printStackTrace();
+            return false;
         }
 
-        return false;
+//        return false;
 
     }
 

@@ -15,8 +15,9 @@
 }
 .panel-primary > .panel-heading {
     color: #333;
-    background-color: #5fc6bc;
-    border-color:#5fc6bc;
+    background-color: #501356;
+    border-color: #501356;
+    color: #FFFFFF;
 }
 #panelb{
     min-width: 100%;

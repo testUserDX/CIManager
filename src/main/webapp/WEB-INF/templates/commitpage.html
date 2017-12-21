@@ -8,6 +8,7 @@
     <link  rel="stylesheet" th:href="@{/css/header.css}" >
     <link  rel="stylesheet" th:href="@{/css/commitstyle.css}" >
     <link rel="stylesheet" th:href="@{/css/spinnercss.css}">
+    <link rel="stylesheet" th:href="@{/css/barstyle.css}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
@@ -51,7 +52,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-list refresh"></span>
-                <span class ="refresh">Total changes</span><p th:text="${session.test}" >Message</p>
+                <span class ="refresh">Total changes</span>
                 <form  class = "refresh-form" >
                     <input type="button" value="Prepare metadata to commit"  class="btn-success" id="spinner-btn"/>
                 </form>
@@ -85,6 +86,13 @@
 </div>
 <div id = "spinner-container">
     <div class="loader"></div>
+</div>
+<div id="progressbar-container">
+    <div id="bar-wrapper">
+        <div id="myBar" style="height:24px;width:0">
+            0%
+        </div>
+    </div>
 </div>
 
 <script th:inline="javascript">
@@ -134,14 +142,35 @@
         form.elements.text.focus();
     }
 
+    function hidePrompt(){
+        var container = document.getElementById('prompt-form-container');
+        container.style.display = 'none';
+        var form = document.getElementById('prompt-form');
+        form.elements.text = "";
+
+        hideCover();
+    }
+
+//    ========================================PROGRESS BAR===============================================
+
+    function showBar(){
+        showCover();
+        var container = document.getElementById('progressbar-container');
+        container.style.display = 'block';
+    }
+
+    function hideBar(){
+        hideCover();
+        var container = document.getElementById('progressbar-container');
+        container.style.display = 'none';
+    }
+
 
     document.getElementById('show-button').onclick = function() {
         showPrompt();
     };
     document.getElementById('cancel-button').onclick = function () {
-        var container = document.getElementById('prompt-form-container');
-        container.style.display = 'none';
-        hideCover();
+        hidePrompt();
     };
 
 
@@ -171,11 +200,9 @@
                     alert("Success commit");
                     window.location.replace("/homepage");
                 }else{
-                    removeSpinner()
+                    removeSpinner();
                     alert("Unsuccess commit");
-                    var container = document.getElementById('prompt-form-container');
-                    container.style.display = 'none';
-                    hideCover();
+                    hidePrompt();
                 }
 
             }
@@ -183,16 +210,24 @@
     }
 
 
+
+    var elem = document.getElementById("myBar");
      jQuery(document).ready(function () {
-         jQuery('#spinner-btn').click(function () {
+         jQuery('#spinner-btn').click(function (e) {
+             e.preventDefault();
              jQuery.ajax({
                  type: "GET",
                  url: "/commitpage?action=1",
                  beforeSend: function () {
-                     showSpinner();
+//                     showSpinner();
+                     showBar();
+                     frame(0,elem);
+                     setTimeout(frame,4000,20,elem);
                  },
                  success: function (data,status) {
-                     removeSpinner();
+                     frame(50,elem);
+//                     removeSpinner();
+
                      jQuery("#myul").html(data);
 
                  }
@@ -200,11 +235,28 @@
          });
      });
 
+    function frame(width,elem) {
 
+        var width = width;
+        width++;
+        elem.style.width = width + '%';
+        elem.innerHTML = width * 1  + '%';
+        if(width >= 100){
+            hideBar();
+            return;
+        }else{
+            if(width == 20){
+                return;
+            }else if(width == 50){
+//                setTimeout(frame,1000,width,elem);
+                return;
+            } else{
+                setTimeout(frame,10,width,elem);
+            }
 
+        }
 
-
-
+    }
 
 </script>
 

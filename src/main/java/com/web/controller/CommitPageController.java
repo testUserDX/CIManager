@@ -117,7 +117,7 @@ public class CommitPageController {
 //                System.out.println(entry.toString());
 //            }
             try {
-                Thread.sleep(1500);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

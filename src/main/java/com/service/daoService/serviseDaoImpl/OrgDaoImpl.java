@@ -1,6 +1,7 @@
 package com.service.daoService.serviseDaoImpl;
 
 import com.model.Project;
+import com.model.User;
 import com.service.daoService.generalDaoService.HibernateDao;
 import com.model.Org;
 import org.hibernate.Hibernate;
@@ -50,7 +51,17 @@ public class OrgDaoImpl extends HibernateDao<Org, Long> implements OrgDao {
     public Org getFullOrg(Long key) {
         Org org = find(key);
         Hibernate.initialize(org.getUserList());
-
         return org;
+    }
+
+    @Override
+    public Org getfullOrgWithUsers(Long key) {
+        Org org = find(key);
+        String userQueryString = "select u from User u join u.orgList o where  u.roleId != (select r from Role r where r.roleName='admin') and o.id =:idOrg ";
+        Query userQuery = currentSession().createQuery(userQueryString);
+        userQuery.setParameter("idOrg", key);
+        List<User> userList = userQuery.list();
+        org.setUserList(userList);
+        return  org;
     }
 }

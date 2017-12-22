@@ -69,42 +69,6 @@ public class DataGenerator {
         orgDao.add(testorg2);
         orgDao.add(testorg3);
         orgDao.add(testorg4);
-
-//
-//        userBA.setRoleId(userRole);
-//        userDao.add(userBA);
-//        User user = simpleUser();
-//
-//        userDao.add(user);
-//
-//        Project project = new Project("testProject-12", "https://github.com/testandreytsykh/ciamanager.git");
-//        project.setGitLogin();
-//        project.setGitPasword();
-////        Project project2 = new Project("testProject-2", "git-2-url");
-//        projectDao.add(project);
-////        projectDao.add(project2);
-//
-//
-////        Org org2 = new Org("login2", "password2", "branch2", "link",project2);
-//        orgDao.add(org);
-////        orgDao.add(org2);
-//
-//        org.setUserList(Arrays.asList(user, userBA));
-//        orgDao.update(org);
-////        org2.setUserList(Arrays.asList(user));
-////        orgDao.update(org2);
-//
-////        User user = simpleUser();
-////        userDao.add(user);
-////
-////        Project project  = new Project("test-1", "git-1");
-////        projectDao.add(project);
-////
-////        Org org = new Org("login1","password1", "branch1",  "link", project );
-////        orgDao.add( org);
-////        org.setUserList(Arrays.asList(user));
-////        orgDao.update(org);
-
     }
 
     public void clearDatabase() {

@@ -13,4 +13,6 @@ public interface OrgDao extends GenericDao<Org, Long> {
     public List<Org> getOrgListOfUser(String username);
 
     public Org getFullOrg(Long key);
+
+    public Org getfullOrgWithUsers(Long key);
 }

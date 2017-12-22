@@ -10,6 +10,7 @@ import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.daoService.RoleDao;
 import com.service.daoService.UserDao;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -120,5 +121,35 @@ public class OrgDaoTest extends DomainTestBase {
 
         List<Org> testOrgs = orgDao.getOrgListOfUser("test-name");
         assertEquals(2, testOrgs.size());
+    }
+
+    @Test
+    public void testGetOrgWithUser(){
+        Role adiminRole = new Role("admin");
+        Role userRole = new Role("user");
+        roleDao.add(adiminRole);
+        roleDao.add(userRole);
+
+        User userAdmin  = new User("test-name", "admin-login", "test-pass", adiminRole);
+        User userUser  = new User("test-name", "user-login", "test-pass", userRole);
+        User userUser2  = new User("test-name2", "user-login2", "test-pass", userRole);
+
+        userDao.add(userAdmin);
+        userDao.add(userUser);
+        userDao.add(userUser2);
+
+        Project project = new Project("test-1", "git-1");
+        projectDao.add(project);
+
+        Org org = new Org("login1", "password1", "branch1", "link", project);
+        org.setUserList(Arrays.asList(userAdmin));
+        orgDao.add(org);
+
+
+        Org foundedOrg = orgDao.getfullOrgWithUsers(org.getId());
+        assertEquals(0,foundedOrg.getUserList().size());
+
+
+
     }
 }

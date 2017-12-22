@@ -1,7 +1,6 @@
 package com.web.controller;
 
 import com.model.Org;
-import com.model.Project;
 import com.model.User;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
@@ -9,12 +8,10 @@ import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,64 +32,81 @@ public class OrgPageController {
     private UserDao userDao;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getOrg(@PathVariable("id") Long id, Model model){
+    public ModelAndView getOrg(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("orgs/view");
         Org org = orgDao.getFullOrg(id);
-        model.addAttribute("org",org);
-        List<User> users = userDao.list();
+
+        List<User> assignedUsers = userDao.getOrgUserWithoutAdmin(org);
+        List<User> allUsers = userDao.getAllUsersWithoutAdmins();
         Set<User> unassignedUsers = new HashSet();
 
-        for (User user: users){
-            if(!org.getUserList().contains(user)){
+        for (User user : allUsers) {
+            if (!assignedUsers.contains(user)) {
                 unassignedUsers.add(user);
             }
         }
-        model.addAttribute("unassigned", unassignedUsers);
-        model.addAttribute("title", TITLE_ORG_PAGE);
-        return "orgs/view";
+        unassignedUsers.add(new User(-1L, "-----"));
+        unassignedUsers.add(new User(-2L, "no users"));
+
+        if(assignedUsers.isEmpty()){
+            assignedUsers.add(new User(null, "no user"));
+            org.setUserList(assignedUsers);
+        }
+
+
+        modelAndView.addObject("org", org);
+        modelAndView.addObject("assigned", assignedUsers);
+        modelAndView.addObject("unassigned", unassignedUsers);
+        modelAndView.addObject("title", TITLE_ORG_PAGE);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public String updateOrg(@PathVariable("id") Long id, @ModelAttribute Org org) {
+        User orgAdmin = userDao.getOrgAdmin(new Org(id));
+        User selectedUser = org.getUserList().get(0);
+        List<User> newList = new ArrayList<>();
+        newList.add(orgAdmin);
+        if (selectedUser.getId() == -1L) {
+            List<User> userList = userDao.getOrgUserWithoutAdmin(new Org(id));
+            if (!userList.isEmpty()) {
+                newList.add(userList.get(0));
+            }
+        } else if (selectedUser.getId() != -1L && selectedUser.getId() != -2L) {
+            newList.add(selectedUser);
+        }
+
+        org.setUserList(newList);
+
+        orgDao.update(org);
+        return "redirect:/orgs/" + id;
     }
 
 
     @RequestMapping(value = "/{id}/users/del/{userId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeEmployee(@PathVariable("id") Long orgId, @PathVariable("userId") Long userId) {
-        Org org = orgDao.find(orgId);
-
+        Org org = orgDao.getFullOrg(orgId);
+        User user = userDao.find(userId);
+        List<User> userList = org.getUserList();
+        userList.remove(user);
+        org.setUserList(userList);
+        orgDao.update(org);
     }
 
-    @RequestMapping(value = "/{id}/orgs/add{userId}", method = RequestMethod.POST)
-    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") long userId) {
+    @RequestMapping(value = "/{id}/users/add/{userId}", method = RequestMethod.POST)
+    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") Long userId) {
+        Org org = orgDao.getFullOrg(orgId);
+        if (userId != null) {
+            User user = userDao.find(userId);
+            List<User> userList = org.getUserList();
+            userList.add(user);
+            org.setUserList(userList);
+            orgDao.update(org);
+        }
 
-        Org org = orgDao.find(orgId);
-
-//        Employee employee = employeeDao.find(employeeId);
-//        Task task = taskDao.find(taskId);
-//
-//        task.addEmployee(employee);
-//        taskDao.update(task);
-
-        return "redirect:/orgs/" + userId;
+        return "redirect:/orgs/" + orgId;
     }
 
-
-
-
-
-
-
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String addNewProject(@ModelAttribute("project") Project project, @ModelAttribute("org") Org org, HttpSession session) {
-//        User user = userDao.getUserByEmil((String) session.getAttribute("userEmail"));
-//        org.setUserList(Arrays.asList(user));
-//        org.setProjectId(project);
-//        orgDao.add(org);
-//        return "redirect:/projects?list";
-//    }
-//
-//    @RequestMapping(params = "edit", method = RequestMethod.GET)
-//    public String editOrg(@ModelAttribute("org") Org org, HttpSession session) {
-//        User user = userDao.getUserByEmil((String) session.getAttribute("userEmail"));
-//        org.setUserList(Arrays.asList(user));
-//        orgDao.add(org);
-//        return "";
-//    }
 }

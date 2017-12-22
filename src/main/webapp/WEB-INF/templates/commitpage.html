@@ -53,9 +53,8 @@
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-list refresh"></span>
                 <span class ="refresh">Total changes</span>
-                <form  class = "refresh-form" >
-                    <input type="button" value="Prepare metadata to commit"  class="btn-success" id="spinner-btn"/>
-                </form>
+                <button type="button" class="prepare-button" id="spinner-btn">Prepare metadata</button>
+
             </div>
             <div class="panel-body" id="panelb">
                 <ul class="list-group" id="myul">
@@ -64,12 +63,12 @@
             </div>
             <div class="panel-footer">
                 <div class="row">
-                    <div class="col-md-6">
-                        <h6>
-                            Total changes <span class="label label-info" id="totalCount">25</span></h6>
+                    <div class="changes">
+                            Total changes <span class="label label-info" id="totalCount">0</span>
                     </div>
 
-                    <input type="button" class="btn-success" value="Commit" id="show-button">
+                    <!--<input type="button" class="btn-success" value="Commit" id="show-button">-->
+                    <button type="button" class="commit-button" id="show-button">Commit</button>
                 </div>
             </div>
         </div>

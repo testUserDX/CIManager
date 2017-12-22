@@ -9,9 +9,10 @@
 }
 
 .bs-dark.navbar-inverse {
-    background: #030321;
+    background: #3F334D;
     border-color: #080808;
 }
+
 .bs-dark .navbar-img {padding:5px 6px !important;}
 .bs-dark .navbar-img img {width:40px;}
 .bs-dark .dropdown-menu {

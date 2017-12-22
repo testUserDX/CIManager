@@ -1,29 +1,35 @@
 
+
+
 .panelwrapper{
     height: 90vh;
 }
 
-
 .panel.panel-primary{
     position: relative;
     height: 100%;
+    border-color:#7D8491;
+    background-color: rgba(192, 197, 193,0.15);
+
 }
 .panel-body {
     overflow-y: scroll;
     position: relative;
     height: 80%;
-}
-.panel-primary > .panel-heading {
-    color: #333;
-    background-color: #501356;
-    border-color: #501356;
-    color: #FFFFFF;
+    border-color:#7D8491 ;
 }
 #panelb{
     min-width: 100%;
-
 }
+
+.panel-primary> .panel-heading{
+    color: #fff;
+    background-color: #7D8491;
+    border-color:#7D8491 ;
+}
+
 .panel-footer{
+    text-align: center;
     position: absolute;
     bottom: 0px;
     width: 100%;
@@ -51,8 +57,70 @@
 .list-group {
     margin-bottom: 0px;
 }
+
+
 .refresh-form{
+    width: 400px;
+    height: 25px;
     display: inline-block;
-    position: relative;
-    left:80%;
+    position: absolute;
+    right:20px;
+
 }
+.prepare-button{
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+
+    background-color:transparent ;
+    color: #ffff;
+    border: 2px solid #3F334D ;
+    outline: none;
+    padding: 2px;
+
+}
+
+.commit-button{
+    background:#3F334D;
+    color:#fff;
+    border:none;
+    position:relative;
+    /*height:40px;*/
+    /*width: 40px;*/
+    font-size:1.6em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+.commit-button:hover{
+    background:#fff;
+    color:#3F334D;
+}
+.commit-button:before,.btn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #3F334D;
+    transition:400ms ease all;
+}
+.commit-button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.commit-button:hover:before,.commit-button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+.changes{
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: small;
+    position: absolute;
+    left:5px;
+}
+

@@ -12,20 +12,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author new
  */
 @Entity
 @Table(name = "project")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Project.findAll", query = "SELECT p FROM Project p")
-    , @NamedQuery(name = "Project.findById", query = "SELECT p FROM Project p WHERE p.id = :id")
-    , @NamedQuery(name = "Project.findByName", query = "SELECT p FROM Project p WHERE p.name = :name")
-    , @NamedQuery(name = "Project.findByGitUrl", query = "SELECT p FROM Project p WHERE p.gitUrl = :gitUrl")
-    , @NamedQuery(name = "Project.findByGitLogin", query = "SELECT p FROM Project p WHERE p.gitLogin = :gitLogin")
-    , @NamedQuery(name = "Project.findByGitPasword", query = "SELECT p FROM Project p WHERE p.gitPasword = :gitPasword")
-    , @NamedQuery(name = "Project.findByDescription", query = "SELECT p FROM Project p WHERE p.description = :description")})
+        @NamedQuery(name = "Project.findAll", query = "SELECT p FROM Project p")
+        , @NamedQuery(name = "Project.findById", query = "SELECT p FROM Project p WHERE p.id = :id")
+        , @NamedQuery(name = "Project.findByName", query = "SELECT p FROM Project p WHERE p.name = :name")
+        , @NamedQuery(name = "Project.findByGitUrl", query = "SELECT p FROM Project p WHERE p.gitUrl = :gitUrl")
+        , @NamedQuery(name = "Project.findByGitLogin", query = "SELECT p FROM Project p WHERE p.gitLogin = :gitLogin")
+        , @NamedQuery(name = "Project.findByGitPasword", query = "SELECT p FROM Project p WHERE p.gitPasword = :gitPasword")
+        , @NamedQuery(name = "Project.findByDescription", query = "SELECT p FROM Project p WHERE p.description = :description")})
 public class Project implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,7 +65,7 @@ public class Project implements Serializable {
         this.folder = folder;
     }
 
-    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String description, String folder) {
+    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String folder, String description) {
         this.name = name;
         this.gitUrl = gitUrl;
         this.gitLogin = gitLogin;
@@ -164,5 +163,5 @@ public class Project implements Serializable {
     public String toString() {
         return "com.model.Project[ id=" + id + " ]";
     }
-    
+
 }

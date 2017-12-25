@@ -30,12 +30,30 @@ public class DataGenerator {
 
     public void genareteDomain() {
         clearDatabase();
+        String windowsUserName = System.getProperty("user.name");
+        System.out.println(windowsUserName);
 
 
         /* ------------- Project ----------------------------------*/
-        Project testProject = new Project("Test SF Project", "https://github.com/testandreytsykh/ciamanager.git","testandreytsykh","ciamanager1","C:/gitfolder","This test project with real salesforce org");
-        Project airportProject = new Project("Borispol Airport", "https://github.com/testUserDX/testCVorg.git","git-login","git-pass","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
-        Project novaPoshtaProject = new Project("Nova poshta", "git-login","git-pass", "https://github.com/testUserDX/testRepoForJgit.git","Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+        Project testProject = new Project("Test SF Project",
+                "https://github.com/testandreytsykh/ciamanager.git",
+                "testandreytsykh",
+                "ciamanager1",
+                "C:\\Users\\"+windowsUserName+"\\Desktop\\Новая папка",
+                "This test project with real salesforce org");
+
+        Project airportProject = new Project("Borispol Airport",
+                "https://github.com/testUserDX/testCVorg.git",
+                "git-login",
+                "git-pass",
+                "C:",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        Project novaPoshtaProject = new Project("Nova poshta",
+                "https://github.com/testUserDX/testRepoForJgit.git",
+                "D:",
+                "git-login",
+                "git-pass",
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
 
         projectDao.add(testProject);
         projectDao.add(airportProject);

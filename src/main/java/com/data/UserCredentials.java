@@ -5,6 +5,15 @@ public class UserCredentials {
     private String password;
     private String role;
 
+    public UserCredentials(){
+    }
+
+    public UserCredentials(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     public String getRole() {
         return role;
     }

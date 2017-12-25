@@ -33,9 +33,9 @@ public class DataGenerator {
 
 
         /* ------------- Project ----------------------------------*/
-        Project testProject = new Project("Test SF Project", "https://github.com/testandreytsykh/ciamanager.git","testandreytsykh","ciamanager1","This test project with real salesforce org");
-        Project airportProject = new Project("Borispol Airport", "https://github.com/testUserDX/testCVorg.git","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-        Project novaPoshtaProject = new Project("Nova poshta", "https://github.com/testUserDX/testRepoForJgit.git","Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+        Project testProject = new Project("Test SF Project", "https://github.com/testandreytsykh/ciamanager.git","testandreytsykh","ciamanager1","C:/gitfolder","This test project with real salesforce org");
+        Project airportProject = new Project("Borispol Airport", "https://github.com/testUserDX/testCVorg.git","git-login","git-pass","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        Project novaPoshtaProject = new Project("Nova poshta", "git-login","git-pass", "https://github.com/testUserDX/testRepoForJgit.git","Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
 
         projectDao.add(testProject);
         projectDao.add(airportProject);

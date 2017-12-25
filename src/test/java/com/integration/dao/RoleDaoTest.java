@@ -17,25 +17,18 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 
-public class RoleDaoTest extends DomainTestBase{
-
-    @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private UserDao userDao;
-
+public class RoleDaoTest extends DomainTestBase {
 
     @Test
-    public void testAdd(){
+    public void testAdd() {
         int size = roleDao.list().size();
-        roleDao.add(simpleRole());
-        assertTrue(size<roleDao.list().size());
+        roleDao.add(getRole());
+        assertTrue(size < roleDao.list().size());
     }
 
     @Test
-    public void testUpdate(){
-        Role role = simpleRole();
+    public void testUpdate() {
+        Role role = getRole();
         roleDao.add(role);
         int id = role.getId();
 
@@ -45,21 +38,21 @@ public class RoleDaoTest extends DomainTestBase{
     }
 
     @Test
-    public void testFind(){
-        Role role = simpleRole();
+    public void testFind() {
+        Role role = getRole();
         roleDao.add(role);
         assertEquals(role, roleDao.find(role.getId()));
     }
 
     @Test
-    public void testList(){
+    public void testList() {
         assertTrue(roleDao.list().isEmpty());
         List<Role> roleList = Arrays.asList(
                 new Role("test1"),
                 new Role("test2"),
                 new Role("test3")
         );
-        for (Role roleItem:roleList){
+        for (Role roleItem : roleList) {
             roleDao.add(roleItem);
         }
         List<Role> foundRoleList = roleDao.list();
@@ -68,8 +61,8 @@ public class RoleDaoTest extends DomainTestBase{
     }
 
     @Test
-    public void testRemove(){
-        Role role = simpleRole();
+    public void testRemove() {
+        Role role = getRole();
         roleDao.add(role);
         Integer idRole = role.getId();
         roleDao.remove(role);
@@ -77,22 +70,14 @@ public class RoleDaoTest extends DomainTestBase{
     }
 
     @Test
-    public void testRemoveRole(){
-        Role role = simpleRole();
+    public void testRemoveRole() {
+        Role role = getRole();
         roleDao.add(role);
-        User user = new User("test","login", "pass",role);
+        User user = new User("test", "login", "pass", role);
         userDao.add(user);
         assertFalse(roleDao.removeRole(role));
-
         userDao.remove(user);
-
         assertTrue(roleDao.removeRole(role));
         assertNull(roleDao.find(role.getId()));
-    }
-
-    private Role simpleRole(){
-        Role role = new Role();
-        role.setRoleName("Test");
-        return role;
     }
 }

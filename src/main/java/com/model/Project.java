@@ -46,6 +46,8 @@ public class Project implements Serializable {
     private String gitPasword;
     @Column(name = "description")
     private String description;
+    @Column(name = "folder")
+    private String folder;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId", fetch = FetchType.EAGER)
     private List<Org> orgList;
 
@@ -56,29 +58,21 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public Project(Long id, String name, String gitUrl) {
-        this.id = id;
+    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String folder) {
         this.name = name;
         this.gitUrl = gitUrl;
+        this.gitLogin = gitLogin;
+        this.gitPasword = gitPasword;
+        this.folder = folder;
     }
 
-    public Project(String name, String gitUrl) {
-        this.name = name;
-        this.gitUrl = gitUrl;
-    }
-
-    public Project(String name, String gitUrl, String description) {
-        this.name = name;
-        this.gitUrl = gitUrl;
-        this.description = description;
-    }
-
-    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String description) {
+    public Project(String name, String gitUrl, String gitLogin, String gitPasword, String description, String folder) {
         this.name = name;
         this.gitUrl = gitUrl;
         this.gitLogin = gitLogin;
         this.gitPasword = gitPasword;
         this.description = description;
+        this.folder = folder;
     }
 
     public Long getId() {
@@ -136,6 +130,14 @@ public class Project implements Serializable {
 
     public void setOrgList(List<Org> orgList) {
         this.orgList = orgList;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 
     @Override

@@ -69,7 +69,7 @@ public class WelcomeController {
         return userCredentials;
     }
 
-    @PostConstruct
+   // @PostConstruct
     public void generateTestData() {
         //TODO remove method in production release
         dataGenerator.genareteDomain();

@@ -24,42 +24,27 @@ import static org.junit.Assert.assertTrue;
 
 public class UserDaoTest extends DomainTestBase {
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private ProjectDao projectDao;
-
-    @Autowired
-    private OrgDao orgDao;
-
-
     @Test
     public void testAdd(){
         int size = userDao.list().size();
-        User user = simpleUser();
+        User user = getUser();
         userDao.add(user);
         assertTrue(size<userDao.list().size());
     }
 
     @Test
     public void testUpdate(){
-        User user = simpleUser();
+        User user = getUser();
         userDao.add(user);
-
         long userId = user.getId();
         user.setName("updated");
         userDao.update(user);
-
         assertEquals("updated", userDao.find(userId).getName());
     }
 
     @Test
     public void testFind(){
-        User user = simpleUser();
+        User user = getUser();
         userDao.add(user);
         long userId = user.getId();
         assertEquals(user, userDao.find(userId));
@@ -67,29 +52,25 @@ public class UserDaoTest extends DomainTestBase {
 
     @Test
     public void testList(){
-
         assertTrue(userDao.list().isEmpty());
-        User user1 = simpleUser();
+        User user1 = getUser();
 
-        List<User> userList = Arrays.asList(simpleUser(),
+        List<User> userList = Arrays.asList(getUser(),
                 new User("test-name-1", "test-login-1", "test-pass-1", user1.getRoleId()),
                 new User("test-name-2", "test-login-2", "test-pass-2", user1.getRoleId()),
                 new User("test-name-3", "test-login-3", "test-pass-3", user1.getRoleId())
         );
-
         for(User user:userList){
             userDao.add(user);
         }
-
         List<User> foundedList = userDao.list();
-
         assertEquals(4, foundedList.size());
         assertTrue(userList.containsAll(foundedList));
     }
 
     @Test
     public void testRemove(){
-        User user = simpleUser();
+        User user = getUser();
         userDao.add(user);
         Long idUser = user.getId();
         userDao.remove(user);
@@ -98,19 +79,11 @@ public class UserDaoTest extends DomainTestBase {
 
     @Test
     public void testVerifyUserByEmailAndPass(){
-        User user = simpleUser();
+        User user = getUser();
         user.setEmail("test@test.com");
         userDao.add(user);
-
         assertTrue(userDao.verifyUserByEmailAndPassword("test@test.com","test-pass" ));
         assertFalse(userDao.verifyUserByEmailAndPassword("fake@test.com","test-pass" ));
         assertFalse(userDao.verifyUserByEmailAndPassword("test@test.com","fake-test-pass" ));
-
-    }
-
-    private User simpleUser(){
-        Role role = new Role("test-role");
-        roleDao.add(role);
-        return new User("test-name", "test-login", "test-pass", role);
     }
 }

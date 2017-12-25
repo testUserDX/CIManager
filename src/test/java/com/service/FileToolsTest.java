@@ -15,24 +15,20 @@ import static org.junit.Assert.*;
 @WebAppConfiguration
 @ContextConfiguration(classes = WebAppConfig.class)
 public class FileToolsTest extends AbstractJUnit4SpringContextTests {
+    private static final String path= "C:";
+    private static final String folderName= "newfolderTest";
+
     @Autowired
     private FilesTools filesTools;
 
-
     @Test
     public void testCreateAndRemoveFolder() {
-        String path = "D:";
-        String folderName = "newFolderName";
         String newFullPath = filesTools.createFolder(path, folderName);
-
         assertEquals(path+"\\"+folderName, newFullPath);
-
-
         assertNotNull(filesTools.createFolder(path, folderName));
         File newDirectory = new File(path + "/" + folderName);
         assertTrue(newDirectory.exists());
-
-        filesTools.removeGitFolder(path);
-        assertFalse(!newDirectory.exists());
+        filesTools.removeGitFolder(newFullPath);
+        assertFalse(newDirectory.exists());
     }
 }

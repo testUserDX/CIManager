@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}"></title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/homecss.css}"/>
+    <span th:replace="fragments/links :: links"></span>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 
 <body>
 <div th:replace="fragments/header :: header"></div>
 
 <div class="main">
-    <!--<label th:text="${#httpSession.getAttribute('org').orgLink}"></label>-->
-
     <div class="container">
         <form method="post" th:object="${org} ">
-            <div class="row">
-                <div class="col-md-6">
                     <h3 style="margin-bottom: 25px; text-align: center;">Edit org data</h3>
                     <div class="form-group">
                         <label class="control-label">Org link</label>
                         <input type="text" class="form-control" name="name" placeholder="Salesforce org link"
                         th:field ="*{orgLink}" >
-                               <!--th:field ="${#httpSession.getAttribute('org')*orgLink}" >-->
                     </div>
                     <div class="form-group">
                         <label class="control-label">Login</label>
@@ -40,98 +32,29 @@
                         <input type="text" class="form-control" name="BranchName" placeholder="Branch name" required
                                th:field="*{branchName}">
                     </div>
-
                     <div class="form-group">
                         <label class="control-label">Current user:</label>
                         <label th:text="${assigned[0].name}"></label>
                     </div>
-
                     <div class="form-group">
                         <label class="control-label">Assign new user</label>
                         <select id="selected-emp" th:field="*{userList[0].id}" >
-
-                            <!--<option th:value="null" th:text="-&#45;&#45; none -&#45;&#45;">-->
                             <option th:each="uemp : ${unassigned}" th:value="${uemp.id}" th:text="${uemp.name}">
                             </option>
                         </select>
                     </div>
                     <input type="hidden"  th:field="*{projectId.id}"/>
-
                     <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save org</button>
         </form>
     </div>
-    <div class="col-md-6">
-        <!--<h3 style="margin-bottom: 25px; text-align: center;">Manage users</h3>-->
-        <!--<label for="users">Users:</label>-->
-        <!--<table id="users" class="user-table">-->
-            <!--<th:block th:each="user : ${assigned}">-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<label th:id="'label-'+${user.id}" th:text="${user.Name}"></label>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<form th:action="${#httpSession.getAttribute('org').id}+'/users/del/'+${user.id}" method="POST">-->
-                            <!--<input type="submit" value="Remove" th:id="'remove-'+${user.id}"/>-->
-
-                            <!--<script type="text/javascript" th:src="@{/js/jquery-1.7.1.js}"></script>-->
-                            <!--<script type="text/javascript" th:inline="javascript">-->
-                                <!--$('#remove-[[${user.id}]]').on("click", function () {-->
-                                    <!--$('#remove-[[${user.id}]]').addClass("hidden");-->
-                                    <!--$("#label-[[${user.id}]]").remove();-->
-
-                                    <!--// add to list of unassigned-->
-                                    <!--var opt = document.createElement("option");-->
-                                    <!--opt.setAttribute("value", "[[${user.id}]]");-->
-                                    <!--opt.textContent = [[${user.name}]];-->
-                                    <!--$("#selected-emp").append(opt);-->
-                                <!--});-->
-                            <!--</script>-->
-                        <!--</form>-->
-                    <!--</td>-->
-                <!--</tr>-->
-            <!--</th:block>-->
-        <!--</table>-->
-
-        <!--<label for="unassigned">Unassgined:</label>-->
-        <!--<table id="unassigned">-->
-            <!--<tr>-->
-                <!--<form method="post" id="add-form">-->
-                    <!--<td>-->
-                        <!--<select id="selected-emp">-->
-                            <!--<option th:each="uemp : ${unassigned}" th:value="${uemp.id}" th:text="${uemp.name}">-->
-                            <!--</option>-->
-                        <!--</select>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<input type="submit" value="Add" id="add-employee"/>-->
-                        <!--<script type="text/javascript" th:src="@{/js/jquery-1.7.1.js}"></script>-->
-                        <!--<script type="text/javascript" th:inline="javascript">-->
-
-                            <!--$("#add-employee").on("click", function () {-->
-                                <!--$("#selected-emp").selected().remove();-->
-                            <!--});-->
-                        <!--</script>-->
-                    <!--</td>-->
-                <!--</form>-->
-            <!--</tr>-->
-        <!--</table>-->
-
-    </div>
 </div>
-
-
-<script type="text/javascript" th:src="@{/js/jquery-1.7.1.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-
     (function () {
         // prepare default form action
         setAddAction();
-
         // handler for changing action
         $("#selected-emp").on("change", function () {
             var id = $("#selected-emp").val();
-            console.log(id);
-            alert(id);
             if(id!=null) {
                 setAddAction();
             }
@@ -143,7 +66,6 @@
         }
     })();
 </script>
-
-
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

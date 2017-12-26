@@ -12,17 +12,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("projects")
-public class ProjectPageController {
+public class ProjectController {
     public static final String MASTER_BRANCH ="master";
     public static final String TITLE_NEW_PROJECT = "New Project";
     public static final String TITLE_PROJECT_LIST = "Projects list";
+    public static final String TITLE_PROJECT_MANAGER = "Project Manager";
 
     @Autowired
     private ProjectDao projectDao;
@@ -71,5 +74,27 @@ public class ProjectPageController {
         org.setIsProduction(true);
          orgDao.add(org);
         return "redirect:/projects?list";
+    }
+
+    @RequestMapping(params = "view", method = RequestMethod.GET)
+    public String showData(@RequestParam(value = "projid", required = false) Long projid, Model model, HttpSession session) {
+        session.setAttribute("projid", projid);
+        Project project = projectDao.findFullProject(projid);
+        model.addAttribute("project", project);
+        List<Org> orgs = project.getOrgList();
+        model.addAttribute("projectOrgs", orgs);
+        List<User> users = projectDao.usersProjectListByProjectName(project.getName());
+        model.addAttribute("projectUsers", users);
+        model.addAttribute("org", new Org());
+        model.addAttribute("title", TITLE_PROJECT_MANAGER);
+        return "/projects/view";
+    }
+
+    @RequestMapping(params = "add_org", method = RequestMethod.POST)
+    public String addNewOrgPromProject(@ModelAttribute("org") Org org, HttpSession session) {
+        org.setProjectId(projectDao.find((Long) session.getAttribute("projid")));
+        org.setUserList(Arrays.asList(userDao.getUserByEmil((String) session.getAttribute("userEmail"))));
+        orgDao.add(org);
+        return "redirect: /projects?view&projid=" + session.getAttribute("projid");
     }
 }

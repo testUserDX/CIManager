@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}"></title>
-    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/header.css" rel="stylesheet" th:href="@{/css/header.css}" >
+    <span th:replace="fragments/links :: links"></span>
     <link href="../../css/projecteditstyle.css" rel="stylesheet" th:href="@{/css/projecteditstyle.css}" >
     <link href="../../css/createorgstyle.css" rel="stylesheet" th:href="@{/css/createorgstyle.css}" >
 
@@ -53,7 +50,7 @@
                                     <a  id="editOrg" th:href="@{'/orgs/'+${org.id}}">Edit org </a>
                                 </td>
                                 <td>
-                                    <a  id="deleteOrg" th:href="@{'/projectmanagepage/'+${org.id}}">Delete
+                                    <a  id="deleteOrg" th:href="@{'/orgs?delete&orgid='+${org.id}}">Delete
                                         Org </a>
                                 </td>
 
@@ -110,7 +107,7 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" class="contact-form" th:action="@{/projectmanagepage}" th:object="${org}" method="post">
+    <form role="form" id="prompt-form" class="contact-form" th:action="@{/projects?add_org}" th:object="${org}" method="post">
         <input  id="close" name="exit" type="image" src="../../images/close_red.png">
         <h3 id = "texthead">Create new org</h3>
         <div class="form-group">

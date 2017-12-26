@@ -1,6 +1,7 @@
 package com.web.controller;
 
 import com.model.Org;
+import com.model.Project;
 import com.model.User;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/orgs")
-public class OrgPageController {
+public class OrgController {
 
     public static final String TITLE_ORG_PAGE = "Orgs";
 
@@ -107,6 +109,15 @@ public class OrgPageController {
         }
 
         return "redirect:/orgs/" + orgId;
+    }
+
+
+    @RequestMapping(params = "delete", method = RequestMethod.GET)
+    public String deleteOrg(@RequestParam(value = "orgid", required = false)  Long orgid, HttpSession session) {
+       // Project project = projectDao.findFullProject((Long) session.getAttribute("projid"));
+      //  List<Org> orgs = project.getOrgList();
+        orgDao.remove(orgDao.find(orgid));
+        return "redirect: /projects?view&projid=" + session.getAttribute("projid");
     }
 
 }

@@ -35,7 +35,7 @@
                             <div th:text="${project.gitUrl}"></div>
                         </td>
                         <td th:switch="${session.role}">
-                            <a th:case="'admin'" th:href="@{/projectmanagepage(projid = ${project.id})}">Edit project </a>
+                            <a th:case="'admin'" th:href="@{/projects?view(projid = ${project.id})}">Edit project </a>
                             <a th:case="'user'" th:href="@{/commitpage(projid = ${project.id})}">View project</a>
                         </td>
                     </tr>

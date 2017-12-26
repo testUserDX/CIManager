@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
+
     <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/popup.css}">
+
     <link  rel="stylesheet" th:href="@{/css/header.css}" >
-    <link  rel="stylesheet" th:href="@{/css/commitstyle.css}" >
-    <link rel="stylesheet" th:href="@{/css/spinnercss.css}">
-    <link rel="stylesheet" th:href="@{/css/barstyle.css}">
+
+    <link rel="stylesheet" th:href="@{/css/popup.css}">   <!--styles for popup window for commit message-->
+    <link  rel="stylesheet" th:href="@{/css/commitstyle.css}"> <!--main styles for commitpage-->
+    <link rel="stylesheet" th:href="@{/css/spinnercss.css}">  <!--styles for spinner-->
+    <link rel="stylesheet" th:href="@{/css/barstyle.css}">   <!--styles for progressbar window on metadata loading-->
+    <link rel="stylesheet" th:href="@{/css/toaststyle.css}">  <!--styles for toast notifications-->
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script th:src="@{/js/toastscript.js}"></script>
 
 </head>
 <body>
@@ -24,7 +30,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a id = "homeid" th:href="@{/homepage}" >Homepage <span class="sr-only">(current)</span></a></li>
-                    </li>
                 </ul>
                 <form class="navbar-form navbar-left form-horizontal" role="search">
                     <div class="input-group">
@@ -64,10 +69,8 @@
             <div class="panel-footer">
                 <div class="row">
                     <div class="changes">
-                            Total changes <span class="label label-info" id="totalCount">0</span>
+                            Total changes:  <span class="label label-info" id="totalCount">0</span>
                     </div>
-
-                    <!--<input type="button" class="btn-success" value="Commit" id="show-button">-->
                     <button type="button" class="commit-button" id="show-button">Commit</button>
                 </div>
             </div>
@@ -76,12 +79,20 @@
 </div>
 
 <div id="prompt-form-container">
-    <form role="form" id="prompt-form" method="post"> <!--th:action="@{/commitpage}" th:object="${cmessage}"-->
+    <form role="form" id="prompt-form" method="post">
         <h1 id="texthead">Enter commit message:</h1>
-        <textarea id="message" name="text" class="feedback-input" placeholder="Comment" required ></textarea><!--th:field ="*{message}"-->
+        <textarea id="message" name="text" class="feedback-input" placeholder="Comment" required ></textarea>
         <input class="popup-btn" type="submit" value="COMMIT"/>
         <input class="popup-btn" id="cancel-button" type="reset" value="CANCEL"/>
     </form>
+    <div  id="snackbar">
+        <span id ="icon"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            x
+        </button>
+        <span id ="text">
+    </span>
+    </div>
 </div>
 <div id = "spinner-container">
     <div class="loader"></div>
@@ -95,20 +106,7 @@
 </div>
 
 <script th:inline="javascript">
-
-
-    //========================COUNTER==========================================
-    var ul = document.getElementById("myul");
-    var liNodes = 0;
-
-    for (var i =0; i < ul.childNodes.length; i++){
-        if(ul.childNodes[i].nodeName === 'LI'){
-            liNodes ++ ;
-        }
-    }
-
-    document.getElementById("totalCount").innerHTML = "" + liNodes;
-
+    document.getElementById('show-button').disabled = true;
     //========================================SPINNER============================
     function showSpinner() {
         showCover();
@@ -146,8 +144,8 @@
         container.style.display = 'none';
         var form = document.getElementById('prompt-form');
         form.elements.text = "";
-
         hideCover();
+
     }
 
 //    ========================================PROGRESS BAR===============================================
@@ -173,6 +171,9 @@
     };
 
 
+
+//==========================AJAX REQUESTS ==============================
+
     jQuery(document).ready(function () {
         jQuery('#prompt-form').submit(function (event) {
             event.preventDefault();
@@ -196,14 +197,25 @@
                 removeSpinner();
                 alert(data);
                 if(JSON.stringify(data) == "true"){
-                    alert("Success commit");
-                    window.location.replace("/homepage");
-                }else{
-                    removeSpinner();
-                    alert("Unsuccess commit");
-                    hidePrompt();
-                }
 
+                    showToast('ok','Well done! Your changes has been succesfully committed');
+                    setTimeout(function () {
+                        window.location.replace("/homepage");
+                    },3000);
+
+
+                }else{
+                    showToast('err','Oops! Something went wrong with your commit');
+
+                    setTimeout(function () {
+                        removeSpinner();
+                        hidePrompt();
+                    },3000);
+
+
+
+
+                }
             }
         });
     }
@@ -228,6 +240,8 @@
 //                     removeSpinner();
 
                      jQuery("#myul").html(data);
+                     countChanges();
+                     document.getElementById('show-button').disabled = false;
 
                  }
              });
@@ -256,6 +270,23 @@
         }
 
     }
+
+    //========================COUNTER==========================================
+
+    function countChanges() {
+        var ul = document.getElementById("myul");
+        var liNodes = 0;
+
+        for (var i =0; i < ul.childNodes.length; i++){
+            if(ul.childNodes[i].nodeName === 'LI'){
+                liNodes ++ ;
+            }
+        }
+        document.getElementById("totalCount").innerHTML = "" + liNodes;
+    }
+
+
+
 
 </script>
 <div th:replace="fragments/footer :: footer"></div>

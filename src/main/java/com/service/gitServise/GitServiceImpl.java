@@ -91,7 +91,7 @@ public class GitServiceImpl implements GitService {
     public boolean commitJob(String message,String path, String branch) {
         try(Git git = Git.open(new File(path))) {
             Status status  = git.status().call();
-            if (!status.getAdded().isEmpty() && status.hasUncommittedChanges() && !message.isEmpty()){
+            if (!status.getAdded().isEmpty() || status.hasUncommittedChanges() && !message.isEmpty()){
                 CheckoutCommand checkout = git.checkout();
                 checkout.setName(branch).call();
                 git.commit().setMessage(message).call();

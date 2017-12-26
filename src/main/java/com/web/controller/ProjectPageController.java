@@ -22,6 +22,7 @@ import java.util.Arrays;
 public class ProjectPageController {
     public static final String MASTER_BRANCH ="master";
     public static final String TITLE_NEW_PROJECT = "New Project";
+    public static final String TITLE_PROJECT_LIST = "Projects list";
 
     @Autowired
     private ProjectDao projectDao;
@@ -35,7 +36,10 @@ public class ProjectPageController {
     @RequestMapping(params = "list", method = RequestMethod.GET)
     public ModelAndView projectList(HttpSession session) {
         String userEmail = (String) session.getAttribute("userEmail");
-        return new ModelAndView("projects/list", "userProjects", projectDao.usersProjectListByEmail(userEmail));
+        ModelAndView modelAndView = new ModelAndView("projects/list");
+        modelAndView.addObject("userProjects", projectDao.usersProjectListByEmail(userEmail));
+        modelAndView.addObject("title", TITLE_PROJECT_LIST);
+        return modelAndView;
     }
 
     @RequestMapping(params = "new", method = RequestMethod.GET)

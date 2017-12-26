@@ -81,6 +81,8 @@ public class CommitPageController {
 
 
         Project project = projectDao.find(projid);
+
+        path = project.getFolder();
         CredentialsProvider credentials = new UsernamePasswordCredentialsProvider(project.getGitLogin(), project.getGitPasword());
         boolean result = false;
         try {

@@ -35,7 +35,7 @@ public class ProjectPageController {
     @RequestMapping(params = "list", method = RequestMethod.GET)
     public ModelAndView projectList(HttpSession session) {
         String userEmail = (String) session.getAttribute("userEmail");
-        return new ModelAndView("homepage", "userProjects", projectDao.usersProjectListByEmail(userEmail));
+        return new ModelAndView("projects/list", "userProjects", projectDao.usersProjectListByEmail(userEmail));
     }
 
     @RequestMapping(params = "new", method = RequestMethod.GET)

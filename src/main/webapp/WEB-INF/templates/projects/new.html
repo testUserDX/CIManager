@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/links :: links"></head>
+<head>
+    <span th:replace="fragments/links :: links"></span>
+</head>
 <body>
-
 <div th:replace="fragments/header :: header"></div>
-
 <div class="container">
     <form method="post" th:action="@{/projects}" th:object="${project}">
         <div class="row">
@@ -12,34 +12,34 @@
                 <h3 style="margin-bottom: 25px; text-align: center;">Project information</h3>
                 <div class="form-group">
                     <label class="control-label">Name</label>
-                    <input type="text" class="form-control"  name="name" placeholder="Name" required
+                    <input type="text" class="form-control" name="name" placeholder="Name" required
                            th:field="*{name}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Git-url</label>
-                    <input type="text" class="form-control"  name="Git-url" placeholder="Git-url"
+                    <input type="text" class="form-control" name="Git-url" placeholder="Git-url"
                            required
                            th:field="*{gitUrl}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Git-login</label>
-                    <input type="text" class="form-control"  name="Git-login"
+                    <input type="text" class="form-control" name="Git-login"
                            placeholder="Git-login"
                            required th:field="*{gitLogin}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Git-password</label>
-                    <input type="text" class="form-control"  name="Git-password"
+                    <input type="text" class="form-control" name="Git-password"
                            placeholder="Git-password" required th:field="*{gitPasword}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Project folder</label>
-                    <input type="text" class="form-control"  name="Project-folder"
+                    <input type="text" class="form-control" name="Project-folder"
                            placeholder="Project folder" required th:field="*{folder}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Project decription</label>
-                    <input type="text" class="form-control"  name="Project-decription"
+                    <input type="text" class="form-control" name="Project-decription"
                            placeholder="Project description" required th:field="*{description}">
                 </div>
             </div>
@@ -53,7 +53,7 @@
 
                 <div class="form-group">
                     <label class="control-label">Login</label>
-                    <input type="text" class="form-control"  name="name" placeholder="Login" required
+                    <input type="text" class="form-control" name="name" placeholder="Login" required
                            th:field="*{orgList[0].login}">
                 </div>
 

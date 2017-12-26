@@ -1,55 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title th:text="${title}"></title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
+    <span th:replace="fragments/links :: links"></span>
     <link href="../../css/form.css" rel="stylesheet" th:href="@{/css/form.css}" >
-    <!--<link href="one-page-wonder.css" rel="stylesheet">-->
     <link href="../../css/logo.css" rel="stylesheet" th:href="@{/css/logo.css}">
-
-
 </head>
 
 <body>
-
-
-        <!--
-    you can substitue the span of reauth email for a input with the email and
-    include the remember me checkbox
-    -->
-    
     <div class="container">
-
-    <div class="row">
-    <svg viewBox="0 0 960 300">
-    <symbol id="s-text">
-        <text text-anchor="middle" x="50%" y="80%">Salesforce CI </text>
-    </symbol>
-
-    <g class = "g-ants">
-        <use xlink:href="#s-text" class="text-copy"></use>
-        <use xlink:href="#s-text" class="text-copy"></use>
-        <use xlink:href="#s-text" class="text-copy"></use>
-        <use xlink:href="#s-text" class="text-copy"></use>
-        <use xlink:href="#s-text" class="text-copy"></use>
-    </g>
-    </svg>
-   
-    </div>
+        <div th:replace="fragments/logo :: logo"></div>
         <div class="card card-container">
-            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
             <img id="profile-img" class="profile-img-card" src="http://www.freeiconspng.com/uploads/customers-icon-3.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" method="post" action = "/loginpage.html" th:action="@{/loginpage.html}" th:object ="${credentials}">

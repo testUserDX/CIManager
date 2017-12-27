@@ -10,6 +10,7 @@ import com.service.daoService.RoleDao;
 import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -27,6 +28,9 @@ public class DataGenerator {
 
     @Autowired
     RoleDao roleDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void genareteDomain() {
         clearDatabase();
@@ -60,16 +64,16 @@ public class DataGenerator {
         projectDao.add(novaPoshtaProject);
 
         /* ------------- Role ----------------------------------*/
-        Role userRole = new Role("user");
-        Role adminRole = new Role("admin");
+        Role userRole = new Role("USER");
+        Role adminRole = new Role("ADMIN");
         roleDao.add( userRole);
         roleDao.add( adminRole);
 
         // --------------------- Users ---------------------------------------
-        User adminSteveBA = new User("Steve Ballmer Admin", "steve-login", "111", "111@ctdev.com", adminRole);
-        User userPoleBA = new User("Pole Allen BA", "pole-login", "222", "222@ctdev.com", userRole);
-        User userBillDev = new User("Bill Gates Dev", "bill-login", "333", "333@ctdev.com", userRole);
-        User userMikeDev = new User("Mike Jordan Dev", "Mike-login", "444", "444@ctdev.com",userRole);
+        User adminSteveBA = new User("Steve Ballmer Admin", "steve-login", passwordEncoder.encode("111"), "111@ctdev.com", adminRole);
+        User userPoleBA = new User("Pole Allen BA", "pole-login", passwordEncoder.encode("222"), "222@ctdev.com", userRole);
+        User userBillDev = new User("Bill Gates Dev", "bill-login", passwordEncoder.encode("333"), "333@ctdev.com", userRole);
+        User userMikeDev = new User("Mike Jordan Dev", "Mike-login", passwordEncoder.encode("444"), "444@ctdev.com",userRole);
         userDao.add(adminSteveBA);
         userDao.add(userPoleBA);
         userDao.add(userBillDev);

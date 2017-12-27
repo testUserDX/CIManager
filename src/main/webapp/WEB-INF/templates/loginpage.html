@@ -12,16 +12,16 @@
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="http://www.freeiconspng.com/uploads/customers-icon-3.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" method="post" action = "/loginpage.html" th:action="@{/loginpage.html}" th:object ="${credentials}">
+            <form class="form-signin" method="post"  th:action="@{/login}" > <!--th:object ="${credentials}" action = "/loginpage.html"-->
                 <span id="reauth-email" class="reauth-email"></span>
-                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus th:field ="*{email}">
-                    <input type="text" id="inputEmail1" class="form-control" placeholder="Role" required autofocus th:field ="*{role}">
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required th:field ="*{password}">
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
+                    <input type="email" id="inputEmail" name="username" class="form-control" placeholder="Email address" required autofocus ><!--th:field ="*{email}"-->
+                    <!--<input type="text" id="inputEmail1" class="form-control" placeholder="Role" required autofocus > //th:field ="*{role}"-->
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required > <!--th:field ="*{password}"-->
+                <!--<div id="remember" class="checkbox">-->
+                    <!--<label>-->
+                        <!--<input type="checkbox" value="remember-me"> Remember me-->
+                    <!--</label>-->
+                <!--</div>-->
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
             </form><!-- /form -->
             <a href="#" class="forgot-password">

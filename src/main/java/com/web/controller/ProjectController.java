@@ -7,6 +7,8 @@ import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +44,16 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView("projects/list");
         modelAndView.addObject("userProjects", projectDao.usersProjectListByEmail(userEmail));
         modelAndView.addObject("title", TITLE_PROJECT_LIST);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        System.out.println("===================================================================================");
+        System.out.println("===================================================================================");
+        System.out.println("===================================================================================");
+        System.out.println("===================================================================================");
+        System.out.println(username);
+        System.out.println("===================================================================================");
+        System.out.println("===================================================================================");
+        System.out.println("===================================================================================");
         return modelAndView;
     }
 

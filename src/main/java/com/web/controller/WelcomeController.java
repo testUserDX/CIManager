@@ -5,6 +5,8 @@ import com.data.UserCredentials;
 import com.service.daoService.UserDao;
 import com.web.helper.DataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,34 +31,44 @@ public class WelcomeController {
     private UserDao userDao;
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String redirectToLogin(HttpSession session) {
-        if (session.getAttribute(ATR_EMAIL) == null) {
-            return "redirect:/loginpage";
-        } else {
-            switch ((String) session.getAttribute("role")) {
-                case ROLE_ADMIN:
+    public String redirectToLogin(/*HttpSession session*/) {
+//        if (session.getAttribute(ATR_EMAIL) == null) {
+//            return "redirect:/loginpage";
+//        } else {
+//            switch ((String) session.getAttribute("role")) {
+//                case ROLE_ADMIN:
                     return "redirect:/projects?list";
-                case ROLE_USER:
-                    return "redirect:/projects?list";
-                default:
-                    return "redirect:/";
-            }
-        }
+//                case ROLE_USER:
+//                    return "redirect:/projects?list";
+//                default:
+//                    return "redirect:/";
+//            }
+//        }
     }
 
-    @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
-    public ModelAndView showMenu(Model model) {
-        model.addAttribute("title", TITLE_LOGIN);
-        return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
-    }
+//    @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
+//    public ModelAndView showMenu(Model model) {
+//        model.addAttribute("title", TITLE_LOGIN);
+//        return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
+//    }
 
-    @RequestMapping(value = "/loginpage", method = RequestMethod.POST)
-    public String verifyUser(@ModelAttribute UserCredentials userCredentials, HttpSession session) {
-        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
-            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
-            session.setAttribute("role", userCredentials.getRole());
-        }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String verifyUser(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
+//        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
+//            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
+//            session.setAttribute("role", userCredentials.getRole());
+//        }
+
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String verifyUser1(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
+//        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
+//            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
+//            session.setAttribute("role", userCredentials.getRole());
+//        }
+        return "/loginpage";
     }
 
     private UserCredentials createTestUserCreds() {

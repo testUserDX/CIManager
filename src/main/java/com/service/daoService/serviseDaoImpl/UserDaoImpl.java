@@ -5,6 +5,8 @@ import com.model.User;
 import com.service.daoService.UserDao;
 import com.service.daoService.generalDaoService.HibernateDao;
 import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,10 +16,10 @@ import java.util.List;
 public class UserDaoImpl extends HibernateDao<User, Long> implements UserDao {
 
     @Override
-    public boolean verifyUserByEmailAndPassword(String email, String passord) {
-        Query query = currentSession().createQuery("select u from User u where  u.email=:email and u.password =:password ");
+    public boolean verifyUserByEmailAndPassword(String email, String password) {
+        Query query = currentSession().createQuery("select u from User u where  u.email=:email and u.password =:password_encoded");
         query.setParameter("email", email);
-        query.setParameter("password", passord);
+        query.setParameter("password_encoded", password);
         List userList = query.list();
         if (userList.isEmpty()) {
             return false;

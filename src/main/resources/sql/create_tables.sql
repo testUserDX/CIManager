@@ -81,7 +81,7 @@ CREATE TABLE `user` (
   `id` bigint(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `login` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `registrated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `enabled` tinyint(1) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,

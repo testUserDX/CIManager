@@ -13,7 +13,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.dialect.SpringStandardDialect;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -23,6 +25,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com")
+
 //@Import({ SecurityConfig.class })
 public class WebAppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
@@ -50,6 +53,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     * */
 
 
+//===========================================================================================================================
     @Bean
     public ViewResolver viewResolver() {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -62,9 +66,13 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     public TemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
+
         engine.setTemplateResolver(templateResolver());
         return engine;
+
+
     }
+
 
     private ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
@@ -74,6 +82,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
+//
+//    ================================================================================================================================
+//    @Bean
+//    public ConditionalCommentsDialect conditionalCommentDialect() {
+//        return new ConditionalCommentsDialect();
+//    }
 
 //    @Bean
 //    public SpringResourceTemplateResolver templateResolver(){

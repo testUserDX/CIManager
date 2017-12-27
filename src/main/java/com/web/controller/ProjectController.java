@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("projects")
@@ -40,20 +42,23 @@ public class ProjectController {
 
     @RequestMapping(params = "list", method = RequestMethod.GET)
     public ModelAndView projectList(HttpSession session) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> roles = auth.getAuthorities().stream().map(r-> r.getAuthority()).collect(Collectors.toSet());
+
+        for(String role : roles){
+            session.setAttribute("role",role);
+        }
+
+        System.out.println(session.getAttribute("role"));
+        System.out.println(roles);
+        String email = auth.getName();
+        session.setAttribute("userEmail",email);
         String userEmail = (String) session.getAttribute("userEmail");
         ModelAndView modelAndView = new ModelAndView("projects/list");
         modelAndView.addObject("userProjects", projectDao.usersProjectListByEmail(userEmail));
         modelAndView.addObject("title", TITLE_PROJECT_LIST);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        System.out.println("===================================================================================");
-        System.out.println("===================================================================================");
-        System.out.println("===================================================================================");
-        System.out.println("===================================================================================");
-        System.out.println(username);
-        System.out.println("===================================================================================");
-        System.out.println("===================================================================================");
-        System.out.println("===================================================================================");
+
+
         return modelAndView;
     }
 

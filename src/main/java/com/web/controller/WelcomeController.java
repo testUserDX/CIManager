@@ -71,15 +71,15 @@ public class WelcomeController {
         return "/loginpage";
     }
 
-    private UserCredentials createTestUserCreds() {
-        //TODO delete this method before production realise
-        UserCredentials userCredentials = new UserCredentials();
-        userCredentials.setEmail("111@ctdev.com");
-        userCredentials.setRole("admin");
-        userCredentials.setPassword("111");
-
-        return userCredentials;
-    }
+//    private UserCredentials createTestUserCreds() {
+//        //TODO delete this method before production realise
+//        UserCredentials userCredentials = new UserCredentials();
+//        userCredentials.setEmail("111@ctdev.com");
+//        userCredentials.setRole("admin");
+//        userCredentials.setPassword("111");
+//
+//        return userCredentials;
+//    }
 
     @PostConstruct
     public void generateTestData() {

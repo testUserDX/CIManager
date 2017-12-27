@@ -9,6 +9,7 @@ import com.service.daoService.ProjectDao;
 import com.service.daoService.RoleDao;
 import com.service.daoService.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,9 @@ import java.util.Arrays;
 public class UserController {
 
     public static final String TITLE_NEW_USER = "New User";
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private ProjectDao projectDao;
@@ -55,6 +59,7 @@ public class UserController {
     public String addNewUser(@ModelAttribute("user") User user) {
         //TODO delete this!!!
         user.setLogin("adss");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.add(user);
         return "redirect:/users?list";
     }

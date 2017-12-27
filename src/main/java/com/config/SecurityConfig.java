@@ -57,21 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-//        http.authorizeRequests().antMatchers("/")
-//                .access("hasRole('USER') or hasRole('ADMIN')")
-//                .and()
-//                .formLogin()
-//                .and()
-//                .httpBasic();
-
-//        http.authorizeRequests()
-//                .anyRequest().authenticated()
-//                .antMatchers("/orgs").hasRole("USER")
-//                .and()
-//                .formLogin()
-//                .and()
-//                .httpBasic();
     }
 
     @Override

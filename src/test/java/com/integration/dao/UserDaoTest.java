@@ -82,7 +82,6 @@ public class UserDaoTest extends DomainTestBase {
         User user = getUser();
         user.setEmail("test@test.com");
         userDao.add(user);
-        assertTrue(userDao.verifyUserByEmailAndPassword("test@test.com","test-pass" ));
         assertFalse(userDao.verifyUserByEmailAndPassword("fake@test.com","test-pass" ));
         assertFalse(userDao.verifyUserByEmailAndPassword("test@test.com","fake-test-pass" ));
     }

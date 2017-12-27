@@ -19,4 +19,5 @@ public interface UserDao extends GenericDao<User, Long> {
 
     public User getOrgAdmin(Org org);
 
+    public User getUserById(Long userId);
 }

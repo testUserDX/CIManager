@@ -4,9 +4,7 @@
     <span th:replace="fragments/links :: links"></span>
 </head>
 <body>
-
 <div th:replace="fragments/header :: header"></div>
-
 <div class="container">
     <form method="post" th:action="@{/users}" th:object="${user}">
         <div th:fragment="userForm">
@@ -37,6 +35,7 @@
                 <input type="checkbox" name="checkbox" th:checked="true" th:field="*{enabled}" th:default="true">
             </div>
             <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save user</button>
+        </div>
     </form>
 </div>
 </body>

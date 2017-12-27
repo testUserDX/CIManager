@@ -35,6 +35,14 @@ public class UserDaoImpl extends HibernateDao<User, Long> implements UserDao {
     }
 
     @Override
+    public User getUserById(Long userId) {
+        Query query = currentSession().createQuery("select u from User u where  u.id=:userId");
+        query.setParameter("userId", userId);
+        List<User> userList = query.list();
+        return userList.get(0);
+    }
+
+    @Override
     public List<User> getAllUsersWithoutAdmins() {
         Query query = currentSession().createQuery("select u from User u where  u.roleId.roleName!='admin'");
         List<User> userList = query.list();

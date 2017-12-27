@@ -70,10 +70,10 @@ public class DataGenerator {
         roleDao.add( adminRole);
 
         // --------------------- Users ---------------------------------------
-        User adminSteveBA = new User("Steve Ballmer Admin", "steve-login", passwordEncoder.encode("111"), "111@ctdev.com", adminRole);
-        User userPoleBA = new User("Pole Allen BA", "pole-login", passwordEncoder.encode("222"), "222@ctdev.com", userRole);
-        User userBillDev = new User("Bill Gates Dev", "bill-login", passwordEncoder.encode("333"), "333@ctdev.com", userRole);
-        User userMikeDev = new User("Mike Jordan Dev", "Mike-login", passwordEncoder.encode("444"), "444@ctdev.com",userRole);
+        User adminSteveBA = new User("Steve Ballmer Admin", passwordEncoder.encode("111"), "111@ctdev.com", adminRole);
+        User userPoleBA = new User("Pole Allen BA", passwordEncoder.encode("222"), "222@ctdev.com", userRole);
+        User userBillDev = new User("Bill Gates Dev", passwordEncoder.encode("333"), "333@ctdev.com", userRole);
+        User userMikeDev = new User("Mike Jordan Dev", passwordEncoder.encode("444"), "444@ctdev.com",userRole);
         userDao.add(adminSteveBA);
         userDao.add(userPoleBA);
         userDao.add(userBillDev);

@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
     , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
-    , @NamedQuery(name = "User.findByLogin", query = "SELECT u FROM User u WHERE u.login = :login")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
     , @NamedQuery(name = "User.findByRegistrated", query = "SELECT u FROM User u WHERE u.registrated = :registrated")
     , @NamedQuery(name = "User.findByEnabled", query = "SELECT u FROM User u WHERE u.enabled = :enabled")
@@ -38,9 +37,6 @@ public class User implements Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @Column(name = "login")
-    private String login;
     @Column(name = "password")
     private String password;
     @Column(name = "registrated")
@@ -68,23 +64,20 @@ public class User implements Serializable {
     this.name = name;
     }
 
-    public User(String name, String login, String password, Role roleId) {
+    public User(String name, String password, Role roleId) {
         this.name = name;
         this.roleId = roleId;
-        this.login = login;
         this.password = password;
     }
 
-    public User(String name,String login, String password, String email) {
+    public User(String name, String password, String email) {
         this.name = name;
-        this.login = login;
         this.password = password;
         this.email = email;
     }
 
-    public User(String name, String login, String password, String email, Role roleId) {
+    public User(String name, String password, String email, Role roleId) {
         this.name = name;
-        this.login = login;
         this.password = password;
         this.email = email;
         this.roleId = roleId;
@@ -104,14 +97,6 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {

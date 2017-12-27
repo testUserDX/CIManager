@@ -5,6 +5,7 @@
 </head>
 <body>
 <div class="container-fluid">
+    <div id = container>
     <div th:insert="~{fragments/header :: header}">...</div>
     <div class="main">
         <div class="tablewrapper">
@@ -44,7 +45,9 @@
             </table>
         </div>
     </div>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

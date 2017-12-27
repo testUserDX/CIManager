@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
 
-    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-    <link  rel="stylesheet" th:href="@{/css/header.css}" >
+    <span th:replace="fragments/links :: links"></span>
 
     <link rel="stylesheet" th:href="@{/css/popup.css}">   <!--styles for popup window for commit message-->
     <link  rel="stylesheet" th:href="@{/css/commitstyle.css}"> <!--main styles for commitpage-->
@@ -18,65 +16,69 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script th:src="@{/js/toastscript.js}"></script>
 
+
 </head>
 <body>
 <div class = "container-fluid">
-    <nav class="navbar navbar-inverse bs-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
-            </div>
+        <nav class="navbar navbar-inverse bs-dark">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-img"><img src="../../images/Linkaplace_Logo.svg"></a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a id = "homeid" th:href="@{/homepage}" >Homepage <span class="sr-only">(current)</span></a></li>
-                </ul>
-                <form class="navbar-form navbar-left form-horizontal" role="search">
-                    <div class="input-group">
-                        <input type="text" class="search-box" placeholder="Search">
-                        <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
-                    </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            Account
-                            <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image" />
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Log out</a></li>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a id = "homeid" th:href="@{/homepage}" >Homepage <span class="sr-only">(current)</span></a></li>
+                    </ul>
+                    <form class="navbar-form navbar-left form-horizontal" role="search">
+                        <div class="input-group">
+                            <input type="text" class="search-box" placeholder="Search">
+                            <button type="submit" class="btn"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle navbar-img" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Account
+                                <img src="http://placehold.it/150x150" class="img-circle" alt="Profile Image" />
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Log out</a></li>
 
-                        </ul>
-                    </li>
-                </ul>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <div class="panelwrapper">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span class="glyphicon glyphicon-list refresh"></span>
-                <span class ="refresh">Total changes</span>
-                <button type="button" class="prepare-button" id="spinner-btn">Prepare metadata</button>
+        </nav>
+        <div id="panelwrapper">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list refresh"></span>
+                    <span class ="refresh">Total changes</span>
+                    <button type="button" class="prepare-button" id="spinner-btn">Prepare metadata</button>
 
-            </div>
-            <div class="panel-body" id="panelb">
-                <ul class="list-group" id="myul">
+                </div>
+                <div class="panel-body" id="panelb">
+                    <ul class="list-group" id="myul">
 
-                </ul>
-            </div>
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="changes">
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="changes">
                             Total changes:  <span class="label label-info" id="totalCount">0</span>
+                        </div>
+                        <button type="button" class="commit-button" id="show-button">Commit</button>
                     </div>
-                    <button type="button" class="commit-button" id="show-button">Commit</button>
                 </div>
             </div>
         </div>
-    </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
+
+
 
 <div id="prompt-form-container">
     <form role="form" id="prompt-form" method="post">
@@ -105,7 +107,20 @@
     </div>
 </div>
 
+
+<script th:src="@{/js/heightscript.js}"></script>
 <script th:inline="javascript">
+//    var height = window.screen.height;
+//
+//    if(height >= 550 && height < 1000){
+//        var elem = document.getElementById('panelwrapper');
+//        elem.style.height = '80vh';
+//    }
+//    else if(height >= 1000){
+//        var elem = document.getElementById('panelwrapper');
+//        elem.style.height = '85vh';
+//    }
+
     document.getElementById('show-button').disabled = true;
     //========================================SPINNER============================
     function showSpinner() {
@@ -289,6 +304,5 @@
 
 
 </script>
-<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

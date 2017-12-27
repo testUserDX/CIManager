@@ -1,11 +1,14 @@
 
-
-
-.panelwrapper{
-    height: 90vh;
+body{
+    overflow-y:hidden;
+}
+#panelwrapper{
+    /*position: relative;*/
+    height: 80vh;
 }
 
 .panel.panel-primary{
+    margin-bottom: 0;
     position: relative;
     height: 100%;
     border-color:#7D8491;

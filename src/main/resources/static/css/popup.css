@@ -7,7 +7,7 @@
     border-radius: 5px;
     line-height: 22px;
     background-color: transparent;
-    border: 2px solid #CC6666;
+    border: 2px solid #7E689D;
     transition: all 0.3s;
     padding: 13px;
     margin-bottom: 15px;
@@ -17,7 +17,7 @@
 }
 
 .feedback-input:focus {
-    border: 2px solid #0080c0;
+    border: 2px solid #7E689D;
 }
 
 textarea {
@@ -29,7 +29,7 @@ textarea {
 .popup-btn {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     width: 48%;
-    background: #0080c0;
+    background: #7E689D;
     border-radius: 5px;
     border: 0;
     cursor: pointer;
@@ -40,10 +40,11 @@ textarea {
     transition: all 0.3s;
     margin-top: -4px;
     font-weight: 700;
+    outline: none;
 }
 
 .popup-btn:hover {
-    background: #0080c0;
+    background: #7E689D;
 }
 
 #prompt-form {
@@ -85,27 +86,11 @@ textarea {
     opacity: 0.9;
 }
 
-/*#prompt-form input[name="text"] {*/
-/*display: block;*/
-/*margin: 5px;*/
-/*width: 100%;*/
-/*}*/
+
 
 #texthead {
     font-family: Montserrat;
     color: #ffffff;
     font-weight: bold;
-
-    /*margin-right: 70%;*/
-    /*margin-left: auto;*/
-    /*display: inline-block;*/
-    /*float: left;*/
 }
 
-/*#close {*/
-/*display: inline-block;*/
-/*height: 20px;*/
-/*width: 20px;*/
-/*margin: 5px;*/
-/*float: right;*/
-/*}*/

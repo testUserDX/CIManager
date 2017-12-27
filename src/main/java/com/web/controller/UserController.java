@@ -38,7 +38,7 @@ public class UserController {
     private RoleDao roleDao;
 
     @RequestMapping(params = "new", method = RequestMethod.GET)
-    public String createNewProject(Model model) {
+    public String createNewUser(Model model) {
         model.addAttribute("title", TITLE_NEW_USER);
         model.addAttribute("user", new User());
         model.addAttribute("roleList", roleDao.list());
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addNewProject(@ModelAttribute("user") User user) {
+    public String addNewUser(@ModelAttribute("user") User user) {
         //TODO delete this!!!
         user.setLogin("adss");
         userDao.add(user);

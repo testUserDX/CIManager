@@ -40,7 +40,7 @@ public class ProjectController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(params = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list"/*,params = "list"*/, method = RequestMethod.GET)
     public ModelAndView projectList(HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Set<String> roles = auth.getAuthorities().stream().map(r-> r.getAuthority()).collect(Collectors.toSet());
@@ -62,7 +62,7 @@ public class ProjectController {
         return modelAndView;
     }
 
-    @RequestMapping(params = "new", method = RequestMethod.GET)
+    @RequestMapping(/*params = "new"*/value = "/new", method = RequestMethod.GET)
     public ModelAndView createNewProject(Model model) {
         Org org = new Org();
         Project project = new Project();
@@ -90,10 +90,10 @@ public class ProjectController {
         org.setBranchName(MASTER_BRANCH);
         org.setIsProduction(true);
          orgDao.add(org);
-        return "redirect:/projects?list";
+        return "redirect:/projects/list";
     }
 
-    @RequestMapping(params = "view", method = RequestMethod.GET)
+    @RequestMapping(/*params = "view",*/value = "/view", method = RequestMethod.GET)
     public String showData(@RequestParam(value = "projid", required = false) Long projid, Model model, HttpSession session) {
         session.setAttribute("projid", projid);
         Project project = projectDao.findFullProject(projid);
@@ -107,11 +107,11 @@ public class ProjectController {
         return "/projects/view";
     }
 
-    @RequestMapping(params = "add_org", method = RequestMethod.POST)
+    @RequestMapping(/*params = "add_org"*/value = "/add_org", method = RequestMethod.POST)
     public String addNewOrgPromProject(@ModelAttribute("org") Org org, HttpSession session) {
         org.setProjectId(projectDao.find((Long) session.getAttribute("projid")));
         org.setUserList(Arrays.asList(userDao.getUserByEmil((String) session.getAttribute("userEmail"))));
         orgDao.add(org);
-        return "redirect: /projects?view&projid=" + session.getAttribute("projid");
+        return "redirect: /projects/view?projid=" + session.getAttribute("projid");
     }
 }

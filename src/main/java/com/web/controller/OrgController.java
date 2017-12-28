@@ -86,30 +86,30 @@ public class OrgController {
     }
 
 
-    @RequestMapping(value = "/{id}/users/del/{userId}", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeEmployee(@PathVariable("id") Long orgId, @PathVariable("userId") Long userId) {
-        Org org = orgDao.getFullOrg(orgId);
-        User user = userDao.find(userId);
-        List<User> userList = org.getUserList();
-        userList.remove(user);
-        org.setUserList(userList);
-        orgDao.update(org);
-    }
+//    @RequestMapping(value = "/{id}/users/del/{userId}", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void removeEmployee(@PathVariable("id") Long orgId, @PathVariable("userId") Long userId) {
+//        Org org = orgDao.getFullOrg(orgId);
+//        User user = userDao.find(userId);
+//        List<User> userList = org.getUserList();
+//        userList.remove(user);
+//        org.setUserList(userList);
+//        orgDao.update(org);
+//    }
 
-    @RequestMapping(value = "/{id}/users/add/{userId}", method = RequestMethod.POST)
-    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") Long userId) {
-        Org org = orgDao.getFullOrg(orgId);
-        if (userId != null) {
-            User user = userDao.find(userId);
-            List<User> userList = org.getUserList();
-            userList.add(user);
-            org.setUserList(userList);
-            orgDao.update(org);
-        }
-
-        return "redirect:/orgs/" + orgId;
-    }
+//    @RequestMapping(value = "/{id}/users/add/{userId}", method = RequestMethod.POST)
+//    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") Long userId) {
+//        Org org = orgDao.getFullOrg(orgId);
+//        if (userId != null) {
+//            User user = userDao.find(userId);
+//            List<User> userList = org.getUserList();
+//            userList.add(user);
+//            org.setUserList(userList);
+//            orgDao.update(org);
+//        }
+//
+//        return "redirect:/orgs/" + orgId;
+//    }
 
 
     @RequestMapping(params = "delete", method = RequestMethod.GET)
@@ -117,7 +117,7 @@ public class OrgController {
        // Project project = projectDao.findFullProject((Long) session.getAttribute("projid"));
       //  List<Org> orgs = project.getOrgList();
         orgDao.remove(orgDao.find(orgid));
-        return "redirect: /projects?view&projid=" + session.getAttribute("projid");
+        return "redirect: /projects/view&projid=" + session.getAttribute("projid");
     }
 
 }

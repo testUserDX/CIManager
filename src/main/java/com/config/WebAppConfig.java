@@ -1,5 +1,6 @@
 package com.config;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -66,7 +67,13 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     public TemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
-
+//        engine.addDialect(new SpringStandardDialect());
+//        engine.addDialect(new LayoutDialect());
+        /** @See https://github.com/thymeleaf/thymeleaf-extras-springsecurity */
+        engine.addDialect(securityDialect());
+//        springTemplateEngine.addDialect(new CmsDialect());
+//        engine.addDialect(layoutDialect());
+//        engine.addDialect(securityDialect());
         engine.setTemplateResolver(templateResolver());
         return engine;
 
@@ -81,6 +88,16 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
+    }
+
+//    @Bean
+//    public LayoutDialect layoutDialect() {
+//        return new LayoutDialect();
+//    }
+
+    @Bean
+    public SpringSecurityDialect securityDialect() {
+        return new SpringSecurityDialect();
     }
 //
 //    ================================================================================================================================

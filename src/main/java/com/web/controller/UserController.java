@@ -82,6 +82,7 @@ public class UserController {
 
     @RequestMapping(params = "edit", method = RequestMethod.POST)
     public String postEditUser(@ModelAttribute("user") User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
         return "redirect:/users?list";
     }

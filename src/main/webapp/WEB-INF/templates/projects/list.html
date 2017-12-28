@@ -19,6 +19,10 @@
                     <th>Action</th>
                 </tr>
                 </thead>
+                <a th:href="@{/users?list}" class="btn btn-primary pull-right "
+                   style="width: 160px; font-size: medium">Users list</a>
+                <a th:href="@{/users?new}" class="btn btn-primary pull-right "
+                   style="width: 160px; font-size: medium">Create new user</a>
                 <tbody>
                 <span th:text="${session.role}"></span><span sec:authentication="principal.authorities"/>
                 <div th:switch="${session.role}" class="col-md-3">

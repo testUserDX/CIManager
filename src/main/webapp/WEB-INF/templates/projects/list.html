@@ -3,6 +3,7 @@
 
 <head>
     <span th:replace="fragments/links :: links"></span>
+    <link rel="stylesheet" th:href="@{/css/spinnercss.css}">  <!--styles for spinner-->
 </head>
 <body>
 <div class="container-fluid">
@@ -49,9 +50,11 @@
                             <div th:text="${project.gitUrl}"></div>
                         </td>
                         <td th:switch="${session.role}">
-                            <a th:case="'ROLE_ADMIN'" th:href="@{/projects/view(projid = ${project.id})}">Edit
+                            <a th:case="'ROLE_ADMIN'" id = "redirectA" th:href="@{/projects/view(projid = ${project.id})}">Edit
                                 project </a>
-                            <a th:case="'ROLE_USER'" th:href="@{/commitpage(projid = ${project.id})}">View project</a>
+                            <a th:case="'ROLE_USER'" id = "redirectU">View project</a>
+                            <!--th:href="@{/commitpage(projid = ${project.id})}"-->
+                            <span id="projid" th:disabled="true" th:text="${project.id}"></span>
                         </td>
                     </tr>
                 </th:block>
@@ -62,6 +65,43 @@
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div>
+<div id = "spinner-container">
+    <div class="loader"></div>
+</div>
 
+<script th:src="@{/js/spinnerscript.js}"></script>
+<script>
+
+    var projid = jQuery('#projid').text();
+    alert(projid);
+
+    jQuery('#redirectU').click(function (event) {
+        event.preventDefault();
+        var url = jQuery('#redirectU').getAttribute("href");
+        var param = url.substring(11);
+
+        alert(url);
+        alert(param);
+
+        goAjax(url,param);
+    });
+
+    function goAjax(url,param) {
+        jQuery.ajax({
+            type: "GET",
+            url: "/projects/clone"+param,
+            beforeSend: function () {
+                showSpinner();
+            },
+            success: function () {
+                removeSpinner();
+                window.location.replace(url);
+            }
+        });
+    }
+
+//    alert(document.getElementById('redirectU').getAttribute("href"));
+
+</script>
 </body>
 </html>

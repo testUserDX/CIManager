@@ -52,7 +52,7 @@ public class CommitPageController {
         String userEmail = (String) session.getAttribute("userEmail");
         if (!(userEmail == null)) {
 
-            model.addAttribute("cmessage", new CommitMessage());
+//            model.addAttribute("cmessage", new CommitMessage());
             session.setAttribute("projid", idProject);
 
             Project project = projectDao.find(idProject);

@@ -3,18 +3,20 @@ package com.web.controller;
 import com.model.Org;
 import com.model.Project;
 import com.model.User;
+import com.service.FilesTools;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.daoService.UserDao;
+import com.service.gitServise.GitService;
+import com.service.userService.UserFlowService;
+import org.omg.CORBA.NO_RESPONSE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -40,6 +42,15 @@ public class ProjectController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    UserFlowService userFlowService;
+
+    @Autowired
+    GitService gitService;
+
+    @Autowired
+    FilesTools filesTools;
+
     @RequestMapping(value = "/list"/*,params = "list"*/, method = RequestMethod.GET)
     public ModelAndView projectList(HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,8 +60,6 @@ public class ProjectController {
             session.setAttribute("role",role);
         }
 
-        System.out.println(session.getAttribute("role"));
-        System.out.println(roles);
         String email = auth.getName();
         session.setAttribute("userEmail",email);
         String userEmail = (String) session.getAttribute("userEmail");
@@ -113,5 +122,11 @@ public class ProjectController {
         org.setUserList(Arrays.asList(userDao.getUserByEmil((String) session.getAttribute("userEmail"))));
         orgDao.add(org);
         return "redirect: /projects/view?projid=" + session.getAttribute("projid");
+    }
+
+    @RequestMapping(value = "/clone")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void asyncCloneRepo(@RequestParam(value = "projid") Long idProject, Model model, HttpSession session){
+
     }
 }

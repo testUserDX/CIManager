@@ -237,15 +237,12 @@
                  type: "GET",
                  url: "/commitpage?action=1",
                  beforeSend: function () {
-//                     showSpinner();
                      showBar();
                      frame(0,elem);
                      setTimeout(frame,4000,20,elem);
                  },
                  success: function (data,status) {
                      frame(50,elem);
-//                     removeSpinner();
-
                      jQuery("#myul").html(data);
                      countChanges();
                      document.getElementById('show-button').disabled = false;

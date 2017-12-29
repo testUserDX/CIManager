@@ -52,12 +52,6 @@ public class UserController {
         return "users/new";
     }
 
-    @RequestMapping("/logout")
-    public String logout(Model model, HttpSession session) {
-        session.invalidate();
-        return "loginpage";
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public String addNewUser(@ModelAttribute("user") User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

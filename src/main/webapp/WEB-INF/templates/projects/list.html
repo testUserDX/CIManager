@@ -26,13 +26,16 @@
                 <a th:href="@{/users?new}" class="btn btn-primary pull-right "
                    style="width: 160px; font-size: medium">Create new user</a>
                 <tbody>
-                <div th:switch="${session.role}" class="col-md-3">
-                    <div th:case="'ROLE_ADMIN'" >
-                        <a href="?new" class="btn btn-primary btn-lg btn-block btn-huge"
-                            style="width: 160px; font-size: medium">Create new project</a>
-                    </div>
+                <!--<div th:switch="${session.role}" class="col-md-3">-->
+                    <!--<div th:case="'ROLE_ADMIN'" >-->
+                        <!--<a href="/projects/new" class="btn btn-primary btn-lg btn-block btn-huge"-->
+                            <!--style="width: 160px; font-size: medium">Create new project</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-3">
+                    <a href="/projects/new" class="btn btn-primary btn-lg btn-block btn-huge"
+                    style="width: 160px; font-size: medium">Create new project</a>
                 </div>
-
 
                 <!--<div>-->
                     <!--<a  href="?new" class="btn btn-primary btn-lg btn-block btn-huge"-->

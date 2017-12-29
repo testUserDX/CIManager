@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -127,6 +128,17 @@ public class ProjectController {
     @RequestMapping(value = "/clone")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void asyncCloneRepo(@RequestParam(value = "projid") Long idProject, Model model, HttpSession session){
+        session.setAttribute("projid", idProject);
+        String userEmail = (String) session.getAttribute("userEmail");
 
+        Project project = projectDao.find(idProject);
+        String path = project.getFolder();
+
+        File gitSource = new File(path + "\\" + userEmail + idProject + "\\.git");
+        boolean isRepoExist;
+        isRepoExist = gitSource.exists();
+        if (!isRepoExist) {
+            userFlowService.cloneRemoteRopository(idProject, userEmail, project.getGitUrl(), path);
+        }
     }
 }

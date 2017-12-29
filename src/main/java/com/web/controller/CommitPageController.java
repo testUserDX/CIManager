@@ -48,40 +48,19 @@ public class CommitPageController {
 
     @RequestMapping(value = "/commitpage", params = "projid")
     public String commit(@RequestParam(value = "projid") Long idProject, Model model, HttpSession session) {
-
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (!(userEmail == null)) {
-
-//            model.addAttribute("cmessage", new CommitMessage());
-            session.setAttribute("projid", idProject);
-
-            Project project = projectDao.find(idProject);
-            path = project.getFolder();
-
-            File gitSource = new File(path + "\\" + userEmail + idProject + "\\.git");
-            boolean isRepoExist;
-            isRepoExist = gitSource.exists();
-            if (!isRepoExist) {
-                userFlowService.cloneRemoteRopository(idProject, userEmail, project.getGitUrl(), path);
-            }
-            model.addAttribute("title", TITLE_COMMIT_PAGE);
-            return "commitpage";
-        } else {
-            return "redirect: /loginpage";
-        }
+        model.addAttribute("title", TITLE_COMMIT_PAGE);
+        return "commitpage";
     }
 
     @RequestMapping(value = "/commitpage", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> getMessage(/*@ModelAttribute("cmessage") CommitMessage message, */Model model, HttpSession session, RequestEntity<String> requestEntity) {
+    public ResponseEntity<?> getMessage(Model model, HttpSession session, RequestEntity<String> requestEntity) {
 
         Long projid = (Long) session.getAttribute("projid");
         String userEmail = (String) session.getAttribute("userEmail");
         List<Org> userOrg = orgDao.getOrgByUserAndProject(projid, (String) session.getAttribute("userEmail"));
 
-
         Project project = projectDao.find(projid);
-
         path = project.getFolder();
         CredentialsProvider credentials = new UsernamePasswordCredentialsProvider(project.getGitLogin(), project.getGitPasword());
         boolean result = false;
@@ -114,6 +93,8 @@ public class CommitPageController {
         if (action == 1) {
             Long projid = (Long) session.getAttribute("projid");
             String userEmail = (String) session.getAttribute("userEmail");
+            Project project = projectDao.find(projid);
+            path = project.getFolder();
 
             gitService.addFiles(".", path + "\\" + userEmail + projid);
 //            List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
@@ -121,7 +102,7 @@ public class CommitPageController {
 //                System.out.println(entry.toString());
 //            }
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -140,11 +121,8 @@ public class CommitPageController {
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.setContentType(MediaType.TEXT_HTML);
 
-
             return new ResponseEntity<>(responseText.toString(), HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.OK);
-
-//        return "redirect: /commitpage?projid="+projid;
     }
 }

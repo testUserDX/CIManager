@@ -82,11 +82,11 @@ CREATE TABLE `user` (
   `name` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
   `registrated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `enabled` tinyint(1) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_role_fk_idx` (`role_id`),
+  UNIQUE (`email`),
   CONSTRAINT `user_role_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=385 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

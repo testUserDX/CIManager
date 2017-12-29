@@ -52,15 +52,15 @@ public class WelcomeController {
 //        return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
 //    }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String verifyUser(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
-//        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
-//            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
-//            session.setAttribute("role", userCredentials.getRole());
-//        }
-
-        return "redirect:/";
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String verifyUser(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
+////        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
+////            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
+////            session.setAttribute("role", userCredentials.getRole());
+////        }
+//
+//        return "redirect:/";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String verifyUser1(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {

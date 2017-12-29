@@ -8,25 +8,25 @@ package com.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.inject.Default;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author new
  */
 @Entity
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
-    , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findByRegistrated", query = "SELECT u FROM User u WHERE u.registrated = :registrated")
-    , @NamedQuery(name = "User.findByEnabled", query = "SELECT u FROM User u WHERE u.enabled = :enabled")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+        @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+        , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
+        , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
+        , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
+        , @NamedQuery(name = "User.findByRegistrated", query = "SELECT u FROM User u WHERE u.registrated = :registrated")
+        /*, @NamedQuery(name = "User.findByEnabled", query = "SELECT u FROM User u WHERE u.enabled = :enabled")*/
+        , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,8 +42,8 @@ public class User implements Serializable {
     @Column(name = "registrated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrated;
-    @Column(name = "enabled")
-    private Boolean enabled;
+//    @Column(name = "enabled")
+//    private Boolean enabled = true;
     @Column(name = "email")
     private String email;
     @ManyToMany(mappedBy = "userList")
@@ -59,9 +59,9 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Long id,String name) {
+    public User(Long id, String name) {
         this.id = id;
-    this.name = name;
+        this.name = name;
     }
 
     public User(String name, String password, Role roleId) {
@@ -115,13 +115,13 @@ public class User implements Serializable {
         this.registrated = registrated;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+//    public Boolean getEnabled() {
+//        return enabled;
+//    }
+//
+//    public void setEnabled(Boolean enabled) {
+//        this.enabled = enabled;
+//    }
 
     public String getEmail() {
         return email;
@@ -172,5 +172,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.model.User[ id=" + id + " ]";
     }
-    
+
 }

@@ -6,7 +6,7 @@
 <div class="container">
             <div th:fragment="userForm">
             <h3 style="margin-bottom: 25px; text-align: center;">User information</h3>
-            <form method="post" th:action="@{/users}" th:object="${user}">
+            <form method="post" th:action="@{'/users?edit&userId='+${user.id}}" th:object="${user}">
             <div class="form-group">
                 <label class="control-label">Username</label>
                 <input type="text" class="form-control" name="name" placeholder="Username"
@@ -27,10 +27,6 @@
                 <label class="control-label">Password</label>
                 <input type="text" class="form-control" name="Password" placeholder="Password"
                        required th:field="*{password}">
-            </div>
-            <div class="funkyradio-info">
-                <label class="control-label">Enabled</label>
-                <input type="checkbox" name="checkbox" th:checked="true" th:field="*{enabled}" th:default="true">
             </div>
             <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Edit user</button>
             </form>

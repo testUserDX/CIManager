@@ -15,7 +15,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Enabled</th>
+                        <!--<th>Enabled</th>-->
                     </tr>
                     </thead>
                     <tbody>
@@ -30,9 +30,9 @@
                             <td>
                                 <div th:text="${user.roleId.roleName}"></div>
                             </td>
-                            <td>
-                                <div th:text="${user.enabled}"></div>
-                            </td>
+                            <!--<td>-->
+                                <!--<div th:text="${user.enabled}"></div>-->
+                            <!--</td>-->
                             <td>
                                 <div>
                                     <a  th:href="@{'/users?edit&userId='+${user.id}}"

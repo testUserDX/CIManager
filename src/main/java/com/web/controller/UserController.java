@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.PasswordView;
 import java.util.Arrays;
 
 @Controller
@@ -81,7 +82,8 @@ public class UserController {
     }
 
     @RequestMapping(params = "edit", method = RequestMethod.POST)
-    public String postEditUser(@ModelAttribute("user") User user) {
+    public String postEditUser(@ModelAttribute("user") User user, @RequestParam(value = "userId") Long userId) {
+        user.setId(userId);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
         return "redirect:/users?list";

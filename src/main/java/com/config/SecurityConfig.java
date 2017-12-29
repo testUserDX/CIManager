@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/errorpage").permitAll()
-                .antMatchers("/users/**","/orgs/**","/projects/new**","/projects/view**").hasAnyRole("ROLE_ADMIN")
+                .antMatchers("/users/**", "/orgs/**", "/projects/new**", "/projects/view**").hasAnyRole("ROLE_ADMIN")
 //                .antMatchers("//**").hasAnyRole("USER")
                 .anyRequest().authenticated()
                 .and()
@@ -56,7 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/errors/403");
     }
 
     @Override
@@ -70,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);

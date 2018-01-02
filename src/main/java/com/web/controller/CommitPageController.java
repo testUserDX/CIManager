@@ -101,11 +101,9 @@ public class CommitPageController {
 //            for (DiffEntry entry : result){
 //                System.out.println(entry.toString());
 //            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
+
             Set<String> changes = gitService.getStatus(path + "\\" + userEmail + projid);
             StringBuilder responseText = new StringBuilder();
             for (String change : changes) {

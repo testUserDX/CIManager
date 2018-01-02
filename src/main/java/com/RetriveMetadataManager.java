@@ -9,12 +9,12 @@ import java.io.File;
 /**
  * Created by new on 27.11.2017.
  */
-public class RetriveMetadataManager {
+public  class RetriveMetadataManager {
 
     public void run(String login, String password, Boolean isProduction) throws RetriveMetadataException {
         String url = (isProduction)? "https://login.salesforce.com": "https://test.salesforce.com";
         try{
-            File buildFile = new File("src/main/java/build.xml");
+            File buildFile = new File("C:\\Users\\new\\Desktop\\CIManager\\src\\main\\java\\build.xml");
             Project p = new Project();
             p.setUserProperty("build.properties", buildFile.getAbsolutePath());
             p.setProperty("sf.username", login);

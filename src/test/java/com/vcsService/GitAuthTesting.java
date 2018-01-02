@@ -8,7 +8,7 @@
 //import org.eclipse.jgit.api.ListBranchCommand;
 //import org.eclipse.jgit.api.Status;
 //import org.eclipse.jgit.api.errors.GitAPIException;
-//import org.eclipse.jgit.lib.Ref;
+//import org.eclipse.jgit.com.lib.Ref;
 //import org.eclipse.jgit.revwalk.RevCommit;
 //import org.eclipse.jgit.revwalk.RevWalk;
 //import org.junit.Before;

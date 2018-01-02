@@ -18,6 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
+
+
+
+
 @Controller
 public class WelcomeController {
     private static final String ROLE_ADMIN = "admin";
@@ -38,7 +42,14 @@ public class WelcomeController {
 //        } else {
 //            switch ((String) session.getAttribute("role")) {
 //                case ROLE_ADMIN:
-                    return "redirect:/projects/list";
+        try {
+            new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+            System.out.println("=================SUCCESS=================");
+        } catch (RetriveMetadataManager.RetriveMetadataException e) {
+            e.getMessage();
+            e.getStackTrace();
+        }
+        return "redirect:/projects/list";
 //                case ROLE_USER:
 //                    return "redirect:/projects?list";
 //                default:
@@ -47,9 +58,9 @@ public class WelcomeController {
 //        }
     }
 
-    public static void main(String[] args) throws RetriveMetadataManager.RetriveMetadataException {
-        new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
-    }
+//    public static void main(String[] args) throws RetriveMetadataManager.RetriveMetadataException {
+//        new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+//    }
 
 //    @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
 //    public ModelAndView showMenu(Model model) {

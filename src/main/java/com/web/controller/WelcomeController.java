@@ -1,6 +1,7 @@
 package com.web.controller;
 
 
+import com.RetriveMetadataManager;
 import com.data.UserCredentials;
 import com.service.daoService.UserDao;
 import com.web.helper.DataGenerator;
@@ -44,6 +45,10 @@ public class WelcomeController {
 //                    return "redirect:/";
 //            }
 //        }
+    }
+
+    public static void main(String[] args) throws RetriveMetadataManager.RetriveMetadataException {
+        new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
     }
 
 //    @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)

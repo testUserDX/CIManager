@@ -38,11 +38,7 @@ public class WelcomeController {
 //        } else {
 //            switch ((String) session.getAttribute("role")) {
 //                case ROLE_ADMIN:
-        try {
-            new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
-        } catch (RetriveMetadataManager.RetriveMetadataException e) {
-            System.out.println(e.getMessage());
-        }
+
         return "redirect:/projects/list";
 //                case ROLE_USER:
 //                    return "redirect:/projects?list";

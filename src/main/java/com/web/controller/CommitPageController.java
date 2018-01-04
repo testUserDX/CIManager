@@ -4,10 +4,12 @@ import com.data.CommitMessage;
 import com.model.Org;
 import com.model.Project;
 import com.service.FilesTools;
+import com.service.RetriveMetadataManager;
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.gitServise.GitService;
 import com.service.userService.UserFlowService;
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -95,7 +98,18 @@ public class CommitPageController {
             String userEmail = (String) session.getAttribute("userEmail");
             Project project = projectDao.find(projid);
             path = project.getFolder();
-
+            try {
+                new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+            } catch (RetriveMetadataManager.RetriveMetadataException e) {
+                System.out.println(e.getMessage());
+            }
+            File source = new File("C:\\Users\\new\\IdeaProjects\\CIManager\\src\\main\\groovy\\build");
+            File dest = new File(path + "\\" + userEmail + projid);
+            try {
+                FileUtils.copyDirectory(source, dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             gitService.addFiles(".", path + "\\" + userEmail + projid);
 //            List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
 //            for (DiffEntry entry : result){

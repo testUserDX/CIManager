@@ -46,7 +46,7 @@ public class RetriveMetadataManager {
         }
     }
 
-    public static void main(String[] args) throws RetriveMetadataException {
-        new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
-    }
+//    public static void main(String[] args) throws RetriveMetadataException {
+//        new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+//    }
 }

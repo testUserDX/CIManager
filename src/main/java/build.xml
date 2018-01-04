@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Force.com Metadata Backup" basedir="." xmlns:sf="antlib:com.salesforce">
+  <import file="ant-includes/setup-target.xml" />
+
+  <taskdef uri="antlib:com.salesforce" resource="com/salesforce/antlib.xml" classpath="lib/ant-salesforce-${sf.antlib.version}.jar" onerror="failall" />
+
+  <taskdef name="xmlmerge" classname="ch.elca.el4j.services.xmlmerge.anttask.XmlMergeTask" classpath="lib/module-xml_merge-common-3.1.jar;lib/jdom-1.1.3.jar;lib/jaxen-1.1.1.jar;lib/slf4j-api-1.7.7.jar" />
+
+  <import file="ant-includes/list-targets.xml" />
+
+  <property environment="env"/>
+
+  <macrodef name="forceMetaBackup">
+    <attribute name="args" default="" />
+
+    <sequential>
+      <property name="force.meta.backup.script" value="force-meta-backup.groovy" />
+
+      <exec osfamily="unix" executable="${force.meta.backup.script}" resolveexecutable="true" failonerror="true">
+        <arg line="@{args}" />
+      </exec>
+
+      <exec osfamily="windows" executable="cmd" failonerror="true">
+        <arg line="/c ${env.GROOVY_HOME}/bin/groovy.bat ${force.meta.backup.script} @{args}" />
+      </exec>
+    </sequential>
+  </macrodef>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+
+  <target name="generatePackageXmlAndBuildXml" depends="-setUp">
+    <forceMetaBackup />
+  </target>
+
+  <target name="bulkRetrievable" depends="generatePackageXmlAndBuildXml, -setUpMetadataDir">
+    <ant antfile="${build.dir}/bulk-retrievable-target.xml" />
+  </target>
+
+  <target name="bulkRetrieveFolders" depends="generatePackageXmlAndBuildXml">
+    <ant antfile="${build.dir}/folders-build.xml" />
+  </target>
+
+  <target name="retrieveMiscMetadata" depends="generatePackageXmlAndBuildXml,-setUpMetadataDir">
+    <antcall target="-sfRetrieve"><param name="unpackaged" value="${build.dir}/misc-package.xml" /></antcall>
+
+    <ant antfile="${build.dir}/profile-packages-target.xml" />
+
+    <antcall target="xmlMergeProfilesAndPermissions" />
+  </target>
+
+  <target name="backupMetadata" depends="clean,bulkRetrievable,bulkRetrieveFolders,retrieveMiscMetadata">
+  </target>
+
+  <target name="xmlMergeProfilesAndPermissions">
+    <forceMetaBackup args="--build-xml-merge-target" />
+    <ant antfile="${build.dir}/profile-packages-merge-target.xml" />
+  </target>
+
+  <target name="-sfRetrieve">
+    <echo>Retrieving ${unpackaged}</echo>
+    <sf:retrieve
+      unpackaged="${unpackaged}"
+      retrieveTarget="${build.metadata.dir}"
+      username="${sf.username}"
+      password="${sf.password}"
+      serverurl="${sf.serverurl}"
+      pollWaitMillis="${sf.pollWaitMillis}"
+      maxPoll="${sf.maxPoll}"
+    />
+  </target>
+
+  <target name="-sfListMetadata">
+    <sf:listMetadata
+      metadataType="${metadataType}"
+      resultFilePath="${build.lists.dir}/${metadataType}.log"
+      username="${sf.username}"
+      password="${sf.password}"
+      serverurl="${sf.serverurl}"
+    />
+  </target>
+</project>

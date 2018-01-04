@@ -24,5 +24,7 @@ body{
 #container{
     min-height: calc(95vh - 5vh);
 }
-
+a{
+    cursor: pointer;
+}
 

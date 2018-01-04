@@ -977,12 +977,6 @@ static void main(args) {
     def config = Configuration.build("build.properties", options)
 
     def forceService = ForceServiceFactory.create(config)
-    [
-            new BulkMetadataManifestBuilder(forceService, config),
-            new Folders(forceService, config),
-            new MiscMetadataManifestBuilder(forceService, config),
-            new ProfilesMetadataManifestBuilder(forceService, config)
-    ].each { it.writeManifest() }
 
     if (options.'build-xml-merge-target') {
         def xmlMerge = new XmlMergeTargetBuilder(config)
@@ -991,10 +985,10 @@ static void main(args) {
     }
 
     // Default Action
-//    [
-//        new BulkMetadataManifestBuilder(forceService, config),
-//        new Folders(forceService, config),
-//        new MiscMetadataManifestBuilder(forceService, config),
-//        new ProfilesMetadataManifestBuilder(forceService, config)
-//    ].each { it.writeManifest() }
+    [
+        new BulkMetadataManifestBuilder(forceService, config),
+        new Folders(forceService, config),
+        new MiscMetadataManifestBuilder(forceService, config),
+        new ProfilesMetadataManifestBuilder(forceService, config)
+    ].each { it.writeManifest() }
 }

@@ -2,6 +2,7 @@ package com.web.controller;
 
 
 import com.data.UserCredentials;
+import com.service.RetriveMetadataManager;
 import com.service.daoService.UserDao;
 import com.web.helper.DataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,12 @@ public class WelcomeController {
 //        } else {
 //            switch ((String) session.getAttribute("role")) {
 //                case ROLE_ADMIN:
-                    return "redirect:/projects/list";
+        try {
+            new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+        } catch (RetriveMetadataManager.RetriveMetadataException e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/projects/list";
 //                case ROLE_USER:
 //                    return "redirect:/projects?list";
 //                default:

@@ -109,7 +109,7 @@ public class GitServiceImpl implements GitService {
 
 
     @Override
-    public void createBrunch(String name) {
+    public void createBranch(String name) {
         try(Git git = Git.open(new File(localRepositoryPath))) {
             git.branchCreate().setName(name).call();
 //            git.push().call();
@@ -170,16 +170,6 @@ public class GitServiceImpl implements GitService {
 
         return null;
     }
-
-//    @Override
-//    public boolean removeFileFromRepo(List<String> fileString) {
-//        return false;
-//    }
-//
-//    @Override
-//    public Set<String> getStatus(Git git) {
-//        return null;
-//    }
 
     public Set<String> getStatus(String path){
 

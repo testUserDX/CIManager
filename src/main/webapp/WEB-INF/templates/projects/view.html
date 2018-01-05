@@ -11,6 +11,7 @@
     <div th:insert="~{fragments/header :: header}">...</div>
 
     <div class="container-fluid">
+        <div id = "container">
         <img src="../../images/board.svg" id="projimg"/>
         <h1 id ="projname" th:text="${project.name}"></h1>
 
@@ -104,6 +105,8 @@
             </div>
         </div>
     </div>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 
 <div id="prompt-form-container">
@@ -130,6 +133,7 @@
         <button type="submit" class="btn main-btn pull-right">Save</button>
     </form>
 </div>
+
 
 <script>
 
@@ -193,6 +197,6 @@
     };
 
 </script>
-<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

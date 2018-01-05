@@ -40,3 +40,6 @@
     border-radius: 7px;
     border-color: #00a491;
 }
+#container{
+    min-height: calc(95vh - 5vh);
+}

@@ -27,20 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsService userDetailsService;
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -49,10 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated()
                 .antMatchers("/users").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/projects/view","/projects/new", "/orgs").hasAuthority("ROLE_ADMIN")
-//                .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
-//                .antMatchers( "/orgs/**", "/projects/new**", "/projects/view**").hasAuthority("ROLE_ADMIN")
-//                .antMatchers("//**").hasAnyRole("USER")
-//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -80,10 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
         auth.authenticationProvider(authenticationProvider());
-//                .inMemoryAuthentication()
-//                .withUser("user").password("password").roles("USER")
-//                .and()
-//                .withUser("admin").password("password").roles("ADMIN");
     }
 
     @Bean
@@ -94,10 +72,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        manager.createUser(org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
-//        return manager;
-//    }
 }

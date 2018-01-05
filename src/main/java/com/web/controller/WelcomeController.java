@@ -20,10 +20,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class WelcomeController {
-    private static final String ROLE_ADMIN = "admin";
-    private static final String ROLE_USER = "user";
-    private static final String ATR_EMAIL = "userEmail";
-    public static final String TITLE_LOGIN = "Login";
 
     @Autowired
     private DataGenerator dataGenerator;
@@ -32,37 +28,10 @@ public class WelcomeController {
     private UserDao userDao;
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String redirectToLogin(/*HttpSession session*/) {
-//        if (session.getAttribute(ATR_EMAIL) == null) {
-//            return "redirect:/loginpage";
-//        } else {
-//            switch ((String) session.getAttribute("role")) {
-//                case ROLE_ADMIN:
-
+    public String redirectToLogin() {
         return "redirect:/projects/list";
-//                case ROLE_USER:
-//                    return "redirect:/projects?list";
-//                default:
-//                    return "redirect:/";
-//            }
-//        }
     }
 
-//    @RequestMapping(value = {"/loginpage"}, method = RequestMethod.GET)
-//    public ModelAndView showMenu(Model model) {
-//        model.addAttribute("title", TITLE_LOGIN);
-//        return new ModelAndView("loginpage", "credentials", /*new UserCredentials()*/ createTestUserCreds());
-//    }
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String verifyUser(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
-////        if (userDao.verifyUserByEmailAndPassword(userCredentials.getEmail(), userCredentials.getPassword())) {
-////            session.setAttribute(ATR_EMAIL, userCredentials.getEmail());
-////            session.setAttribute("role", userCredentials.getRole());
-////        }
-//
-//        return "redirect:/";
-//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String verifyUser1(/*@ModelAttribute UserCredentials userCredentials, HttpSession session*/) {
@@ -72,16 +41,6 @@ public class WelcomeController {
 //        }
         return "/loginpage";
     }
-
-//    private UserCredentials createTestUserCreds() {
-//        //TODO delete this method before production realise
-//        UserCredentials userCredentials = new UserCredentials();
-//        userCredentials.setEmail("111@ctdev.com");
-//        userCredentials.setRole("admin");
-//        userCredentials.setPassword("111");
-//
-//        return userCredentials;
-//    }
 
     @PostConstruct
     public void generateTestData() {

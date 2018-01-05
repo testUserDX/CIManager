@@ -10,6 +10,14 @@
 <div class="container-fluid">
     <div id = container>
     <div th:insert="~{fragments/header :: header}">...</div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')" class = "admin-btns"> <!--class="col-md-3"-->
+            <a href="/projects/new" class="popup-btn"
+               style="width: 160px; font-size: medium">Create new project</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users?list}" class="popup-btn"
+               style="width: 160px; font-size: medium">Users list</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users?new}" class="popup-btn"
+               style="width: 160px; font-size: medium">Create new user</a>
+        </div>
     <div class="main">
         <div class="tablewrapper">
             <table class="table table-condensed">
@@ -21,10 +29,10 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <a th:href="@{/users?list}" class="btn btn-primary pull-right "
-                   style="width: 160px; font-size: medium">Users list</a>
-                <a th:href="@{/users?new}" class="btn btn-primary pull-right "
-                   style="width: 160px; font-size: medium">Create new user</a>
+                <!--<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users?list}" class="btn btn-primary pull-right "-->
+                   <!--style="width: 160px; font-size: medium">Users list</a>-->
+                <!--<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users?new}" class="btn btn-primary pull-right "-->
+                   <!--style="width: 160px; font-size: medium">Create new user</a>-->
                 <tbody>
                 <!--<div th:switch="${session.role}" class="col-md-3">-->
                     <!--<div th:case="'ROLE_ADMIN'" >-->
@@ -32,10 +40,10 @@
                             <!--style="width: 160px; font-size: medium">Create new project</a>-->
                     <!--</div>-->
                 <!--</div>-->
-                <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-3">
-                    <a href="/projects/new" class="btn btn-primary btn-lg btn-block btn-huge"
-                    style="width: 160px; font-size: medium">Create new project</a>
-                </div>
+                <!--<div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-3">-->
+                    <!--<a href="/projects/new" class="btn btn-primary btn-lg btn-block btn-huge"-->
+                    <!--style="width: 160px; font-size: medium">Create new project</a>-->
+                <!--</div>-->
 
                 <!--<div>-->
                     <!--<a  href="?new" class="btn btn-primary btn-lg btn-block btn-huge"-->

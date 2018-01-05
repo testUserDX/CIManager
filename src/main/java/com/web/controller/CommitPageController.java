@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
@@ -97,9 +98,10 @@ public class CommitPageController {
             Long projid = (Long) session.getAttribute("projid");
             String userEmail = (String) session.getAttribute("userEmail");
             Project project = projectDao.find(projid);
+            List<Org> userOrg = orgDao.getOrgByUserAndProject(projid, (String) session.getAttribute("userEmail"));
             path = project.getFolder();
             try {
-                new RetriveMetadataManager().run("vldvld31@test.com", "vlad19961", true);
+                new RetriveMetadataManager().run(userOrg.get(0).getLogin(), userOrg.get(0).getPassword(), userOrg.get(0).getOrgLink());
             } catch (RetriveMetadataManager.RetriveMetadataException e) {
                 System.out.println(e.getMessage());
             }

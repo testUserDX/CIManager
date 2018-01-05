@@ -10,16 +10,19 @@
 </head>
 <body>
 <div class = "container-fluid">
-    <div th:insert="~{fragments/header :: header}">...</div>
+    <div id="">
+        <div th:insert="~{fragments/header :: header}">...</div>
+
+        <!--<div class="alert alert-danger" role="alert">-->
+        <!--<h1><th:block th:text="${error}" /></h1>-->
+        <!--</div>-->
+        <div class="alert alert-danger" role="alert" th:align="center">
+            <h1><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <th:block th:text="${error}" /></h1>
+        </div>
+        <div th:replace="fragments/footer :: footer"></div>
+    </div>
 </div>
-<!--<div class="alert alert-danger" role="alert">-->
-    <!--<h1><th:block th:text="${error}" /></h1>-->
-<!--</div>-->
-<div class="alert alert-danger" role="alert" th:align="center">
-    <h1><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-    <span class="sr-only">Error:</span>
-   <th:block th:text="${error}" /></h1>
-</div>
-<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

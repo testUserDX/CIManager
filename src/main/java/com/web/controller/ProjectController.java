@@ -99,7 +99,7 @@ public class ProjectController {
         org.setProjectId(project1);
         org.setBranchName(MASTER_BRANCH);
         org.setIsProduction(true);
-         orgDao.add(org);
+        orgDao.add(org);
         return "redirect:/projects/list";
     }
 
@@ -137,8 +137,10 @@ public class ProjectController {
         File gitSource = new File(path + "\\" + userEmail + idProject + "\\.git");
         boolean isRepoExist;
         isRepoExist = gitSource.exists();
-        if (!isRepoExist) {
-            userFlowService.cloneRemoteRopository(idProject, userEmail, project.getGitUrl(), path);
+        if(isRepoExist){
+            filesTools.removeGitFolder(path + "\\" + userEmail + idProject);
         }
+        userFlowService.cloneRemoteRopository(idProject, userEmail, project.getGitUrl(), path);
+
     }
 }

@@ -21,21 +21,12 @@ public interface GitService {
 
     boolean commitJob(String message, String path, String branch);
 
-    void createBrunch(String name);
+    void createBranch(String name);
 
     boolean pushToRemote(String path, String branch, CredentialsProvider credentials);
 
     Set<String> getStatus(String path);
 
     List<DiffEntry> getFilesInDiff(String path, String branch);
-
-
-
-//
-//    public boolean removeFileFromRepo(List<String> fileString);
-//
-//    public Set<String> getStatus(Git git);
-//
-//    public void createBrunch(String name);
 
 }

@@ -1,0 +1,55 @@
+
+.tablewrapper{
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+}
+
+tbody>tr:hover{
+    background-color: rgba(77, 22, 61, 0.2);
+}
+body{
+    background-color: rgba(55, 103, 107,0.04);
+}
+.container-fluid{
+    padding: 5px;
+}
+
+.table td a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+#container{
+    min-height: calc(95vh - 5vh);
+}
+a{
+    cursor: pointer;
+}
+
+.popup-btn {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    /*width: 48%;*/
+    background: #7E689D;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    /*padding-top: 10px;*/
+    padding:7px;
+    transition: all 0.3s;
+    /*margin-top: 14px;*/
+    font-weight: 700;
+    outline: none;
+}
+
+.admin-btns{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+
+

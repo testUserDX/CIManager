@@ -14,8 +14,8 @@ import java.io.File;
  */
 public class RetriveMetadataManager {
 
-    public void run(String login, String password, Boolean isProduction) throws RetriveMetadataException {
-        String url = (isProduction)? "https://login.salesforce.com": "https://test.salesforce.com";
+    public void run(String login, String password, /*Boolean isProduction*/ String url) throws RetriveMetadataException {
+//        String url = (isProduction)? "https://login.salesforce.com": "https://test.salesforce.com";
         try{
             File buildFile = new File("C:\\Users\\new\\IdeaProjects\\CIManager\\src\\main\\groovy\\build.xml");
             Project p = new Project();

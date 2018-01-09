@@ -80,11 +80,11 @@ public class DataGenerator {
         userDao.add(userMikeDev);
 
         // --------------------- Orgs ---------------------------------------
-        Org testorg1 = new Org("taxweb@atlanta.com", "1q2w3e4r5t6y", "master", "https://login.salesforce.com/",  testProject);
+        Org testorg1 = new Org("vldvld31@test.com", "vlad19961", "master", "https://login.salesforce.com/",  testProject);
         Org testorg2 = new Org("test1@atlanta.com", "112345678", "master", "https://login.salesforce.com/",  testProject);
         Org testorg3 = new Org("test2@atlanta.com", "12345678", "master", "https://login.salesforce.com/",  testProject);
         Org testorg4 = new Org("test3@atlanta.com", "12345678", "master", "https://login.salesforce.com/",  airportProject);
-        testorg1.setUserList(Arrays.asList(adminSteveBA,userPoleBA ));
+        testorg1.setUserList(Arrays.asList(adminSteveBA,userPoleBA));
         testorg4.setUserList(Arrays.asList(adminSteveBA));
 
         orgDao.add(testorg1);

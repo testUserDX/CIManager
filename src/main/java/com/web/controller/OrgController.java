@@ -65,7 +65,7 @@ public class OrgController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String updateOrg(@PathVariable("id") Long id, @ModelAttribute Org org) {
+    public String updateOrg(@PathVariable("id") Long id, @ModelAttribute Org org , HttpSession session) {
         User orgAdmin = userDao.getOrgAdmin(new Org(id));
         User selectedUser = org.getUserList().get(0);
         List<User> newList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class OrgController {
         org.setUserList(newList);
 
         orgDao.update(org);
-        return "redirect:/orgs/" + id;
+        return "redirect:/projects/view?projid=" + session.getAttribute("projid");
     }
 
 
@@ -117,7 +117,7 @@ public class OrgController {
        // Project project = projectDao.findFullProject((Long) session.getAttribute("projid"));
       //  List<Org> orgs = project.getOrgList();
         orgDao.remove(orgDao.find(orgid));
-        return "redirect: /projects/view&projid=" + session.getAttribute("projid");
+        return "redirect:/projects/view?projid=" + session.getAttribute("projid");
     }
 
 }

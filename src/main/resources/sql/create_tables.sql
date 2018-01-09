@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `org`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `org` (
   `id` bigint(8) NOT NULL AUTO_INCREMENT,
-  `login` varchar(45) NOT NULL,
+  `login` varchar(45) NOT NULL UNIQUE,
   `password` varchar(45) NOT NULL,
   `isProduction` tinyint(1) DEFAULT NULL,
   `project_id` bigint(8) NOT NULL,
@@ -46,12 +46,12 @@ DROP TABLE IF EXISTS `project`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project` (
   `id` bigint(8) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `git_url` varchar(100) NOT NULL,
-  `git_login` varchar(45) DEFAULT NULL,
+  `name` varchar(100) NOT NULL UNIQUE ,
+  `git_url` varchar(100) NOT NULL ,
+  `git_login` varchar(45) DEFAULT NULL ,
   `git_pasword` varchar(45) DEFAULT NULL,
   `description` varchar(150) DEFAULT NULL,
-  `folder` varchar(100) NOT NULL,
+  `folder` varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -82,7 +82,7 @@ CREATE TABLE `user` (
   `name` varchar(45) NOT NULL,
   `password` varchar(255) NOT NULL,
   `registrated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `email` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL UNIQUE,
   `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_role_fk_idx` (`role_id`),

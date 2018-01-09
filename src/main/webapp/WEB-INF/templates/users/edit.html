@@ -3,37 +3,46 @@
     <span th:replace="fragments/links :: links"></span>
 </head>
 <body>
-<div class="container">
-            <div th:fragment="userForm">
+<div class="container-fluid">
+    <div id = "container">
+        <div th:insert="~{fragments/header :: header}">...</div>
+        <div th:fragment="userForm">
             <h3 style="margin-bottom: 25px; text-align: center;">User information</h3>
             <form method="post" th:action="@{'/users?edit&userId='+${user.id}}" th:object="${user}">
-            <div class="form-group">
-                <label class="control-label">Username</label>
-                <input type="text" class="form-control" name="name" placeholder="Username"
-                       th:field="*{name}">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Email</label>
-                <input type="text" class="form-control" name="Password" placeholder="Email"
-                       required th:field="*{email}">
-            </div>
-            <div class="form-group">
-                <select id="selected-emp" th:field="*{roleId.id}">
-                    <option th:each="role : ${roleList}" th:value="${role.id}" th:text="${role.roleName}">
-                    </option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Password</label>
-                <input type="text" class="form-control" name="Password" placeholder="Password"
-                       required th:field="*{password}">
-            </div>
-            <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Edit user</button>
+                <div class="form-group">
+                    <label class="control-label">Username</label>
+                    <input type="text" class="form-control" name="name" placeholder="Username"
+                           th:field="*{name}">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" class="form-control" name="Password" placeholder="Email"
+                           required th:field="*{email}">
+                </div>
+                <div class="form-group">
+                    <select id="selected-emp" th:field="*{roleId.id}">
+                        <option th:each="role : ${roleList}" th:value="${role.id}" th:text="${role.roleName}">
+                        </option>
+                    </select>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label class="control-label">Password</label>-->
+                <!--<input type="text" class="form-control" name="Password" placeholder="Password"-->
+                <!--required th:field="*{password}">-->
+                <!--</div>-->
+                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Edit user</button>
             </form>
             <form method="post" th:action="@{'/users?delete&userId='+${user.id}}" th:object="${user}">
                 <button type="submit" id="1submit" name="submit" class="btn btn-primary pull-left">Delete user</button>
             </form>
+            <!--<form method="get" th:action="@{'/users?changepassword&userId='+${user.id}}" >-->
+                <!--<button th:action="@{'/users?changepassword&userId='+${user.id}}" type="button" id="changepass" name="submit" class="btn btn-primary pull-left">Change password</button>-->
+            <!--</form>-->
+            <a th:href="@{'/users?changepassword&userId='+${user.id}}" class="btn btn-primary"
+               >Change password</a>
         </div>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

@@ -78,6 +78,25 @@ public class UserController {
     @RequestMapping(params = "edit", method = RequestMethod.POST)
     public String postEditUser(@ModelAttribute("user") User user, @RequestParam(value = "userId") Long userId) {
         user.setId(userId);
+        user.setPassword((userDao.getUserById(userId).getPassword()));
+        userDao.update(user);
+        return "redirect:/users?list";
+    }
+
+    @RequestMapping(params = "changepassword", method = RequestMethod.GET)
+    public String passwordEdit(@RequestParam(value = "userId") Long userId, Model model) {
+        User newUser = new User();
+        newUser.setId(userId);
+        model.addAttribute("user", newUser/*userDao.getUserById(userId)*/);
+        return "users/changepassword";
+    }
+    @RequestMapping(params = "changepassword", method = RequestMethod.POST)
+    public String changePassword(@ModelAttribute("user") User user, @RequestParam(value = "userId") Long userId) {
+        user.setName((userDao.getUserById(userId).getName()));
+        user.setEmail((userDao.getUserById(userId).getEmail()));
+        user.setOrgList((userDao.getUserById(userId).getOrgList()));
+        user.setId((userDao.getUserById(userId).getId()));
+        user.setRoleId((userDao.getUserById(userId).getRoleId()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
         return "redirect:/users?list";

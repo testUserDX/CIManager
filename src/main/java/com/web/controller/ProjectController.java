@@ -92,6 +92,7 @@ public class ProjectController {
         Org org = project.getOrgList().get(0);
         Project project1 = project;
         project1.setOrgList(null);
+        project.setFolder("C:/"+project.getName());
 
         projectDao.add(project1);
         User user = userDao.getUserByEmil(userEmail);
@@ -122,7 +123,7 @@ public class ProjectController {
         org.setProjectId(projectDao.find((Long) session.getAttribute("projid")));
         org.setUserList(Arrays.asList(userDao.getUserByEmil((String) session.getAttribute("userEmail"))));
         orgDao.add(org);
-        return "redirect: /projects/view?projid=" + session.getAttribute("projid");
+        return "redirect:/projects/view?projid=" + session.getAttribute("projid");
     }
 
     @RequestMapping(value = "/clone")

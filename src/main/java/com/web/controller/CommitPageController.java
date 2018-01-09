@@ -100,11 +100,11 @@ public class CommitPageController {
             Project project = projectDao.find(projid);
             List<Org> userOrg = orgDao.getOrgByUserAndProject(projid, (String) session.getAttribute("userEmail"));
             path = project.getFolder();
-            try {
-                new RetriveMetadataManager().run(userOrg.get(0).getLogin(), userOrg.get(0).getPassword(), userOrg.get(0).getOrgLink());
-            } catch (RetriveMetadataManager.RetriveMetadataException e) {
-                System.out.println(e.getMessage());
-            }
+//            try {
+//                new RetriveMetadataManager().run(userOrg.get(0).getLogin(), userOrg.get(0).getPassword(), userOrg.get(0).getOrgLink());
+//            } catch (RetriveMetadataManager.RetriveMetadataException e) {
+//                System.out.println(e.getMessage());
+//            }
             File source = new File("C:\\Users\\new\\IdeaProjects\\CIManager\\src\\main\\groovy\\build");
             File dest = new File(path + "\\" + userEmail + projid);
             try {

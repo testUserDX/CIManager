@@ -77,14 +77,14 @@ body{
 
     background-color:transparent ;
     color: #ffff;
-    border: 2px solid #3F334D ;
+    border: 2px solid #180231 ;
     outline: none;
     padding: 2px;
 
 }
 
 .commit-button{
-    background:#3F334D;
+    background:#180231;
     color:#fff;
     border:none;
     position:relative;
@@ -98,7 +98,7 @@ body{
 }
 .commit-button:hover{
     background:#fff;
-    color:#3F334D;
+    color:#180231;
 }
 .commit-button:before,.btn:after{
     content:'';
@@ -107,7 +107,7 @@ body{
     right:0;
     height:2px;
     width:0;
-    background: #3F334D;
+    background: #180231;
     transition:400ms ease all;
 }
 .commit-button:after{
@@ -130,4 +130,8 @@ body{
 .label-info{
     background-color: #7D8491;
 }
-
+#spinner-btn{
+    margin-top: 0px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}

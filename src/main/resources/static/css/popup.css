@@ -7,7 +7,7 @@
     border-radius: 5px;
     line-height: 22px;
     background-color: transparent;
-    border: 2px solid #7E689D;
+    border: 2px solid #7D8491;
     transition: all 0.3s;
     padding: 13px;
     margin-bottom: 15px;
@@ -17,7 +17,7 @@
 }
 
 .feedback-input:focus {
-    border: 2px solid #7E689D;
+    border: 2px solid #7D8491;
 }
 
 textarea {
@@ -29,7 +29,7 @@ textarea {
 .popup-btn {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     width: 48%;
-    background: #7E689D;
+    background: #7D8491;
     border-radius: 5px;
     border: 0;
     cursor: pointer;
@@ -44,7 +44,7 @@ textarea {
 }
 
 .popup-btn:hover {
-    background: #7E689D;
+    background: #7D8491;
 }
 
 #prompt-form {

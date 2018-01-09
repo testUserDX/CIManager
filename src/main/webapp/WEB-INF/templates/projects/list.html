@@ -62,10 +62,12 @@
                             <div th:text="${project.gitUrl}"></div>
                         </td>
                         <td th:switch="${session.role}">
-                            <a th:case="'ROLE_ADMIN'" id = "redirectA" th:href="@{/projects/view(projid = ${project.id})}">Edit
+                            <a th:case="'ROLE_ADMIN'" id = "redirectA" th:href="@{/projects/view(projid = ${project.id})}" class="btn btn-primary btn-lg btn-block pull-right"
+                               style="width: 120px; font-size: medium">Edit
                                 project </a>
                             <!--<a th:case="'ROLE_USER'" th:href="@{/commitpage(projid = ${project.id})}" >View project</a>-->
-                            <a  th:case="'ROLE_USER'"  th:onclick="'javascript:aClick(\'' + ${project.id} + '\');'" >View project</a><!--th:href="@{/projects/clone(projid = ${project.id})}"-->
+                            <a  th:case="'ROLE_USER'"  th:onclick="'javascript:aClick(\'' + ${project.id} + '\');'" class="btn btn-primary btn-lg btn-block pull-right"
+                                style="width: 120px; font-size: medium">View project</a><!--th:href="@{/projects/clone(projid = ${project.id})}"-->
                         </td>
                     </tr>
                 </th:block>

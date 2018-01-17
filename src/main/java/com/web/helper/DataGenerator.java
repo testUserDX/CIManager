@@ -80,7 +80,7 @@ public class DataGenerator {
         userDao.add(userMikeDev);
 
         // --------------------- Orgs ---------------------------------------
-        Org testorg1 = new Org("vldvld31@test.com", "vlad19961", "master", "https://login.salesforce.com/",  testProject);
+        Org testorg1 = new Org("maindevorg@ctdev.com", "YCHhhFP43mrpwLSUIq1M", "master", "https://login.salesforce.com/",  testProject);
         Org testorg2 = new Org("test1@atlanta.com", "112345678", "master", "https://login.salesforce.com/",  testProject);
         Org testorg3 = new Org("test2@atlanta.com", "12345678", "master", "https://login.salesforce.com/",  testProject);
         Org testorg4 = new Org("test3@atlanta.com", "12345678", "master", "https://login.salesforce.com/",  airportProject);

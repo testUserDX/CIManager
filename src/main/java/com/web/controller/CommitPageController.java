@@ -1,17 +1,16 @@
 package com.web.controller;
 
-import com.data.CommitMessage;
 import com.model.Org;
 import com.model.Project;
 import com.service.FilesTools;
-import com.service.RetriveMetadataManager;
+
 import com.service.daoService.OrgDao;
 import com.service.daoService.ProjectDao;
 import com.service.gitServise.GitService;
+import com.service.metadataService.RetrieveMetadataService;
 import com.service.userService.UserFlowService;
-import org.apache.commons.io.FileUtils;
+
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
+
 import java.util.List;
 import java.util.Set;
 
@@ -100,18 +97,16 @@ public class CommitPageController {
             Project project = projectDao.find(projid);
             List<Org> userOrg = orgDao.getOrgByUserAndProject(projid, (String) session.getAttribute("userEmail"));
             path = project.getFolder();
+
+            RetrieveMetadataService.retrieveMetadata(userOrg.get(0).getPassword(),userOrg.get(0).getLogin(),41.0,"login",path + "\\" + userEmail + projid);
+
+//            File source = new File("C:\\Users\\new\\IdeaProjects\\CIManager\\src\\main\\groovy\\build");
+//            File dest = new File(path + "\\" + userEmail + projid);
 //            try {
-//                new RetriveMetadataManager().run(userOrg.get(0).getLogin(), userOrg.get(0).getPassword(), userOrg.get(0).getOrgLink());
-//            } catch (RetriveMetadataManager.RetriveMetadataException e) {
-//                System.out.println(e.getMessage());
+//                FileUtils.copyDirectory(source, dest);
+//            } catch (IOException e) {
+//                e.printStackTrace();
 //            }
-            File source = new File("C:\\Users\\new\\IdeaProjects\\CIManager\\src\\main\\groovy\\build");
-            File dest = new File(path + "\\" + userEmail + projid);
-            try {
-                FileUtils.copyDirectory(source, dest);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             gitService.addFiles(".", path + "\\" + userEmail + projid);
 //            List<DiffEntry> result = gitService.getFilesInDiff(path+"\\"+userEmail+projid,"master");
 //            for (DiffEntry entry : result){

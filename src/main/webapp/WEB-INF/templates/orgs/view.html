@@ -10,14 +10,15 @@
 
 <div class="main">
     <div class="container-fluid">
-        <div id = container>
+        <div id=container>
             <div th:replace="fragments/header :: header"></div>
-        <form method="post" th:object="${org} ">
+            <div class="col-md-6">
+                <form method="post" th:object="${org} ">
                     <h3 style="margin-bottom: 25px; text-align: center;">Edit org data</h3>
                     <div class="form-group">
                         <label class="control-label">Org link</label>
                         <input type="text" class="form-control" name="name" placeholder="Salesforce org link"
-                        th:field ="*{orgLink}" >
+                               th:field="*{orgLink}">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Login</label>
@@ -34,42 +35,80 @@
                         <input type="text" class="form-control" name="BranchName" placeholder="Branch name" required
                                th:field="*{branchName}">
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Current user:</label>
-                        <label th:text="${assigned[0].name}"></label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Assign new user</label>
-                        <select id="selected-emp" th:field="*{userList[0].id}" >
-                            <option th:each="uemp : ${unassigned}" th:value="${uemp.id}" th:text="${uemp.name}">
-                            </option>
-                        </select>
-                    </div>
-                    <input type="hidden"  th:field="*{projectId.id}"/>
                     <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Save org</button>
-        </form>
-    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h3 style="margin-bottom: 25px; text-align: center;">Manage users</h3>
+                <label for="users">Assigned users:</label>
+                <table id="users" class="table">
+                    <div th:if="${!assigned.isEmpty()}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="user : ${assigned}">
+                                <tr>
+                                    <th>
+                                        <label th:id="'label-'+${user.id}" th:text="${user.Name}"></label>
+                                    </th>
+                                    <td>
+                                        <form th:action="${org.id}+'/users/del/'+${user.id}" method="POST">
+                                            <input type="submit" class="btn btn-primary" value="Remove"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </div>
+                    <div th:if="${assigned.isEmpty()}">
+                        <tbody>
+                            <tr>
+                                <th>There are not assigned users</th>
+                            </tr>
+                        <tbody>
+                    </div>
+                </table>
+
+                <label for="unassigned">Unassigned users:</label>
+                <table id="unassigned" class="table">
+                    <div th:if="${!unassigned.isEmpty()}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Add</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="unuser : ${unassigned}">
+                            <tr>
+                                <th>
+                                    <label th:id="'label-'+${unuser.id}" th:text="${unuser.Name}"></label>
+                                </th>
+                                <td>
+                                    <form th:action="${org.id}+'/users/add/'+${unuser.id}" method="POST">
+                                        <input type="submit" class="btn btn-primary" value="Add"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </div>
+                    <div th:if="${unassigned.isEmpty()}">
+                        <tbody>
+                        <tr>
+                            <th>There are not unassigned users</th>
+                        </tr>
+                        <tbody>
+                    </div>
+                </table>
+            </div>
+        </div>
         <div th:replace="fragments/footer :: footer"></div>
+    </div>
 </div>
-</div>
-<script type="text/javascript" th:inline="javascript">
-    (function () {
-        // prepare default form action
-        setAddAction();
-        // handler for changing action
-        $("#selected-emp").on("change", function () {
-            var id = $("#selected-emp").val();
-            if(id!=null) {
-                setAddAction();
-            }
-        });
-
-        function setAddAction() {
-            var id = $("#selected-emp").val();
-            $("#add-form").attr("action", [[${org.id}]] + '/users/add/' + id);
-        }
-    })();
-</script>
-
 </body>
 </html>

@@ -47,14 +47,6 @@ public class OrgController {
                 unassignedUsers.add(user);
             }
         }
-        unassignedUsers.add(new User(-1L, "-----"));
-        unassignedUsers.add(new User(-2L, "no users"));
-
-        if(assignedUsers.isEmpty()){
-            assignedUsers.add(new User(null, "no user"));
-            org.setUserList(assignedUsers);
-        }
-
 
         modelAndView.addObject("org", org);
         modelAndView.addObject("assigned", assignedUsers);
@@ -86,6 +78,17 @@ public class OrgController {
     }
 
 
+    @RequestMapping(value = "/{id}/users/del/{userId}", method = RequestMethod.POST)
+    public String removeUser(@PathVariable("id") Long orgId, @PathVariable("userId") Long userId) {
+        Org org = orgDao.getFullOrg(orgId);
+        User user = userDao.find(userId);
+        List<User> userList = org.getUserList();
+        userList.remove(user);
+        org.setUserList(userList);
+        orgDao.update(org);
+        return "redirect:/orgs/" + orgId;
+    }
+
 //    @RequestMapping(value = "/{id}/users/del/{userId}", method = RequestMethod.POST)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void removeEmployee(@PathVariable("id") Long orgId, @PathVariable("userId") Long userId) {
@@ -96,6 +99,20 @@ public class OrgController {
 //        org.setUserList(userList);
 //        orgDao.update(org);
 //    }
+
+    @RequestMapping(value = "/{id}/users/add/{userId}", method = RequestMethod.POST)
+    public String addUser(@PathVariable("id") long orgId, @PathVariable("userId") Long userId) {
+        Org org = orgDao.getFullOrg(orgId);
+        if (userId != null) {
+            User user = userDao.find(userId);
+            List<User> userList = org.getUserList();
+            userList.add(user);
+            org.setUserList(userList);
+            orgDao.update(org);
+        }
+
+        return "redirect:/orgs/" + orgId;
+    }
 
 //    @RequestMapping(value = "/{id}/users/add/{userId}", method = RequestMethod.POST)
 //    public String addEmployee(@PathVariable("id") long orgId, @PathVariable("userId") Long userId) {

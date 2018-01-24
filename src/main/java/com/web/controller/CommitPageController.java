@@ -2,6 +2,7 @@ package com.web.controller;
 
 import com.model.Org;
 import com.model.Project;
+import com.service.EmailService;
 import com.service.FilesTools;
 
 import com.service.daoService.OrgDao;
@@ -29,6 +30,9 @@ import java.util.Set;
 public class CommitPageController {
 
     public static final String TITLE_COMMIT_PAGE = "Commit";
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     OrgDao orgDao;
@@ -68,6 +72,7 @@ public class CommitPageController {
         try {
             result = userFlowService.commitAll(requestEntity.getBody(), path + "\\" + userEmail + projid, userOrg.get(0).getBranchName(), credentials);
             if (result) {
+                emailService.sendEmail("vladislavkchr@gmail.com","Changes was committed", "Success commit on "+project.getName()+" from "+userEmail);
                 filesTools.removeGitFolder(path + "\\" + userEmail + projid);
             }
         } catch (GitAPIException e) {
@@ -134,4 +139,5 @@ public class CommitPageController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }

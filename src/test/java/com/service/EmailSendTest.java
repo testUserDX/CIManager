@@ -16,8 +16,7 @@ public class EmailSendTest extends DomainTestBase{
     @Test
     public void successfulEmailSending() {
         boolean result = emailService.sendEmail("test@gmail.com", "TestSubject", "TestText");
-        //uncomment when email.properties are properly configured
-//        assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
